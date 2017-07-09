@@ -9,7 +9,13 @@
 #import <UIKit/UIKit.h>
 
 #define isFirstLaunch @"isFirstLaunch"
+#define isHasSavedGame @"isHasSavedGame"
+
 
 @interface NSDGeneralMenuViewController : UIViewController
+
+- (IBAction)didTapNewGameButtonWithSender:(id)sender ;
+
+
 
 @end

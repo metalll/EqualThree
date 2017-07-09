@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NSDGridGameView.h"
 
 @interface NSDGameTableViewCell : UITableViewCell
+
+@property(nonatomic) int height;
+@property (weak, nonatomic) IBOutlet NSDGridGameView *gameGridView;
 
 @end

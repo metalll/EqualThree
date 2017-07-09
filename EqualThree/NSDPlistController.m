@@ -10,6 +10,9 @@
 
 @implementation NSDPlistController
 
+
+
+
 +(void)loadPlistWithName:(NSString *)name andCompletion:(void (^)(NSArray *))completion{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

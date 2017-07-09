@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NSDEqualThreeGameViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface NSDEqualThreeGameViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIPopoverPresentationControllerDelegate>
 
 @end

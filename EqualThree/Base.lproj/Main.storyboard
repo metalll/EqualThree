@@ -51,7 +51,7 @@
                                     </attributedString>
                                 </state>
                                 <connections>
-                                    <segue destination="1WA-wW-rj0" kind="presentation" modalPresentationStyle="fullScreen" id="UZy-Gi-0UL"/>
+                                    <segue destination="1WA-wW-rj0" kind="presentation" identifier="ResumeGame" modalPresentationStyle="fullScreen" id="UZy-Gi-0UL"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KRG-4U-KcS">
@@ -67,7 +67,7 @@
                                     </attributedString>
                                 </state>
                                 <connections>
-                                    <segue destination="1WA-wW-rj0" kind="presentation" modalPresentationStyle="fullScreen" id="sRt-C9-8Rs"/>
+                                    <action selector="didTapNewGameButtonWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WEi-Tz-bNx"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TRS-ci-E6e">
@@ -100,15 +100,16 @@
                     <navigationItem key="navigationItem" id="xg6-IO-Zgb"/>
                     <connections>
                         <outlet property="mainView" destination="8bC-Xf-vdC" id="vyW-I3-wDv"/>
+                        <outlet property="resumeButton" destination="GNa-qc-v6s" id="xO2-86-NIY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
-        <!--View Controller-->
+        <!--Equal Three Game View Controller-->
         <scene sceneID="zkm-cI-197">
             <objects>
-                <viewController id="1WA-wW-rj0" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EqualThreeGameViewController" id="1WA-wW-rj0" customClass="NSDEqualThreeGameViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZcC-cs-k7z"/>
                         <viewControllerLayoutGuide type="bottom" id="gnE-ZJ-9JS"/>
@@ -116,8 +117,23 @@
                     <view key="view" contentMode="scaleToFill" id="J8P-AL-jxh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="oNp-7h-sKS">
+                                <rect key="frame" x="8" y="20" width="359" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="oNp-7h-sKS" secondAttribute="trailing" constant="-8" id="62e-0r-wyG"/>
+                            <constraint firstItem="gnE-ZJ-9JS" firstAttribute="top" secondItem="oNp-7h-sKS" secondAttribute="bottom" id="Zfm-7B-Nuf"/>
+                            <constraint firstItem="oNp-7h-sKS" firstAttribute="top" secondItem="ZcC-cs-k7z" secondAttribute="bottom" id="dTv-rU-Q3R"/>
+                            <constraint firstItem="oNp-7h-sKS" firstAttribute="leading" secondItem="J8P-AL-jxh" secondAttribute="leadingMargin" constant="-8" id="gEe-ON-tvP"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="oNp-7h-sKS" id="UyV-r9-nHg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="obm-Y6-rLe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -164,10 +180,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jer-GA-ybT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="33" y="905"/>
+            <point key="canvasLocation" x="-1918" y="1220"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="UZy-Gi-0UL"/>
-    </inferredMetricsTieBreakers>
 </document>

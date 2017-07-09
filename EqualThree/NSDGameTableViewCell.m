@@ -21,4 +21,8 @@
     // Configure the view for the selected state
 }
 
+-(int)height{
+    return _height;
+}
+
 @end

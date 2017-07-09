@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface NSDGameTopTableViewCell : UITableViewCell
+@property(nonatomic) int height;
+@property (weak, nonatomic) IBOutlet UILabel *targetCount;
+@property (weak, nonatomic) IBOutlet UILabel *MoviesCount;
+@property (weak, nonatomic) IBOutlet UILabel *ScoreCount;
 
 @end

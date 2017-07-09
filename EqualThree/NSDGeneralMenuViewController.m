@@ -9,7 +9,7 @@
 #import "NSDGeneralMenuViewController.h"
 #import "NSDToastView.h"
 #import "UIColor+NSDColor.h"
-
+#import "NSDEqualThreeGameViewController.h"
 
 
 @interface NSDGeneralMenuViewController (){
@@ -17,6 +17,7 @@
 }
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 
+@property (weak, nonatomic) IBOutlet UIButton *resumeButton;
 
 @end
 
@@ -43,6 +44,92 @@
         [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:isFirstLaunch];
          [toast displayOnView:_mainView withMessage:@"Welcome to EqualThree" andColor:[UIColor toastSimpleColor] andIndicator:NO andFaded:YES];
     }
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{
+                                                              isHasSavedGame:@NO
+                                                }];
+    
+    if([[NSUserDefaults standardUserDefaults] objectForKey:isHasSavedGame]){
+    
+        
+        [_resumeButton setEnabled:NO];
+        [_resumeButton setAlpha:0.5f];
+    }else{
+        [_resumeButton setEnabled:YES];
+        [_resumeButton setAlpha:1.0f];
+        
+    }
+    
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+
+    if([[NSUserDefaults standardUserDefaults] objectForKey:isHasSavedGame]){
+        
+        
+        [_resumeButton setEnabled:NO];
+        [_resumeButton setAlpha:0.5f];
+    }else{
+        [_resumeButton setEnabled:YES];
+        [_resumeButton setAlpha:1.0f];
+        
+    }
+
+    
+    [super viewDidAppear:animated];
+    
+}
+
+- (IBAction)didTapNewGameButtonWithSender:(id)sender {
+    
+
+    
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:isHasSavedGame] isEqual:@NO]){
+    
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Create new game"
+                                                                       message:@"Are you sure?"
+                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* allowAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {
+                                                              
+                                                                  
+                                                                  NSDEqualThreeGameViewController * target = [self.storyboard instantiateViewControllerWithIdentifier:@"EqualThreeGameViewController"];
+                                                                  
+                                                                  [self.navigationController presentViewController:target animated:YES completion:nil];
+                                                                  
+
+                                                                  
+                                                              }];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                                                            handler:^(UIAlertAction * action) {}];
+
+        
+        [alert addAction:cancelAction];
+        [alert addAction:allowAction];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    
+    }else{
+        
+        NSDEqualThreeGameViewController * target = [self.storyboard instantiateViewControllerWithIdentifier:@"EqualThreeGameViewController"];
+        
+        [self.navigationController presentViewController:target animated:YES completion:nil];
+        
+        
+        
+
+    }
+    
+    
+    
+    
+}
+
+
+
 @end
+
+
+

@@ -11,6 +11,9 @@
 
 @interface NSDToastView : NSObject
 
+
+#pragma mark Define block
+
 #define MESSAGE_FRAME_X 0
 #define MESSAGE_FRAME_BEGIN_Y -50
 #define MESSAGE_FRAME_HEIGHT 50
@@ -31,6 +34,8 @@
 #define MESSAGE_FRAME_END_Y 0
 #define MESSAGE_DELAY 3
 
+
+#pragma mark Method block
 
 -(void) displayOnView:(UIView*)view withMessage:(NSString*)message andColor:(UIColor*)color andIndicator:(BOOL)indicator andFaded:(BOOL)faded;
 

@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface NSDGameBottomTableViewCell : UITableViewCell
-
+@property (weak, nonatomic) IBOutlet UIButton *menuButton;
+@property (weak, nonatomic) IBOutlet UIButton *helpButton;
+@property(nonatomic) int height;
 @end

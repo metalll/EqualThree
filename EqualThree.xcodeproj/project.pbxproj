@@ -18,6 +18,7 @@
 		4346AAFA1F12807B00F1F639 /* NSDGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 4346AAF91F12807A00F1F639 /* NSDGame.m */; };
 		4346AB001F12827C00F1F639 /* NSDGameItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4346AAFF1F12827C00F1F639 /* NSDGameItemView.m */; };
 		4346AB031F1285B000F1F639 /* NSDPlistController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4346AB021F1285B000F1F639 /* NSDPlistController.m */; };
+		4346AB0C1F12D4A400F1F639 /* NSDGridGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4346AB0B1F12D4A400F1F639 /* NSDGridGameView.m */; };
 		436755271F12682100E1C06E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 436755261F12682100E1C06E /* main.m */; };
 		4367552A1F12682100E1C06E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 436755291F12682100E1C06E /* AppDelegate.m */; };
 		436755301F12682100E1C06E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4367552E1F12682100E1C06E /* Main.storyboard */; };
@@ -49,6 +50,8 @@
 		4346AAFF1F12827C00F1F639 /* NSDGameItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDGameItemView.m; sourceTree = "<group>"; };
 		4346AB011F1285B000F1F639 /* NSDPlistController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDPlistController.h; sourceTree = "<group>"; };
 		4346AB021F1285B000F1F639 /* NSDPlistController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDPlistController.m; sourceTree = "<group>"; };
+		4346AB0A1F12D4A400F1F639 /* NSDGridGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDGridGameView.h; sourceTree = "<group>"; };
+		4346AB0B1F12D4A400F1F639 /* NSDGridGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDGridGameView.m; sourceTree = "<group>"; };
 		436755221F12682100E1C06E /* EqualThree.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EqualThree.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		436755261F12682100E1C06E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		436755281F12682100E1C06E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -104,6 +107,8 @@
 			children = (
 				4346AAFE1F12827C00F1F639 /* NSDGameItemView.h */,
 				4346AAFF1F12827C00F1F639 /* NSDGameItemView.m */,
+				4346AB0A1F12D4A400F1F639 /* NSDGridGameView.h */,
+				4346AB0B1F12D4A400F1F639 /* NSDGridGameView.m */,
 			);
 			name = CustomView;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4346AB0C1F12D4A400F1F639 /* NSDGridGameView.m in Sources */,
 				4346AAE41F127E9000F1F639 /* NSDRatingTableViewCell.m in Sources */,
 				436755481F12696E00E1C06E /* NSDEqualThreeGameViewController.m in Sources */,
 				4367552A1F12682100E1C06E /* AppDelegate.m in Sources */,

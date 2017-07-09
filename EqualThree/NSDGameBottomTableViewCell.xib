@@ -1,7 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -11,9 +16,35 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QuG-jG-3NG">
+                        <rect key="frame" x="10" y="0.0" width="144" height="43.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <state key="normal" title="Help"/>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wdM-NO-90u">
+                        <rect key="frame" x="166" y="0.0" width="144" height="43.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <state key="normal" title="Menu"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="wdM-NO-90u" secondAttribute="trailing" constant="10" id="AFy-1V-xdu"/>
+                    <constraint firstItem="QuG-jG-3NG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Wlm-rw-ad8"/>
+                    <constraint firstItem="QuG-jG-3NG" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.45" id="adw-J7-JJ1"/>
+                    <constraint firstItem="QuG-jG-3NG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="iMS-le-lHA"/>
+                    <constraint firstItem="wdM-NO-90u" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="nlO-2d-Yk0"/>
+                    <constraint firstAttribute="bottom" secondItem="wdM-NO-90u" secondAttribute="bottom" id="qbR-dn-r4e"/>
+                    <constraint firstAttribute="bottom" secondItem="QuG-jG-3NG" secondAttribute="bottom" id="suD-Kv-EGe"/>
+                    <constraint firstItem="wdM-NO-90u" firstAttribute="width" secondItem="QuG-jG-3NG" secondAttribute="width" id="xQp-JO-BM5"/>
+                </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="helpButton" destination="QuG-jG-3NG" id="7Gd-5r-eJa"/>
+                <outlet property="menuButton" destination="wdM-NO-90u" id="qnl-sM-PXo"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>
