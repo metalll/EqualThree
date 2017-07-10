@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" misplaced="YES" id="iN0-l3-epB" customClass="NSDMenuView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="636"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f7j-10-rBo">
+                    <rect key="frame" x="169" y="318.5" width="36" height="39"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <state key="normal" title="Exit">
+                        <color key="titleColor" red="1" green="0.07750356319364915" blue="0.0077714886801768523" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JDa-0q-TPi">
+                    <rect key="frame" x="147.5" y="278.5" width="80" height="39"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <state key="normal" title="Resume"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="JDa-0q-TPi" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="8yl-jo-aUR"/>
+                <constraint firstItem="JDa-0q-TPi" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-20" id="Enh-eQ-dZq"/>
+                <constraint firstItem="f7j-10-rBo" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="F3I-ze-c8j"/>
+                <constraint firstItem="f7j-10-rBo" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="20" id="Vgx-2L-qfg"/>
+            </constraints>
+            <connections>
+                <outlet property="ExitButton" destination="f7j-10-rBo" id="IXE-Zp-Gnr"/>
+                <outlet property="resumeButton" destination="JDa-0q-TPi" id="eWh-uj-3rP"/>
+            </connections>
+            <point key="canvasLocation" x="33.5" y="101.5"/>
+        </view>
+    </objects>
+</document>

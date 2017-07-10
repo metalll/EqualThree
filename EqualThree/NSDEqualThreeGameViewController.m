@@ -10,11 +10,25 @@
 #import "NSDGameTableViewCell.h"
 #import "NSDGameTopTableViewCell.h"
 #import "NSDGameBottomTableViewCell.h"
+#import "NSDRatingViewController.h"
+#import "NSDMenuView.h"
+#import <QuartzCore/QuartzCore.h>
+#import "NSDGeneralMenuViewController.h"
+#import "NSDToastView.h"
+#import "UIColor+NSDColor.h"
+
+
 @interface NSDEqualThreeGameViewController (){
     int topTableViewCellHeight;
     int bottomTableViewCellHeight;
     int gameTableViewCellHeight;
+    NSDMenuView * menuView;
+    NSDToastView * toast;
+    
+    CGRect menuButtonRectangle;
+
 }
+@property (weak, nonatomic) IBOutlet UIView *mainView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
@@ -23,6 +37,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    menuView = NULL;
     
     _tableView.alwaysBounceVertical = NO;
     
@@ -37,6 +53,24 @@
     
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.estimatedRowHeight = gameTableViewCellHeight;
+    
+    toast = [NSDToastView new];
+    
+    
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:isHasSavedGame] isEqual:@YES ]){
+     
+        [toast displayOnView:_mainView withMessage:@"Resume game" andColor:[UIColor toastSimpleColor] andIndicator:NO andFaded:YES];
+        
+        
+    
+    }else{
+    
+        [toast displayOnView:_mainView withMessage:@"New game" andColor:[UIColor toastAcceptColor] andIndicator:NO andFaded:YES];
+        [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:isHasSavedGame];
+        
+    
+    }
+    
     
     
     
@@ -101,8 +135,10 @@
         bottomCell.height = bottomTableViewCellHeight;
         [bottomCell.menuButton addTarget:self action:@selector(didTouchUpInsideMenuButton) forControlEvents:UIControlEventTouchUpInside];
         
-        [bottomCell.helpButton addTarget:self action:@selector(didTouchUpInsideMenuButton) forControlEvents:UIControlEventTouchUpInside];
+        [bottomCell.helpButton addTarget:self action:@selector(didTouchUpInsideHelpButton) forControlEvents:UIControlEventTouchUpInside];
         
+        
+        menuButtonRectangle = bottomCell.menuButton.frame;
         
         return bottomCell;
     }
@@ -114,23 +150,79 @@
 
 
 -(void) didTouchUpInsideMenuButton{
+    
+    
+    int popoverMenuWidth = self.view.frame.size.width - 50;
+    
+    int popoverMenuY = self.view.frame.size.height - 110;
+    
+    
 
-    UIStoryboard * __weak storyboard = [self storyboard];
-    UIViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"MenuPopover"];
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"NSDMenuView" owner:self options:nil];
     
-    controller.modalPresentationStyle = UIModalPresentationPopover;
-    [self presentViewController:controller animated:YES completion:nil];
+    menuView = (NSDMenuView *) [nib firstObject];
     
-    UIPopoverPresentationController *popController = [controller popoverPresentationController];
-    popController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-    popController.delegate = self;
+    menuView.frame = CGRectMake(25 , popoverMenuY , popoverMenuWidth, 100);
+
+    [menuView.resumeButton addTarget:self action:@selector(didTouchUpInsideResumeButton) forControlEvents:UIControlEventTouchUpInside];
+    [menuView.ExitButton addTarget:self action:@selector(didTouchUpInsideExitButton) forControlEvents:UIControlEventTouchUpInside];
+    
+
+    
+    menuView.alpha = 0.0;
+    menuView.layer.cornerRadius = 5;
+    menuView.layer.borderWidth = 1.5f;
+    menuView.layer.masksToBounds = YES;
+    
+    [self.view addSubview:menuView];
+    
+    [UIView animateWithDuration:0.4 animations:^{
+        [menuView setAlpha:1.0];
+    } completion:^(BOOL finished) {}];
+ 
+}
+
+-(void) didTouchUpInsideResumeButton{
+    
+    [UIView animateWithDuration:0.4 animations:^{
+    
+        
+        [menuView setAlpha:0.0];
+        
+        
+        
+    } completion:^(BOOL finished) {
+        if(finished){
+        
+            [menuView removeFromSuperview];
+            
+            menuView = NULL;
+        
+        }
+    }];
+    
     
     
 }
+
+-(void) didTouchUpInsideExitButton{
+    
+    
+    //TODO for test
+    
+
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    
+}
+
+
 
 -(void) didTouchUpInsideHelpButton{
 
 }
+
 
 
 

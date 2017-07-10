@@ -49,7 +49,7 @@
                                                               isHasSavedGame:@NO
                                                 }];
     
-    if([[NSUserDefaults standardUserDefaults] objectForKey:isHasSavedGame]){
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:isHasSavedGame] isEqual:@NO]){
     
         
         [_resumeButton setEnabled:NO];
@@ -64,7 +64,7 @@
 
 -(void)viewDidAppear:(BOOL)animated{
 
-    if([[NSUserDefaults standardUserDefaults] objectForKey:isHasSavedGame]){
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:isHasSavedGame] isEqual:@NO]){
         
         
         [_resumeButton setEnabled:NO];
@@ -84,7 +84,7 @@
     
 
     
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:isHasSavedGame] isEqual:@NO]){
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:isHasSavedGame] isEqual:@YES]){
     
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Create new game"
                                                                        message:@"Are you sure?"
@@ -93,6 +93,8 @@
         UIAlertAction* allowAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                               handler:^(UIAlertAction * action) {
                                                               
+                                                                  
+                                                                  [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:isHasSavedGame];
                                                                   
                                                                   NSDEqualThreeGameViewController * target = [self.storyboard instantiateViewControllerWithIdentifier:@"EqualThreeGameViewController"];
                                                                   

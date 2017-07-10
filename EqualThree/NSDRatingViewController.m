@@ -55,7 +55,6 @@
         [_activityIndicator stopAnimating];
         [UITableView animateWithDuration:.2 animations:^{
             _tableView.alpha=1.0f;
-            NSLog(@"arr %@",arr.description);
         }];
         
         
