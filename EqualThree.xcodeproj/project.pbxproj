@@ -43,6 +43,9 @@
 		438F4A6A1F13ABB600C48F7A /* NSDCustomViewForHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 438F4A691F13ABB600C48F7A /* NSDCustomViewForHeader.xib */; };
 		438F4A701F13B26600C48F7A /* NSDHighscoresManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 438F4A6F1F13B26600C48F7A /* NSDHighscoresManager.m */; };
 		438F4A731F13B47700C48F7A /* NSDScoreRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 438F4A721F13B47700C48F7A /* NSDScoreRecord.m */; };
+		43DAB72D1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB72C1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.m */; };
+		43DAB7301F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB72F1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.m */; };
+		43DAB7331F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB7321F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,6 +114,12 @@
 		438F4A6F1F13B26600C48F7A /* NSDHighscoresManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDHighscoresManager.m; sourceTree = "<group>"; };
 		438F4A711F13B47700C48F7A /* NSDScoreRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDScoreRecord.h; sourceTree = "<group>"; };
 		438F4A721F13B47700C48F7A /* NSDScoreRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDScoreRecord.m; sourceTree = "<group>"; };
+		43DAB72B1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+NSDURLDictionaryWrapper.h"; sourceTree = "<group>"; };
+		43DAB72C1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+NSDURLDictionaryWrapper.m"; sourceTree = "<group>"; };
+		43DAB72E1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+NSDBodySetter.h"; sourceTree = "<group>"; };
+		43DAB72F1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+NSDBodySetter.m"; sourceTree = "<group>"; };
+		43DAB7311F16C4E60042537A /* NSDictionary+NSDBodyEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+NSDBodyEncoder.h"; sourceTree = "<group>"; };
+		43DAB7321F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+NSDBodyEncoder.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +272,12 @@
 				4346AB021F1285B000F1F639 /* NSDPlistController.m */,
 				4344FA141F1394A3005683A9 /* NSDReachibility.h */,
 				4344FA151F1394A3005683A9 /* NSDReachibility.m */,
+				43DAB72B1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.h */,
+				43DAB72C1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.m */,
+				43DAB72E1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.h */,
+				43DAB72F1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.m */,
+				43DAB7311F16C4E60042537A /* NSDictionary+NSDBodyEncoder.h */,
+				43DAB7321F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -345,6 +360,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43DAB7301F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.m in Sources */,
 				438F4A701F13B26600C48F7A /* NSDHighscoresManager.m in Sources */,
 				4346AB0C1F12D4A400F1F639 /* NSDGridGameView.m in Sources */,
 				4346AAE41F127E9000F1F639 /* NSDRatingTableViewCell.m in Sources */,
@@ -357,6 +373,7 @@
 				438F4A681F13ABA600C48F7A /* NSDCustomHeaderForTableView.m in Sources */,
 				436755451F12694700E1C06E /* NSDRatingViewController.m in Sources */,
 				4344FA161F1394A3005683A9 /* NSDReachibility.m in Sources */,
+				43DAB7331F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m in Sources */,
 				438F4A731F13B47700C48F7A /* NSDScoreRecord.m in Sources */,
 				43046D2C1F14F531006294DC /* NSDLevel.m in Sources */,
 				436755501F1271BE00E1C06E /* UIColor+NSDColor.m in Sources */,
@@ -369,6 +386,7 @@
 				436755271F12682100E1C06E /* main.m in Sources */,
 				4346AB121F12EB6600F1F639 /* NSDMenuView.m in Sources */,
 				43046D291F14F51C006294DC /* NSDReplay.m in Sources */,
+				43DAB72D1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.m in Sources */,
 				4346AAEC1F127EF000F1F639 /* NSDGameTopTableViewCell.m in Sources */,
 				4346AB1A1F12F2F700F1F639 /* NSDGameItem.m in Sources */,
 				4346AAFA1F12807B00F1F639 /* NSDGame.m in Sources */,
