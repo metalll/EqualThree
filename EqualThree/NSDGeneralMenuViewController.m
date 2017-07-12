@@ -10,6 +10,7 @@
 #import "NSDToastView.h"
 #import "UIColor+NSDColor.h"
 #import "NSDEqualThreeGameViewController.h"
+#import "NSDAlertView.h"
 
 
 @interface NSDGeneralMenuViewController (){
@@ -85,37 +86,43 @@
 
     
     if([[[NSUserDefaults standardUserDefaults] objectForKey:isHasSavedGame] isEqual:@YES]){
+        
+        
+        
+          }
+        
+        
+//    
+//        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Create new game"
+//                                                                       message:@"Are you sure?"
+//                                                preferredStyle:UIAlertControllerStyleAlert];
+//        
+//        
+//        
+//        UIAlertAction* allowAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+//                                                              handler:^(UIAlertAction * action) {
+//                                                              
+//                                                                  
+//                                                                  [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:isHasSavedGame];
+//                                                                  
+//                                                                  NSDEqualThreeGameViewController * target = [self.storyboard instantiateViewControllerWithIdentifier:@"EqualThreeGameViewController"];
+//                                                                  
+//                                                                  [self.navigationController presentViewController:target animated:YES completion:nil];
+//                                                                  
+//
+//                                                                  
+//                                                              }];
+//        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+//                                                            handler:^(UIAlertAction * action) {}];
+//
+//        
+//        [alert addAction:cancelAction];
+//        [alert addAction:allowAction];
+//        
+//        [self presentViewController:alert animated:YES completion:nil];
+//        
     
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Create new game"
-                                                                       message:@"Are you sure?"
-                                                preferredStyle:UIAlertControllerStyleAlert];
-        
-        
-        
-        UIAlertAction* allowAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                              handler:^(UIAlertAction * action) {
-                                                              
-                                                                  
-                                                                  [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:isHasSavedGame];
-                                                                  
-                                                                  NSDEqualThreeGameViewController * target = [self.storyboard instantiateViewControllerWithIdentifier:@"EqualThreeGameViewController"];
-                                                                  
-                                                                  [self.navigationController presentViewController:target animated:YES completion:nil];
-                                                                  
-
-                                                                  
-                                                              }];
-        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
-                                                            handler:^(UIAlertAction * action) {}];
-
-        
-        [alert addAction:cancelAction];
-        [alert addAction:allowAction];
-        
-        [self presentViewController:alert animated:YES completion:nil];
-        
-    
-    }else{
+    else{
         
         NSDEqualThreeGameViewController * target = [self.storyboard instantiateViewControllerWithIdentifier:@"EqualThreeGameViewController"];
         

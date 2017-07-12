@@ -46,6 +46,8 @@
 		43DAB72D1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB72C1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.m */; };
 		43DAB7301F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB72F1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.m */; };
 		43DAB7331F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB7321F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m */; };
+		43DAB73C1F16DA7D0042537A /* NSDAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB73A1F16DA7D0042537A /* NSDAlertView.m */; };
+		43DAB73D1F16DA7D0042537A /* NSDAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43DAB73B1F16DA7D0042537A /* NSDAlertView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +122,9 @@
 		43DAB72F1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+NSDBodySetter.m"; sourceTree = "<group>"; };
 		43DAB7311F16C4E60042537A /* NSDictionary+NSDBodyEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+NSDBodyEncoder.h"; sourceTree = "<group>"; };
 		43DAB7321F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+NSDBodyEncoder.m"; sourceTree = "<group>"; };
+		43DAB7391F16DA7D0042537A /* NSDAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDAlertView.h; sourceTree = "<group>"; };
+		43DAB73A1F16DA7D0042537A /* NSDAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDAlertView.m; sourceTree = "<group>"; };
+		43DAB73B1F16DA7D0042537A /* NSDAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NSDAlertView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +172,9 @@
 				438F4A661F13ABA600C48F7A /* NSDCustomHeaderForTableView.h */,
 				438F4A671F13ABA600C48F7A /* NSDCustomHeaderForTableView.m */,
 				438F4A691F13ABB600C48F7A /* NSDCustomViewForHeader.xib */,
+				43DAB7391F16DA7D0042537A /* NSDAlertView.h */,
+				43DAB73A1F16DA7D0042537A /* NSDAlertView.m */,
+				43DAB73B1F16DA7D0042537A /* NSDAlertView.xib */,
 			);
 			name = CustomView;
 			sourceTree = "<group>";
@@ -342,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4346AAE51F127E9000F1F639 /* NSDRatingTableViewCell.xib in Resources */,
+				43DAB73D1F16DA7D0042537A /* NSDAlertView.xib in Resources */,
 				4346AAF71F127F2100F1F639 /* NSDGameTableViewCell.xib in Resources */,
 				436755351F12682100E1C06E /* LaunchScreen.storyboard in Resources */,
 				436755321F12682100E1C06E /* Assets.xcassets in Resources */,
@@ -383,6 +392,7 @@
 				4346AAF61F127F2100F1F639 /* NSDGameTableViewCell.m in Sources */,
 				4346AB031F1285B000F1F639 /* NSDPlistController.m in Sources */,
 				4344FA131F139351005683A9 /* NSDHttpClient.m in Sources */,
+				43DAB73C1F16DA7D0042537A /* NSDAlertView.m in Sources */,
 				436755271F12682100E1C06E /* main.m in Sources */,
 				4346AB121F12EB6600F1F639 /* NSDMenuView.m in Sources */,
 				43046D291F14F51C006294DC /* NSDReplay.m in Sources */,

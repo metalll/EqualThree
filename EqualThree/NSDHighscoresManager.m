@@ -47,7 +47,7 @@
     
     [records addObject:[[NSDScoreRecord alloc]initWithName:@"Dasha" andScore:223233342]];
     
-    [records addObject:[[NSDScoreRecord alloc]initWithName:@"Masha" andScore:243244234322]];
+    [records addObject:[[NSDScoreRecord alloc]initWithName:@"Masha" andScore:243242]];
     
     
 }
