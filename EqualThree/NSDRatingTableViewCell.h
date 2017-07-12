@@ -7,9 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "NSDScoreRecord.h"
 @interface NSDRatingTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scopeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numberLabel;
+
+
+-(void)setRatingRecordWithRecord:(NSDScoreRecord *)record andNumber:(NSUInteger) number;
+
+
 
 @end

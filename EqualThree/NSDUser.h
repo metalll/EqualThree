@@ -10,6 +10,9 @@
 
 @interface NSDUser : NSObject
 
+
+
+
 @property (strong,nonatomic) NSString * userName;
 @property (strong,nonatomic) NSString * userScore;
 @property (strong,nonatomic) NSString * userDeviceVendorUUID;

@@ -11,7 +11,9 @@
 #import "NSDToastView.h"
 #import "NSDPlistController.h"
 #import "NSDRatingTableViewCell.h"
-
+#import "NSDCustomHeaderForTableView.h"
+#import "NSDScoreRecord.h"
+#import "NSDHighscoresManager.h"
 #define rankListName @"rankList.plist"
 
 @interface NSDRatingViewController (){
@@ -30,8 +32,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    rankList = [NSArray new];
     
     self.navigationItem.title = @"High Score";
     
@@ -49,16 +49,26 @@
     
     
     
-    [NSDPlistController loadPlistWithName:rankListName andCompletion:^(NSArray * arr){
-        rankList=arr;
+    
+    
+    
+    
+    
+    
+    [[NSDHighscoresManager sharedManager] allRecordsWithCompletion:^(NSArray * tArr) {
+        rankList=tArr;
         [_tableView reloadData];
         [_activityIndicator stopAnimating];
         [UITableView animateWithDuration:.2 animations:^{
             _tableView.alpha=1.0f;
         }];
         
-        
+
     }];
+
+    
+    
+    
     
     
     
@@ -73,8 +83,9 @@
         [tableView registerNib:[UINib nibWithNibName:@"NSDRatingTableViewCell" bundle:nil] forCellReuseIdentifier:@"RatingTableViewCell"];
         tempCell = [tableView dequeueReusableCellWithIdentifier:@"RatingTableViewCell"] ;
     }
-    tempCell.nameLabel.text = [NSString stringWithFormat:@" %li. %@  ", (long)indexPath.row+1,[[rankList objectAtIndex:indexPath.row] objectAtIndex:0]]  ;
-    tempCell.scopeLabel.text = [[rankList objectAtIndex:indexPath.row] objectAtIndex:1];
+    
+    [tempCell setRatingRecordWithRecord:[rankList objectAtIndex:indexPath.row] andNumber:indexPath.row];
+    
     return tempCell;
 }
 
@@ -86,9 +97,21 @@
     return 1;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return @" Name                                     Score ";
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 44;
 }
+
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    return [[[NSBundle mainBundle] loadNibNamed:@"NSDCustomViewForHeader" owner:self options:nil]firstObject];
+    
+    
+}
+
+
+
 
 
 

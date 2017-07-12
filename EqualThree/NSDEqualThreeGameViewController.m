@@ -59,13 +59,13 @@
     
     if([[[NSUserDefaults standardUserDefaults] objectForKey:isHasSavedGame] isEqual:@YES ]){
      
-        [toast displayOnView:_mainView withMessage:@"Resume game" andColor:[UIColor toastSimpleColor] andIndicator:NO andFaded:YES];
+        [toast displayOnView:_mainView withMessage:@"Resume game" andColor:[UIColor toastSimpleColor] andIndicator:NO andFaded:YES andIsHasTopBar:NO];
         
         
     
     }else{
     
-        [toast displayOnView:_mainView withMessage:@"New game" andColor:[UIColor toastAcceptColor] andIndicator:NO andFaded:YES];
+        [toast displayOnView:_mainView withMessage:@"New game" andColor:[UIColor toastAcceptColor] andIndicator:NO andFaded:YES andIsHasTopBar:NO];
         [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:isHasSavedGame];
         
     

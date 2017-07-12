@@ -10,12 +10,19 @@
 
 @implementation NSDToastView
 
--(void)displayOnView:(UIView *)view withMessage:(NSString *)message andColor:(UIColor*)color andIndicator:(BOOL)indicator andFaded:(BOOL)faded
-{
+-(void) displayOnView:(UIView *)view withMessage:(NSString *)message andColor:(UIColor *)color andIndicator:(BOOL)indicator andFaded:(BOOL)faded andIsHasTopBar:(BOOL)hasTopBar{
+    
+    int marginY = 0;
+    
+    if(!hasTopBar){
+        marginY+=44;
+    }
     [self removeFromView:view];
     
+
     
-    UIView *messageFrame = [[UIView alloc] initWithFrame:CGRectMake(MESSAGE_FRAME_X, MESSAGE_FRAME_BEGIN_Y, view.frame.size.width, MESSAGE_FRAME_HEIGHT)];
+    
+    UIView *messageFrame = [[UIView alloc] initWithFrame:CGRectMake(MESSAGE_FRAME_X, MESSAGE_FRAME_BEGIN_Y + marginY, view.frame.size.width, MESSAGE_FRAME_HEIGHT)];
     messageFrame.backgroundColor = color;
     messageFrame.alpha = MESSAGE_FRAME_ALPHA;
     messageFrame.tag = MESSAGE_FRAME_TAG;
@@ -44,7 +51,7 @@
     [view addSubview:messageFrame];
     
     [UIView animateWithDuration:ANIMATION_SPEED animations:^{
-        messageFrame.frame = CGRectMake(MESSAGE_FRAME_X, MESSAGE_FRAME_END_Y, view.frame.size.width, MESSAGE_FRAME_HEIGHT);
+        messageFrame.frame = CGRectMake(MESSAGE_FRAME_X, MESSAGE_FRAME_END_Y + marginY, view.frame.size.width, MESSAGE_FRAME_HEIGHT);
     }];
     
     if(faded)
@@ -54,7 +61,28 @@
         });
     }
     
+
+    
+
+
 }
+
+-(void)displayOnView:(UIView *)view withMessage:(NSString *)message andColor:(UIColor*)color andIndicator:(BOOL)indicator andFaded:(BOOL)faded
+{
+
+    
+    [self displayOnView:view
+            withMessage:message
+               andColor:color
+           andIndicator:indicator
+               andFaded:faded
+         andIsHasTopBar:YES];
+    
+    
+}
+
+
+
 
 -(void)removeFromView:(UIView*)view
 {

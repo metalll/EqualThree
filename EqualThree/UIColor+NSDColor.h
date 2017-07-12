@@ -13,13 +13,20 @@
 
 #pragma mark NSDToastColors
 
-+(UIColor *) toastAcceptColor;
-+(UIColor *) toastErrorColor;
-+(UIColor *) toastSimpleColor;
++(instancetype) toastAcceptColor;
++(instancetype) toastErrorColor;
++(instancetype) toastSimpleColor;
 
 #pragma mark NSDNavColors
 
-+(UIColor *) navigationBackgroundColor;
++(instancetype) navigationBackgroundColor;
 
+
+
++(instancetype) goldColor;
+
++(instancetype) silverColor;
+
++(instancetype) bronzeColor;
 
 @end

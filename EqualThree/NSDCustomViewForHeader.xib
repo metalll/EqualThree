@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="NSDCustomHeaderForTableView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e7g-dx-85B">
+                    <rect key="frame" x="0.0" y="0.0" width="187.5" height="667"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WsQ-3W-LAK">
+                    <rect key="frame" x="187.5" y="0.0" width="187.5" height="667"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="highlightedColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="WsQ-3W-LAK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2Hi-4n-FFi"/>
+                <constraint firstAttribute="bottom" secondItem="WsQ-3W-LAK" secondAttribute="bottom" id="KMX-2j-M6K"/>
+                <constraint firstAttribute="bottom" secondItem="e7g-dx-85B" secondAttribute="bottom" id="cOe-lK-q3y"/>
+                <constraint firstAttribute="trailing" secondItem="WsQ-3W-LAK" secondAttribute="trailing" id="ghW-yn-spj"/>
+                <constraint firstItem="e7g-dx-85B" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="lGD-DY-25F"/>
+                <constraint firstItem="WsQ-3W-LAK" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.5" id="lWk-tN-k08"/>
+                <constraint firstItem="e7g-dx-85B" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.5" id="n2o-Ra-ccd"/>
+                <constraint firstItem="e7g-dx-85B" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="sp2-TG-FzI"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

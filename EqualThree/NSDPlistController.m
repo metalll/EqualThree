@@ -23,8 +23,10 @@
         {
             
             
+            //test lazy init
+         NSArray * testArray = @[@[@"1",@"Vasya",@"20000"],@[@"2",@"Genya",@"500"],@[@"3",@"Genya",@"900000"]];
             
-         NSArray * testArray = @[@[@"Vasya",@"20000"],@[@"Genya",@"500"],@[@"Genya",@"900000"]];
+            
          [testArray writeToFile:plistPath atomically:YES];
        }
         

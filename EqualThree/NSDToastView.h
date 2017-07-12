@@ -18,7 +18,7 @@
 #define MESSAGE_FRAME_BEGIN_Y -50
 #define MESSAGE_FRAME_HEIGHT 50
 #define MESSAGE_FRAME_TAG 4400
-#define MESSAGE_FRAME_ALPHA 0.7
+#define MESSAGE_FRAME_ALPHA 1.0
 #define LABEL_X 0
 #define LABEL_Y 0
 #define LABEL_HEIGHT 50
@@ -39,6 +39,8 @@
 
 -(void) displayOnView:(UIView*)view withMessage:(NSString*)message andColor:(UIColor*)color andIndicator:(BOOL)indicator andFaded:(BOOL)faded;
 
+
+-(void) displayOnView:(UIView *)view withMessage:(NSString *)message andColor:(UIColor *)color andIndicator:(BOOL)indicator andFaded:(BOOL)faded andIsHasTopBar:(BOOL)hasTopBar;
 
 -(void) removeFromView:(UIView*)view;
 
