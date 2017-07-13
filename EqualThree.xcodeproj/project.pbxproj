@@ -21,6 +21,7 @@
 		4346AB171F12F1F200F1F639 /* NSDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4346AB161F12F1F200F1F639 /* NSDUser.m */; };
 		4346AB1A1F12F2F700F1F639 /* NSDGameItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4346AB191F12F2F700F1F639 /* NSDGameItem.m */; };
 		4346AB1E1F12F51E00F1F639 /* NSDPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 4346AB1D1F12F51E00F1F639 /* NSDPoint.m */; };
+		4362981F1F18236200BB7A29 /* NSDRamCacheController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4362981E1F18236200BB7A29 /* NSDRamCacheController.m */; };
 		436755271F12682100E1C06E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 436755261F12682100E1C06E /* main.m */; };
 		4367552A1F12682100E1C06E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 436755291F12682100E1C06E /* AppDelegate.m */; };
 		436755301F12682100E1C06E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4367552E1F12682100E1C06E /* Main.storyboard */; };
@@ -71,6 +72,8 @@
 		4346AB1B1F12F40100F1F639 /* NSDGameItemType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSDGameItemType.h; sourceTree = "<group>"; };
 		4346AB1C1F12F51E00F1F639 /* NSDPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDPoint.h; sourceTree = "<group>"; };
 		4346AB1D1F12F51E00F1F639 /* NSDPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDPoint.m; sourceTree = "<group>"; };
+		4362981D1F18236200BB7A29 /* NSDRamCacheController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDRamCacheController.h; sourceTree = "<group>"; };
+		4362981E1F18236200BB7A29 /* NSDRamCacheController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDRamCacheController.m; sourceTree = "<group>"; };
 		436755221F12682100E1C06E /* EqualThree.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EqualThree.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		436755261F12682100E1C06E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		436755281F12682100E1C06E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -254,6 +257,8 @@
 				43DAB72F1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.m */,
 				43DAB7311F16C4E60042537A /* NSDictionary+NSDBodyEncoder.h */,
 				43DAB7321F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m */,
+				4362981D1F18236200BB7A29 /* NSDRamCacheController.h */,
+				4362981E1F18236200BB7A29 /* NSDRamCacheController.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -360,6 +365,7 @@
 				43DAB72D1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.m in Sources */,
 				4346AB1A1F12F2F700F1F639 /* NSDGameItem.m in Sources */,
 				4346AAFA1F12807B00F1F639 /* NSDGame.m in Sources */,
+				4362981F1F18236200BB7A29 /* NSDRamCacheController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
