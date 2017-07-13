@@ -39,6 +39,7 @@
 		436755481F12696E00E1C06E /* NSDEqualThreeGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436755471F12696E00E1C06E /* NSDEqualThreeGameViewController.m */; };
 		4367554B1F12704A00E1C06E /* NSDToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4367554A1F12704A00E1C06E /* NSDToastView.m */; };
 		436755501F1271BE00E1C06E /* UIColor+NSDColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4367554F1F1271BE00E1C06E /* UIColor+NSDColor.m */; };
+		43681F9A1F16ECA70050B3CB /* NSDGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43681F991F16ECA70050B3CB /* NSDGameViewController.m */; };
 		438F4A681F13ABA600C48F7A /* NSDCustomHeaderForTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 438F4A671F13ABA600C48F7A /* NSDCustomHeaderForTableView.m */; };
 		438F4A6A1F13ABB600C48F7A /* NSDCustomViewForHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 438F4A691F13ABB600C48F7A /* NSDCustomViewForHeader.xib */; };
 		438F4A701F13B26600C48F7A /* NSDHighscoresManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 438F4A6F1F13B26600C48F7A /* NSDHighscoresManager.m */; };
@@ -109,6 +110,8 @@
 		4367554A1F12704A00E1C06E /* NSDToastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDToastView.m; sourceTree = "<group>"; };
 		4367554E1F1271BE00E1C06E /* UIColor+NSDColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+NSDColor.h"; sourceTree = "<group>"; };
 		4367554F1F1271BE00E1C06E /* UIColor+NSDColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+NSDColor.m"; sourceTree = "<group>"; };
+		43681F981F16ECA70050B3CB /* NSDGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDGameViewController.h; sourceTree = "<group>"; };
+		43681F991F16ECA70050B3CB /* NSDGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDGameViewController.m; sourceTree = "<group>"; };
 		438F4A661F13ABA600C48F7A /* NSDCustomHeaderForTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDCustomHeaderForTableView.h; sourceTree = "<group>"; };
 		438F4A671F13ABA600C48F7A /* NSDCustomHeaderForTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDCustomHeaderForTableView.m; sourceTree = "<group>"; };
 		438F4A691F13ABB600C48F7A /* NSDCustomViewForHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NSDCustomViewForHeader.xib; sourceTree = "<group>"; };
@@ -232,6 +235,8 @@
 				436755441F12694700E1C06E /* NSDRatingViewController.m */,
 				436755461F12696E00E1C06E /* NSDEqualThreeGameViewController.h */,
 				436755471F12696E00E1C06E /* NSDEqualThreeGameViewController.m */,
+				43681F981F16ECA70050B3CB /* NSDGameViewController.h */,
+				43681F991F16ECA70050B3CB /* NSDGameViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -385,6 +390,7 @@
 				43DAB7331F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m in Sources */,
 				438F4A731F13B47700C48F7A /* NSDScoreRecord.m in Sources */,
 				43046D2C1F14F531006294DC /* NSDLevel.m in Sources */,
+				43681F9A1F16ECA70050B3CB /* NSDGameViewController.m in Sources */,
 				436755501F1271BE00E1C06E /* UIColor+NSDColor.m in Sources */,
 				4346AB1E1F12F51E00F1F639 /* NSDPoint.m in Sources */,
 				4346AB001F12827C00F1F639 /* NSDGameItemView.m in Sources */,

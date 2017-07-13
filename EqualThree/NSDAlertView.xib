@@ -10,6 +10,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NSDAlertView">
             <connections>
+                <outlet property="alertView" destination="BIu-eS-bgh" id="kQv-Lu-u52"/>
+                <outlet property="firstButton" destination="ClW-s7-RfQ" id="ggc-qa-rR4"/>
+                <outlet property="mainView" destination="i5M-Pr-FkT" id="8A1-W2-QdD"/>
+                <outlet property="messageLabel" destination="spz-2e-8yl" id="7C8-nT-TmA"/>
                 <outlet property="secondButton" destination="A7l-DJ-nCd" id="2j5-M3-3To"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -37,6 +41,9 @@
                             <state key="normal" title="Text1">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="didPressFirstButton:" destination="-1" eventType="touchUpInside" id="vaM-PN-QXp"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7l-DJ-nCd">
                             <rect key="frame" x="8" y="248" width="224" height="48"/>
@@ -58,7 +65,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.38930457746478875" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="BIu-eS-bgh" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="8TN-zR-nGn"/>
                 <constraint firstItem="BIu-eS-bgh" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="aOy-I5-3QA"/>

@@ -9,7 +9,7 @@
 #import "NSDGeneralMenuViewController.h"
 #import "NSDToastView.h"
 #import "UIColor+NSDColor.h"
-#import "NSDEqualThreeGameViewController.h"
+#include "NSDGameViewController.h"
 #import "NSDAlertView.h"
 
 
@@ -29,6 +29,8 @@
     self.navigationItem.title = @"Menu";
     
     self.navigationController.navigationBar.translucent = NO;
+    
+    
     
     UINavigationBar *bar = [self.navigationController navigationBar];
     [bar setBarTintColor:[UIColor navigationBackgroundColor]];
@@ -89,42 +91,35 @@
         
         
         
-          }
+        [NSDAlertView showAlertWithMessageText:@"Do you really want to start a new game?\nAll progress will be lost."
+                          andFirstButtonText:@"Yes"
+                         andSecondButtonText:@"No"
+                         andFirstButtonBlock:^{
+                             
+                             
+                             [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:isHasSavedGame];
+                             
+                             
+                             NSDGameViewController * target = [self.storyboard
+                                                               instantiateViewControllerWithIdentifier:@"NSDGameViewController"];
+                             
+                             [self.navigationController presentViewController:target animated:YES completion:nil];
+
+                             
+                             
+                         } andSecondButtonBlock:^{
+                             
+                             
+                             
+                         } andParentViewController:self];
+    }
         
         
-//    
-//        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Create new game"
-//                                                                       message:@"Are you sure?"
-//                                                preferredStyle:UIAlertControllerStyleAlert];
-//        
-//        
-//        
-//        UIAlertAction* allowAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-//                                                              handler:^(UIAlertAction * action) {
-//                                                              
-//                                                                  
-//                                                                  [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:isHasSavedGame];
-//                                                                  
-//                                                                  NSDEqualThreeGameViewController * target = [self.storyboard instantiateViewControllerWithIdentifier:@"EqualThreeGameViewController"];
-//                                                                  
-//                                                                  [self.navigationController presentViewController:target animated:YES completion:nil];
-//                                                                  
-//
-//                                                                  
-//                                                              }];
-//        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
-//                                                            handler:^(UIAlertAction * action) {}];
-//
-//        
-//        [alert addAction:cancelAction];
-//        [alert addAction:allowAction];
-//        
-//        [self presentViewController:alert animated:YES completion:nil];
-//        
+
     
     else{
-        
-        NSDEqualThreeGameViewController * target = [self.storyboard instantiateViewControllerWithIdentifier:@"EqualThreeGameViewController"];
+        NSDGameViewController * target = [self.storyboard
+                                                instantiateViewControllerWithIdentifier:@"NSDGameViewController"];
         
         [self.navigationController presentViewController:target animated:YES completion:nil];
         
