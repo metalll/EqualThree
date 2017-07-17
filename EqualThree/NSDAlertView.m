@@ -74,8 +74,8 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor clearColor];
-    self.modalPresentationStyle = UIModalPresentationCurrentContext;
-    self.modalPresentationStyle = UIModalPresentationFormSheet;
+    self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    //self.modalPresentationStyle = UIModalPresentationFormSheet;
     
     self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
@@ -92,13 +92,13 @@
 #pragma mark - Public Methods
 
 - (void)showWithParentViewController:(UIViewController *)parentVC {
-    [parentVC setModalPresentationStyle:UIModalPresentationOverCurrentContext];
+    [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     
-    parentVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
     
     
-    [self setModalPresentationStyle:UIModalPresentationCustom];
+    //[self setModalPresentationStyle:UIModalPresentationCustom];
     [parentVC presentViewController:self animated:YES completion:nil];
 }
 

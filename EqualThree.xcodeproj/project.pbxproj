@@ -41,6 +41,7 @@
 		43DAB7331F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB7321F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m */; };
 		43DAB73C1F16DA7D0042537A /* NSDAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB73A1F16DA7D0042537A /* NSDAlertView.m */; };
 		43DAB73D1F16DA7D0042537A /* NSDAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43DAB73B1F16DA7D0042537A /* NSDAlertView.xib */; };
+		43DDC9441F1CD2FF003E95C4 /* NSDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 43DDC9431F1CD2FF003E95C4 /* NSDButton.m */; };
 		43FE322F1F18F00200BA3237 /* NSDGameFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FE322E1F18F00200BA3237 /* NSDGameFieldViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -109,6 +110,8 @@
 		43DAB7391F16DA7D0042537A /* NSDAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDAlertView.h; sourceTree = "<group>"; };
 		43DAB73A1F16DA7D0042537A /* NSDAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDAlertView.m; sourceTree = "<group>"; };
 		43DAB73B1F16DA7D0042537A /* NSDAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NSDAlertView.xib; sourceTree = "<group>"; };
+		43DDC9421F1CD2FF003E95C4 /* NSDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDButton.h; sourceTree = "<group>"; };
+		43DDC9431F1CD2FF003E95C4 /* NSDButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDButton.m; sourceTree = "<group>"; };
 		43FE322D1F18F00200BA3237 /* NSDGameFieldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDGameFieldViewController.h; sourceTree = "<group>"; };
 		43FE322E1F18F00200BA3237 /* NSDGameFieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDGameFieldViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -149,6 +152,8 @@
 				43DAB7391F16DA7D0042537A /* NSDAlertView.h */,
 				43DAB73A1F16DA7D0042537A /* NSDAlertView.m */,
 				43DAB73B1F16DA7D0042537A /* NSDAlertView.xib */,
+				43DDC9421F1CD2FF003E95C4 /* NSDButton.h */,
+				43DDC9431F1CD2FF003E95C4 /* NSDButton.m */,
 			);
 			name = CustomView;
 			sourceTree = "<group>";
@@ -348,6 +353,7 @@
 				4346AB0C1F12D4A400F1F639 /* NSDGridGameView.m in Sources */,
 				4346AAE41F127E9000F1F639 /* NSDRatingTableViewCell.m in Sources */,
 				4346AB171F12F1F200F1F639 /* NSDUser.m in Sources */,
+				43DDC9441F1CD2FF003E95C4 /* NSDButton.m in Sources */,
 				4367552A1F12682100E1C06E /* AppDelegate.m in Sources */,
 				4367554B1F12704A00E1C06E /* NSDToastView.m in Sources */,
 				43046D2F1F14F57C006294DC /* NSDGameStoredInstance.m in Sources */,
