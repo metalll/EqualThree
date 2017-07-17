@@ -16,6 +16,9 @@
 @property NSDToastView * toast;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 
+
+
+
 @end
 
 @implementation NSDGameViewController

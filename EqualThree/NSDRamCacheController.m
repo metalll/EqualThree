@@ -60,9 +60,7 @@
                 completion(retVal);
                 return;
             });
-            
         }
-        
         
     }]resume];
     

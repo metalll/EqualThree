@@ -77,6 +77,8 @@
     self.modalPresentationStyle = UIModalPresentationCurrentContext;
     self.modalPresentationStyle = UIModalPresentationFormSheet;
     
+    self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
     self.messageLabel.text = self.messageText;
     [self.firstButton setTitle:self.firstButtonText forState:UIControlStateNormal];
     [self.secondButton setTitle:self.secondButtonText forState:UIControlStateNormal];
@@ -91,6 +93,8 @@
 
 - (void)showWithParentViewController:(UIViewController *)parentVC {
     [parentVC setModalPresentationStyle:UIModalPresentationOverCurrentContext];
+    
+    parentVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
     
     

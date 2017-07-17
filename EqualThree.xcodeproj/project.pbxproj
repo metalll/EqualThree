@@ -41,6 +41,7 @@
 		43DAB7331F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB7321F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m */; };
 		43DAB73C1F16DA7D0042537A /* NSDAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB73A1F16DA7D0042537A /* NSDAlertView.m */; };
 		43DAB73D1F16DA7D0042537A /* NSDAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43DAB73B1F16DA7D0042537A /* NSDAlertView.xib */; };
+		43FE322F1F18F00200BA3237 /* NSDGameFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FE322E1F18F00200BA3237 /* NSDGameFieldViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +109,8 @@
 		43DAB7391F16DA7D0042537A /* NSDAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDAlertView.h; sourceTree = "<group>"; };
 		43DAB73A1F16DA7D0042537A /* NSDAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDAlertView.m; sourceTree = "<group>"; };
 		43DAB73B1F16DA7D0042537A /* NSDAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NSDAlertView.xib; sourceTree = "<group>"; };
+		43FE322D1F18F00200BA3237 /* NSDGameFieldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDGameFieldViewController.h; sourceTree = "<group>"; };
+		43FE322E1F18F00200BA3237 /* NSDGameFieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDGameFieldViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +206,8 @@
 				436755441F12694700E1C06E /* NSDRatingViewController.m */,
 				43681F981F16ECA70050B3CB /* NSDGameViewController.h */,
 				43681F991F16ECA70050B3CB /* NSDGameViewController.m */,
+				43FE322D1F18F00200BA3237 /* NSDGameFieldViewController.h */,
+				43FE322E1F18F00200BA3237 /* NSDGameFieldViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -364,6 +369,7 @@
 				43046D291F14F51C006294DC /* NSDReplay.m in Sources */,
 				43DAB72D1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.m in Sources */,
 				4346AB1A1F12F2F700F1F639 /* NSDGameItem.m in Sources */,
+				43FE322F1F18F00200BA3237 /* NSDGameFieldViewController.m in Sources */,
 				4346AAFA1F12807B00F1F639 /* NSDGame.m in Sources */,
 				4362981F1F18236200BB7A29 /* NSDRamCacheController.m in Sources */,
 			);

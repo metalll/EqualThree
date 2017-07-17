@@ -11,4 +11,15 @@
 @implementation NSDGameItemView
 
 
+-(void)drawRect:(CGRect)rect{
+
+    CALayer * layer  = self.layer;
+    
+    layer.cornerRadius = 5.0;
+    layer.masksToBounds = YES;
+    
+
+}
+
+
 @end
