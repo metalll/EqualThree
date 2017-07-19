@@ -22,6 +22,11 @@
 +(instancetype) navigationBackgroundColor;
 
 
++(instancetype) buttonBackgroundColor;
+
++(instancetype) buttonTitleFontColor;
+
+
 
 +(instancetype) goldColor;
 

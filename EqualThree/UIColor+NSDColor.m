@@ -30,6 +30,16 @@
     return [UIColor darkGrayColor];
 }
 
+#pragma mark NSDButtonColors
+
++(instancetype) buttonBackgroundColor{
+    return [UIColor redColor];
+}
+
++(instancetype) buttonTitleFontColor{
+    return [UIColor whiteColor];
+}
+
 #pragma mark NSDCustomColors
 
 +(instancetype) goldColor{

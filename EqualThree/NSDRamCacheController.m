@@ -43,9 +43,11 @@
 
 - (void)objectForKey:(id)key andCompletion:(void (^)(NSData * object))completion {
     NSData * retVal =[[self dic] objectForKey:key];
-    if(retVal && completion){
-        completion(retVal);
-        return;
+    if(retVal){
+        if(completion){
+            completion(retVal);
+            return;
+        }
     }
     
     
@@ -93,6 +95,8 @@
                 }
             }
             
+            
+            //
             [self->array removeObjectsInRange:NSMakeRange(0, i + 1)];
             
             self->size -= minusSize;

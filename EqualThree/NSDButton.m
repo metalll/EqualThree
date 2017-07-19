@@ -7,15 +7,23 @@
 //
 
 #import "NSDButton.h"
+#import "UIColor+NSDColor.h"
 
 @implementation NSDButton
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+-(void)drawRect:(CGRect)rect{
+    //circle corners
+    CALayer * layer  = self.layer;
+    layer.cornerRadius = 10.0;
+    layer.masksToBounds = YES;
+    
+    //background
+    self.backgroundColor = [UIColor buttonBackgroundColor];
+    [self.backgroundColor setFill];
+    CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
+    //titleFont
+    self.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:20.0f];
+    [self setTitleColor: [UIColor buttonTitleFontColor] forState:UIControlStateNormal];
 }
-*/
 
 @end
