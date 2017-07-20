@@ -6,7 +6,7 @@
 //  Copyright © 2017 NSD NULL. All rights reserved.
 //
 
-#import "NSDRatingViewController.h"
+#import "NSDHighscoreViewController.h"
 #import "UIColor+NSDColor.h"
 #import "NSDToastView.h"
 #import "NSDPlistController.h"
@@ -16,7 +16,7 @@
 #import "NSDHighscoresManager.h"
 #define rankListName @"rankList.plist"
 
-@interface NSDRatingViewController (){
+@interface NSDHighscoreViewController (){
     NSArray * rankList;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -25,7 +25,7 @@
 
 @end
 
-@implementation NSDRatingViewController
+@implementation  NSDHighscoreViewController
 
 
 #pragma mark - VC life cycle

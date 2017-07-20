@@ -49,7 +49,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="kL7-p2-Yap" kind="presentation" id="CZ8-pS-16F"/>
+                                    <segue destination="kL7-p2-Yap" kind="presentation" modalTransitionStyle="crossDissolve" id="CZ8-pS-16F"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KRG-4U-KcS" customClass="NSDButton">
@@ -81,7 +81,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="GNa-qc-v6s" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1vJ-Bl-hW5"/>
                             <constraint firstItem="TRS-ci-E6e" firstAttribute="top" secondItem="GNa-qc-v6s" secondAttribute="bottom" constant="10" id="GRa-wp-vMC"/>
@@ -99,6 +99,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="279" y="-48"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="BzN-DY-DgT">
@@ -140,12 +141,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Tpx-8a-nAg" firstAttribute="top" secondItem="ckF-iJ-hgb" secondAttribute="bottom" id="8X8-ll-c9q"/>
+                            <constraint firstItem="sVH-4S-6KH" firstAttribute="top" secondItem="5y4-cW-bcM" secondAttribute="bottom" constant="30" id="QXf-6h-xFy"/>
                             <constraint firstItem="5y4-cW-bcM" firstAttribute="leading" secondItem="DnV-Cb-ki1" secondAttribute="leadingMargin" constant="30" id="VgZ-s6-7xO"/>
+                            <constraint firstItem="sVH-4S-6KH" firstAttribute="top" secondItem="jmw-75-bLI" secondAttribute="bottom" constant="30" id="Weg-bA-aOD"/>
+                            <constraint firstItem="Tpx-8a-nAg" firstAttribute="top" secondItem="ckF-iJ-hgb" secondAttribute="bottom" id="aa1-Fo-KS6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Tpx-8a-nAg" secondAttribute="trailing" id="bZv-yR-mAY"/>
-                            <constraint firstItem="sVH-4S-6KH" firstAttribute="top" secondItem="5y4-cW-bcM" secondAttribute="bottom" constant="30" id="ndR-Dw-aaf"/>
                             <constraint firstItem="Tpx-8a-nAg" firstAttribute="leading" secondItem="DnV-Cb-ki1" secondAttribute="leadingMargin" id="oEA-kc-Oku"/>
-                            <constraint firstItem="sVH-4S-6KH" firstAttribute="top" secondItem="jmw-75-bLI" secondAttribute="bottom" constant="30" id="pdj-sA-hpB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jmw-75-bLI" secondAttribute="trailing" constant="30" id="rAK-Ux-9TQ"/>
                             <constraint firstItem="5y4-cW-bcM" firstAttribute="top" secondItem="Tpx-8a-nAg" secondAttribute="bottom" id="rLE-3H-fAL"/>
                         </constraints>
@@ -158,10 +159,10 @@
             </objects>
             <point key="canvasLocation" x="1169" y="34"/>
         </scene>
-        <!--Rating View Controller-->
+        <!--Highscore View Controller-->
         <scene sceneID="PLf-Z4-Rbs">
             <objects>
-                <viewController storyboardIdentifier="Rating" id="9Cx-lt-XcL" customClass="NSDRatingViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Rating" id="9Cx-lt-XcL" customClass="NSDHighscoreViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="g3h-SY-ntu"/>
                         <viewControllerLayoutGuide type="bottom" id="mzX-dX-Fht"/>
@@ -182,7 +183,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Kua-he-95Z" firstAttribute="centerY" secondItem="dx1-8h-bE5" secondAttribute="centerY" id="6pQ-kp-Exg"/>
                             <constraint firstItem="xcx-H3-lQw" firstAttribute="leading" secondItem="dx1-8h-bE5" secondAttribute="leadingMargin" constant="-8" id="GKc-HT-jCE"/>
@@ -216,6 +217,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dxr-dV-gCD">
                                 <rect key="frame" x="-0.5" y="117.5" width="343" height="343"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -227,7 +229,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="gameItemsField" destination="dxr-dV-gCD" id="OFF-uO-KrV"/>
+                        <outlet property="gameItemsView" destination="dxr-dV-gCD" id="Sfg-Io-wqN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ey7-Cf-LRr" userLabel="First Responder" sceneMemberID="firstResponder"/>

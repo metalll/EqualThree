@@ -50,9 +50,9 @@
             ;
     }
     
-    self.numberLabel.text = [[NSString stringWithFormat:@"%li",number+1] stringByAppendingString:@"."];
+    self.numberLabel.text = [[NSString stringWithFormat:@"%li",(unsigned long)(NSUInteger)(number+1)] stringByAppendingString:@"."];
     self.nameLabel.text = record.userName;
-    self.scopeLabel.text = [NSString stringWithFormat:@"%li", record.userScore];
+    self.scopeLabel.text = [NSString stringWithFormat:@"%li", (unsigned long)record.userScore];
 
 }
 

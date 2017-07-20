@@ -10,6 +10,8 @@
 
 @interface NSDGameItemView : UIView
 
+@property (nonatomic) NSUInteger type;
+
 
 
 @end
