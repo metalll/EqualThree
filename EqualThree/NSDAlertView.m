@@ -107,14 +107,9 @@
 - (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
 {
     CGPoint location = [recognizer locationInView:[recognizer.view superview]];
-    
-    
     if(!CGRectContainsPoint(_alertView.frame, location)){
         [self hide];
     }
-    
-    
-    //Do stuff here...
 }
 
 - (void)hideWithCompletion:(void (^)(void))completion {

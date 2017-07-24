@@ -65,8 +65,19 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
     
     NSUInteger temp = [_gameField[x1][y1] unsignedIntegerValue ];
     
+
+    
     _gameField[x1][y1] =  _gameField[x0][y0];
     _gameField[x0][y0] = @(temp);
+    
+    
+    
+    
+    NSMutableArray * tranzactions = [NSMutableArray arrayWithCapacity:2];
+    [tranzactions addObject:[ [NSDGameItemTransition alloc]initWithX0:x0 andY0:y0 andX1:x1 andY1:y1 andType:[ _gameField[x0][y0] unsignedIntegerValue]]];
+    [tranzactions addObject:[[NSDGameItemTransition alloc]initWithX0:x1 andY0:y1 andX1:x0 andY1:y0 andType:[ _gameField[x1][y1] unsignedIntegerValue]]];
+    
+    [self notifyAboutItemsMovement:tranzactions];
     
     
     

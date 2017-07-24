@@ -8,14 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-#define isFirstLaunch @"isFirstLaunch"
-#define isHasSavedGame @"isHasSavedGame"
+
+
+extern NSString * const kIsHasSavedGame;
+extern NSString * const kIsFirstLaunch;
+
 
 
 @interface NSDGeneralMenuViewController : UIViewController
 
 - (IBAction)didTapNewGameButtonWithSender:(id)sender ;
-
 
 
 @end

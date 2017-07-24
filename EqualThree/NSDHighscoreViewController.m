@@ -19,8 +19,8 @@
 @interface NSDHighscoreViewController (){
     NSArray * rankList;
 }
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
@@ -31,51 +31,31 @@
 #pragma mark - VC life cycle
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
     
     self.navigationItem.title = @"High Score";
-    
     self.navigationController.navigationBar.translucent = NO;
-    
-   
     UINavigationBar *bar = [self.navigationController navigationBar];
     [bar setBarTintColor:[UIColor navigationBackgroundColor]];
     [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [bar setTintColor:[UIColor whiteColor]];
 
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.alpha=0.0f;
-    
-    
-    
-    
-    
-    
-    
-    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.alpha=0.0f;
     
     [[NSDHighscoresManager sharedManager] allRecordsWithCompletion:^(NSArray * tArr) {
         rankList=tArr;
-        [_tableView reloadData];
-        [_activityIndicator stopAnimating];
+        [self.tableView reloadData];
+        [self.activityIndicator stopAnimating];
         [UITableView animateWithDuration:.2 animations:^{
-            _tableView.alpha=1.0f;
+            self.tableView.alpha=1.0f;
         }];
-        
-
     }];
-
     
-    
-    
-    
-    
-    
+    [super viewDidLoad];
 }
 
-
-#pragma mark - table delegate impl
+#pragma mark - TableView delegate and data source
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSDRatingTableViewCell * tempCell = [tableView dequeueReusableCellWithIdentifier:@"RatingTableViewCell"] ;
@@ -97,23 +77,14 @@
     return 1;
 }
 
-
-
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 44;
 }
-
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     return [[[NSBundle mainBundle] loadNibNamed:@"NSDCustomViewForHeader" owner:self options:nil]firstObject];
     
     
 }
-
-
-
-
-
-
 
 @end

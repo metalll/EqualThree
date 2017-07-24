@@ -19,9 +19,6 @@
 
 
 
-
-
-
 -(void) addRecordWithRecord:(NSDScoreRecord *) record andCompletion: (void (^) (void))completion;
 -(void) allRecordsWithCompletion:(void (^)(NSArray *))completion;
 

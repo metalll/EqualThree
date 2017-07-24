@@ -16,4 +16,10 @@
 @property NSInteger y1;
 @property NSInteger type;
 
+
+#pragma mark - costructor
+
+- (instancetype)initWithX0:(NSUInteger)x0 andY0:(NSUInteger)y0 andX1:(NSUInteger)x1 andY1:(NSUInteger)y1 andType:(NSUInteger)type;
+
+
 @end

@@ -80,18 +80,6 @@
     self.gameEngine = [[NSDGameEngine alloc] initWithHorizontalItemsCount:self.horizontalItemsCount
                                                        verticalItemsCount:self.verticalItemsCount
                                                            itemTypesCount:self.itemTypesCount];
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
 
 - (NSDGameItemView*)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type{
@@ -132,15 +120,8 @@
         frame.origin = [self xyCoordinatesFromI:i j:j];
         frame.size = self.itemSize;
         result = [self createGameItemViewWithFrame:frame type:type];
-        
-        
-        
-        
-        
-        
     }
-    
-    
+
     return result;
 }
 
@@ -176,29 +157,21 @@
 
 - (void) didSwipe:(UISwipeGestureRecognizer *) recognizer{
     
+    
+    
+    
     CGPoint point = [recognizer locationInView: self.gameItemsView];
-    
-    
     
     NSUInteger x0 = 0;
     NSUInteger y0 = 0;
     
     
     NSDGameItemView * view0 = nil;
-    NSDGameItemView * view1 = nil;
-    
-    
-    
-    //calculate x0;
-    //calculate y0;
     
     for(NSUInteger i=0;i<self.verticalItemsCount;i++){
         for(NSUInteger j=0;j<self.horizontalItemsCount;j++){
             
             NSUInteger tempType =  [[[_gameEngine.gameField objectAtIndex:i] objectAtIndex:j] unsignedIntegerValue];
-            
-            
-            
             NSDGameItemView * tempGameItemView = [self gameItemViewAtI:i j:j type: tempType ] ;
             if(CGRectContainsPoint( tempGameItemView.frame , point)){
                 x0 = i;
@@ -209,223 +182,36 @@
         }
     }
     
-    
-    
-    
     if(recognizer.direction== UISwipeGestureRecognizerDirectionUp){
-        
-        if(view0!=nil){
-            
-            view1 = [self gameItemViewAtI:x0 j:y0-1 type:[_gameEngine.gameField[x0][y0-1]unsignedIntegerValue]];
-            
+        if(view0!=nil && y0>0 ){
+            [_gameEngine swapItemAtX0:x0 y0:y0 withItemAtX1:x0 y1:y0-1];
         }
-        
-        
-        view1.alpha = 0.0f;
-        view0.alpha = 1.0f;
-        
-        CGRect frame0 = view0.frame;
-        CGRect frame1 = view1.frame;
-        
-        
-        
-        
-        [_gameEngine swapItemAtX0:x0 y0:y0 withItemAtX1:x0 y1:y0-1];
-        
-        
-        
-        [UIView animateWithDuration:0.2 animations:^{
-            
-            
-            view0.frame = frame1;
-            view0.alpha = 1.0f;
-            
-            
-            
-        }];
-        [UIView animateWithDuration:0.1 animations:^{
-            view1.frame = frame0;
-            
-            
-        }completion:^(BOOL finished) {
-            view1.alpha = 1.0f;
-            
-            
-        }];
-        
-        
-        
         return;
     }
     
     if(recognizer.direction== UISwipeGestureRecognizerDirectionDown){
-        
-        if(view0!=nil){
-            
-            view1 = [self gameItemViewAtI:x0 j:y0+1 type:[_gameEngine.gameField[x0][y0+1]unsignedIntegerValue]];
-            
-            
-            
+        if(view0!=nil && y0<(_verticalItemsCount-1)){
+            [_gameEngine swapItemAtX0:x0 y0:y0 withItemAtX1:x0 y1:y0+1];
         }
-        
-        
-        view1.alpha = 0.0f;
-        view0.alpha = 1.0f;
-        
-        CGRect frame0 = view0.frame;
-        CGRect frame1 = view1.frame;
-        
-        [_gameEngine swapItemAtX0:x0 y0:y0 withItemAtX1:x0 y1:y0+1];
-        
-        [UIView animateWithDuration:0.2 animations:^{
-            view0.frame = frame1;
-            view0.alpha = 1.0f;
-            
-        }];
-        
-        [UIView animateWithDuration:0.1 animations:^{
-            view1.frame = frame0;
-            
-        }completion:^(BOOL finished) {
-            view1.alpha = 1.0f;
-            
-        }];
         return;
     }
-    
-    
-    
-    
     
     if(recognizer.direction== UISwipeGestureRecognizerDirectionLeft){
-        
-        if(view0!=nil){
-            
-            view1 = [self gameItemViewAtI:x0-1 j:y0 type:[_gameEngine.gameField[x0-1][y0]unsignedIntegerValue]];
-            
-            
-            
+        if(view0!=nil && x0>0){
+            [_gameEngine swapItemAtX0:x0 y0:y0 withItemAtX1:x0-1 y1:y0];
         }
-        
-        
-        view1.alpha = 0.0f;
-        view0.alpha = 1.0f;
-        
-        CGRect frame0 = view0.frame;
-        CGRect frame1 = view1.frame;
-        
-        
-        
-        
-        [_gameEngine swapItemAtX0:x0 y0:y0 withItemAtX1:x0-1 y1:y0];
-        
-        
-        
-        [UIView animateWithDuration:0.2 animations:^{
-            
-            
-            view0.frame = frame1;
-            view0.alpha = 1.0f;
-            
-            
-            
-        }];
-        
-        
-        
-        [UIView animateWithDuration:0.1 animations:^{
-            view1.frame = frame0;
-            
-            
-        }completion:^(BOOL finished) {
-            view1.alpha = 1.0f;
-            
-            
-        }];
         return;
     }
     
-    
-    
+
     if(recognizer.direction== UISwipeGestureRecognizerDirectionRight){
-        
-        if(view0!=nil){
-            
-            view1 = [self gameItemViewAtI:x0+1 j:y0 type:[_gameEngine.gameField[x0+1][y0]unsignedIntegerValue]];
-            
-            
-            
+        if(view0!=nil && x0<(_horizontalItemsCount-1)){
+            [_gameEngine swapItemAtX0:x0 y0:y0 withItemAtX1:x0+1 y1:y0];
         }
-        
-        
-        view1.alpha = 0.0f;
-        view0.alpha = 1.0f;
-        
-        CGRect frame0 = view0.frame;
-        CGRect frame1 = view1.frame;
-        
-        
-        
-        
-        [_gameEngine swapItemAtX0:x0 y0:y0 withItemAtX1:x0+1 y1:y0];
-        
-        
-        
-        [UIView animateWithDuration:0.2 animations:^{
-            
-            
-            view1.frame = frame0;
-            view1.alpha = 1.0f;
-            
-            
-            
-        }];
-        
-        
-        
-        [UIView animateWithDuration:0.1 animations:^{
-            view0.frame = frame1;
-             view0.alpha = 1.0f;
-            
-        }completion:^(BOOL finished) {
-         //   view1.alpha = 1.0f;
-            
-            
-        }];
         return;
     }
-    
-    
-    
-    //calculate x0;
-    
-    //calculate y0;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #pragma mark - Notifications
@@ -451,53 +237,17 @@
         endFrame.size = gameItemView.frame.size;
         endFrame.origin = [self xyCoordinatesFromI:itemTransition.x1 j:itemTransition.y1];
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        [UIView animateWithDuration:6 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             gameItemView.frame = endFrame;
-            
-            
-            
-            
         } completion:^(BOOL finished) {
             if(finished){
-                
-                
-                
+                [self.gameField objectAtIndex:itemTransition.x1][itemTransition.y1] = gameItemView;
             }
-            
-            
         }];
     }
 }
 
-
-
-
-
-
-
-
-
 - (void)processItemsDidDeleteNotification:(NSNotification *)notification {
-    
-    
-    
-    
-    
     
 }
 

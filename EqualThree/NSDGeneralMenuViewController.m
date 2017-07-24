@@ -13,6 +13,7 @@
 #import "NSDAlertView.h"
 
 
+
 @interface NSDGeneralMenuViewController (){
     NSDToastView * toast;
 }
@@ -22,44 +23,44 @@
 
 @end
 
+
+NSString * const kIsHasSavedGame = @"NSDIsHasSavedGame";
+NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
+
 @implementation NSDGeneralMenuViewController
+
+
+
+#pragma mark - Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Menu";
-    
     self.navigationController.navigationBar.translucent = NO;
-    
-    
-    
+
     UINavigationBar *bar = [self.navigationController navigationBar];
     [bar setBarTintColor:[UIColor navigationBackgroundColor]];
     [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [bar setTintColor:[UIColor whiteColor]];
+
+    self->toast = [NSDToastView new];
     
-    
-    toast = [NSDToastView new];
-    
-    if([[NSUserDefaults standardUserDefaults] objectForKey:isFirstLaunch]){
-       
-        [toast displayOnView:_mainView withMessage:@"Welcome back" andColor:[UIColor toastSimpleColor] andIndicator:NO andFaded:YES];
+    if([[NSUserDefaults standardUserDefaults] objectForKey:kIsFirstLaunch]){
+        [self->toast displayOnView:self.mainView withMessage:@"Welcome back" andColor:[UIColor toastSimpleColor] andIndicator:NO andFaded:YES];
     }else{
-        [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:isFirstLaunch];
-         [toast displayOnView:_mainView withMessage:@"Welcome to EqualThree" andColor:[UIColor toastSimpleColor] andIndicator:NO andFaded:YES];
+        [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:kIsFirstLaunch];
+         [self->toast displayOnView:self.mainView withMessage:@"Welcome to EqualThree" andColor:[UIColor toastSimpleColor] andIndicator:NO andFaded:YES];
     }
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{
-                                                              isHasSavedGame:@NO
-                                                }];
+                                                              kIsHasSavedGame:@NO}];
     
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:isHasSavedGame] isEqual:@NO]){
-    
-        
-        [_resumeButton setEnabled:NO];
-        [_resumeButton setAlpha:0.5f];
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:kIsHasSavedGame] isEqual:@NO]){
+        [self.resumeButton setEnabled:NO];
+        [self.resumeButton setAlpha:0.5f];
     }else{
-        [_resumeButton setEnabled:YES];
-        [_resumeButton setAlpha:1.0f];
+        [self.resumeButton setEnabled:YES];
+        [self.resumeButton setAlpha:1.0f];
         
     }
     
@@ -67,65 +68,43 @@
 
 -(void)viewDidAppear:(BOOL)animated{
 
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:isHasSavedGame] isEqual:@NO]){
-        
-        
-        [_resumeButton setEnabled:NO];
-        [_resumeButton setAlpha:0.5f];
-    }else{
-        [_resumeButton setEnabled:YES];
-        [_resumeButton setAlpha:1.0f];
-        
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:kIsHasSavedGame] isEqual:@NO]){
+        [self.resumeButton setEnabled:NO];
+        [self.resumeButton setAlpha:0.5f];
     }
-
+    else {
+        [self.resumeButton setEnabled:YES];
+        [self.resumeButton setAlpha:1.0f];
+    }
     
     [super viewDidAppear:animated];
     
 }
 
+
+
+#pragma mark - Actions
+
 - (IBAction)didTapNewGameButtonWithSender:(id)sender {
     
-
-    
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:isHasSavedGame] isEqual:@YES]){
-        
-        
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:kIsHasSavedGame] isEqual:@YES]){
         
         [NSDAlertView showAlertWithMessageText:@"Do you really want to start a new game?\nAll progress will be lost."
                           andFirstButtonText:@"Yes"
                          andSecondButtonText:@"No"
                          andFirstButtonBlock:^{
+                             [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:kIsHasSavedGame];
                              
+                             //todo refactor to seque;
                              
-                             [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:isHasSavedGame];
-                             
-                             
-                             NSDGameViewController * target = [self.storyboard
-                                                               instantiateViewControllerWithIdentifier:@"NSDGameViewController"];
-                             
+                             NSDGameViewController * target = [self.storyboard instantiateViewControllerWithIdentifier:@"NSDGameViewController"];
                              [self.navigationController presentViewController:target animated:YES completion:nil];
-
-                             
-                             
                          } andSecondButtonBlock:^{
-                             
-                             
-                             
                          } andParentViewController:self];
     }
-        
-        
-
-    
-    else{
-        NSDGameViewController * target = [self.storyboard
-                                                instantiateViewControllerWithIdentifier:@"NSDGameViewController"];
-        
+    else {
+        NSDGameViewController * target = [self.storyboard instantiateViewControllerWithIdentifier:@"NSDGameViewController"];
         [self.navigationController presentViewController:target animated:YES completion:nil];
-        
-        
-        
-
     }
     
     

@@ -34,7 +34,6 @@
 #define MESSAGE_FRAME_END_Y 0
 #define MESSAGE_DELAY 3
 
-
 #pragma mark Method block
 
 -(void) displayOnView:(UIView*)view withMessage:(NSString*)message andColor:(UIColor*)color andIndicator:(BOOL)indicator andFaded:(BOOL)faded;

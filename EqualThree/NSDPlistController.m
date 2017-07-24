@@ -21,14 +21,9 @@
         NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:name];
         if (![[NSFileManager defaultManager] fileExistsAtPath: plistPath])
         {
-            
-            
-            //test lazy init
-         NSArray * testArray = @[@[@"1",@"Vasya",@"20000"],@[@"2",@"Genya",@"500"],@[@"3",@"Genya",@"900000"]];
-            
-            
-         [testArray writeToFile:plistPath atomically:YES];
-       }
+            if(completion) completion(NULL);
+            return ;
+    }
         
         NSArray * retValArray = [NSArray arrayWithContentsOfFile:plistPath];
         

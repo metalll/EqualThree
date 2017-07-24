@@ -11,47 +11,25 @@
 
 
 @interface NSDHighscoresManager (){
-
     NSMutableArray * records;
-
 }
-
-
-
-
 @end
-
-
-
 
 @implementation NSDHighscoresManager
 
 
-
-
--(void)addRecordWithRecord:(NSDScoreRecord *)record andCompletion:(void (^)(void))completion{
-
-}
-
+#pragma mark - Lazy init
 
 -(void) loadManager{
-    
-    //TBD
-    
-    
-    records = [[NSMutableArray alloc] init];
-    
-    [records addObject:[[NSDScoreRecord alloc]initWithName:@"Vasya" andScore:133242342]];
-    
-    [records addObject:[[NSDScoreRecord alloc]initWithName:@"Petya" andScore:543242342]];
-    
-    [records addObject:[[NSDScoreRecord alloc]initWithName:@"Dasha" andScore:223233342]];
-    
-    [records addObject:[[NSDScoreRecord alloc]initWithName:@"Masha" andScore:243242]];
-    
-    
+    self->records = [NSMutableArray new];
+    [self->records addObject:[[NSDScoreRecord alloc]initWithName:@"Vasya" andScore:133242342]];
+    [self->records addObject:[[NSDScoreRecord alloc]initWithName:@"Petya" andScore:543242342]];
+    [self->records addObject:[[NSDScoreRecord alloc]initWithName:@"Dasha" andScore:223233342]];
+    [self->records addObject:[[NSDScoreRecord alloc]initWithName:@"Masha" andScore:243242]];
 }
 
+
+#pragma mark - Sigletone accessor
 
 static NSDHighscoresManager * manager;
 +(instancetype) sharedManager{
@@ -65,6 +43,13 @@ static NSDHighscoresManager * manager;
     return manager;
 }
 
+
+
+#pragma mark Records accessor
+
+-(void)addRecordWithRecord:(NSDScoreRecord *)record andCompletion:(void (^)(void))completion{
+    //TBD
+}
 
 
 -(void)allRecordsWithCompletion:(void (^)(NSArray *))completion{
