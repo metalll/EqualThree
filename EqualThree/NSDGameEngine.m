@@ -8,11 +8,20 @@
 
 #import "NSDGameEngine.h"
 #import "NSDGameItemTransition.h"
+#import "NSDMatchingSequence.h"
+
 
 NSString * const NSDGameItemsDidMoveNotification = @"NSDGameItemDidMoveNotification";
 NSString * const NSDGameItemsDidDeleteNotification = @"NSDGameItemDidDeleteNotification";
 NSString * const kNSDGameItems = @"kNSDGameItems";
 NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
+
+
+
+
+
+
+
 
 @interface NSDGameEngine ()
 
@@ -32,7 +41,7 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 - (void)applyUserAction;
 - (void)checkMatchingItems;
 - (void)fillGaps;
-- (void)deleteItems:(NSArray*)items;
+- (void)deleteItems:(NSArray*)matchingSequences;
 - (void)revertUserAction;
 
 @end
@@ -81,7 +90,7 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
     
     
     
-    [self applyUserAction];
+  //  [self applyUserAction];
 }
 
 #pragma mark - Private
@@ -110,8 +119,63 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 }
 
 - (void)checkMatchingItems {
-    NSArray *matchingItems = [NSArray new];
-    //todo: fill matchingItems
+    NSMutableArray *matchingItems = [NSMutableArray arrayWithCapacity:10];
+    
+    //C
+    size_t array_size = self.itemTypesCount * sizeof(NSUInteger);
+    NSUInteger *counters = (NSUInteger*)malloc(array_size);
+    
+    for (NSUInteger i = 0; i < self.horizontalItemsCount; i++) {
+        memset(counters, 0, array_size);
+        for (NSUInteger j = 0; j < self.verticalItemsCount; j++) {
+            NSUInteger currentValue = [self.gameField[i][j] unsignedIntegerValue];
+            NSUInteger nextValue = INT_MAX;
+            if (j < self.verticalItemsCount-1) {
+                nextValue = [self.gameField[i][j+1] unsignedIntegerValue];
+            }
+            counters[currentValue]++;
+            if (currentValue != nextValue) {
+                NSUInteger sequence_length = counters[currentValue];
+                if (sequence_length >=3 ) {
+                    NSDMatchingSequence *matchingSequence = [NSDMatchingSequence new];
+                    matchingSequence.i0 = i;
+                    matchingSequence.j0 = j - sequence_length + 1;
+                    matchingSequence.i1 = i;
+                    matchingSequence.j1 = j;
+                    [matchingItems addObject:matchingSequence];
+                }
+                counters[currentValue] = 0;
+            }
+        }
+    }
+    
+    for (NSUInteger j = 0; j < self.verticalItemsCount; j++) {
+        memset(counters, 0, array_size);
+        for (NSUInteger i = 0; i < self.horizontalItemsCount; i++) {
+            NSUInteger currentValue = [self.gameField[i][j] unsignedIntegerValue];
+            NSUInteger nextValue = INT_MAX;
+            if (i < self.horizontalItemsCount-1) {
+                nextValue = [self.gameField[i+1][j] unsignedIntegerValue];
+            }
+            counters[currentValue]++;
+            if (currentValue != nextValue) {
+                NSUInteger sequence_length = counters[currentValue];
+                if (sequence_length >=3 ) {
+                    NSDMatchingSequence *matchingSequence = [NSDMatchingSequence new];
+                    matchingSequence.i0 = i - sequence_length + 1;
+                    matchingSequence.j0 = j;
+                    matchingSequence.i1 = i;
+                    matchingSequence.j1 = j;
+                    [matchingItems addObject:matchingSequence];
+                }
+                counters[currentValue] = 0;
+            }
+        }
+    }
+    
+    free(counters);
+    //end of C
+    
     if (matchingItems.count > 0) {
         self.canRevertUserAction = NO;
         [self deleteItems:matchingItems];
@@ -128,28 +192,45 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 - (void)fillGaps {
     NSMutableArray *newItemTransitions = [NSMutableArray new];
     for (NSUInteger i = 0; i < self.horizontalItemsCount; i++) {
-        for (NSUInteger j = 0; j < self.verticalItemsCount; j++) {
+        for (NSInteger j = self.verticalItemsCount - 1; j >= 0; j--) {
             if (self.gameField[i][j] == [NSNull null]) {
-                NSUInteger newItemType = [self generateNewItemType];
-                self.gameField[i][j] = @(newItemType);
+                
                 NSDGameItemTransition *itemTransition = [NSDGameItemTransition new];
                 itemTransition.x0 = i;
-                itemTransition.y0 = _verticalItemsCount * -1 + j ;
                 itemTransition.x1 = i;
                 itemTransition.y1 = j;
-                itemTransition.type = newItemType;
+                
+                if ((j != 0) && (self.gameField[i][j-1] != [NSNull null])) {
+                    self.gameField[i][j] = self.gameField[i][j-1];
+                    self.gameField[i][j-1] = [NSNull null];
+                    itemTransition.y0 = j - 1;
+                    itemTransition.type = [self.gameField[i][j] integerValue];
+                }
+                else {
+                    NSUInteger newItemType = [self generateNewItemType];
+                    self.gameField[i][j] = @(newItemType);
+                    itemTransition.y0 =  (self.verticalItemsCount * - 1 ) + j ;
+                    itemTransition.type = newItemType;
+                }
+                
                 [newItemTransitions addObject:itemTransition];
             }
         }
     }
-    
     [self notifyAboutItemsMovement:newItemTransitions];
-    [self checkMatchingItems];
+ //   [self checkMatchingItems];
 }
 
-- (void)deleteItems:(NSArray*)items {
-    //todo: do stuff
-    [self notifyAboutItemsDeletion:items];
+- (void)deleteItems:(NSArray*)matchingSequences {
+    for (NSDMatchingSequence *matchingSequence in matchingSequences) {
+        for (NSUInteger i = matchingSequence.i0; i <= matchingSequence.i1; i++) {
+            for (NSUInteger j = matchingSequence.j0; j <= matchingSequence.j1; j++) {
+                self.gameField[i][j] = [NSNull null];
+            }
+        }
+    }
+
+    [self notifyAboutItemsDeletion:matchingSequences];
     [self fillGaps];
 }
 

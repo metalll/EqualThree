@@ -2,7 +2,7 @@
 #import "NSDGameItemView.h"
 #import "NSDGameEngine.h"
 #import "NSDGameItemTransition.h"
-
+#include "NSDIJStruct.h"
 @interface NSDGameFieldViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *gameItemsView;
@@ -16,6 +16,8 @@
 @property NSUInteger verticalItemsCount;
 @property NSUInteger itemTypesCount;
 @property CGSize itemSize;
+
+@property BOOL isAnimatedField;
 
 - (void)configureGame;
 - (CGPoint)xyCoordinatesFromI:(NSInteger)i j:(NSInteger)j;
@@ -37,20 +39,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    @synchronized (self) {
+        self.isAnimatedField = YES;
+    }
+    
     
     [self subscribeToNotifications];
-    [self configureGame];
-    [self initGestureRecognizerWithView:_gameItemsView];
     
-    
-    
-    
-    
-}
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.45 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self configureGame];
+        [self initGestureRecognizerWithView:self.gameItemsView];
 
-
-
-
+    });
+    
+   }
 
 - (void)dealloc {
     [self unsubscribeFromNotifications];
@@ -64,8 +66,8 @@
     self.verticalItemsCount = 8;
     self.itemTypesCount = 5;
     
-    self.itemSize = CGSizeMake(self.gameItemsView.frame.size.width / self.horizontalItemsCount,
-                               self.gameItemsView.frame.size.height / self.verticalItemsCount);
+    self.itemSize = CGSizeMake(self.gameItemsView.frame.size.width / (CGFloat) self.horizontalItemsCount,
+                               self.gameItemsView.frame.size.height / (CGFloat) self.verticalItemsCount);
     
     self.gameField = [NSMutableArray arrayWithCapacity:self.horizontalItemsCount];
     
@@ -85,15 +87,6 @@
 - (NSDGameItemView*)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type{
     NSDGameItemView *itemView = [[NSDGameItemView alloc] initWithFrame:frame];
     
-    itemView.autoresizingMask =
-    UIViewAutoresizingFlexibleLeftMargin |
-    UIViewAutoresizingFlexibleWidth |
-    UIViewAutoresizingFlexibleRightMargin |
-    UIViewAutoresizingFlexibleTopMargin |
-    UIViewAutoresizingFlexibleHeight |
-    UIViewAutoresizingFlexibleBottomMargin;
-    
-    itemView.translatesAutoresizingMaskIntoConstraints = YES;
     itemView.type = type;
     
     [self.gameItemsView addSubview:itemView];
@@ -103,12 +96,11 @@
 
 
 - (CGPoint)xyCoordinatesFromI:(NSInteger)i j:(NSInteger)j {
-    CGPoint result = CGPointMake(i * self.itemSize.width, j * self.itemSize.height);
+    CGPoint result = CGPointMake(i * (CGFloat) self.itemSize.width, j * (CGFloat) self.itemSize.height);
     return result;
 }
 
 - (NSDGameItemView*)gameItemViewAtI:(NSInteger)i j:(NSInteger)j type:(NSUInteger)type{
-    
     NSDGameItemView *result = nil;
     
     if ((i >= 0) && (i < self.horizontalItemsCount) && (j >= 0) && (j < self.verticalItemsCount)) {
@@ -121,7 +113,7 @@
         frame.size = self.itemSize;
         result = [self createGameItemViewWithFrame:frame type:type];
     }
-
+    
     return result;
 }
 
@@ -141,75 +133,127 @@
     UISwipeGestureRecognizer * swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
     swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
     
-    [self.gameItemsView addGestureRecognizer:swipeUp];
-    [self.gameItemsView addGestureRecognizer:swipeDown];
-    [self.gameItemsView addGestureRecognizer:swipeLeft];
-    [self.gameItemsView addGestureRecognizer:swipeRight];
+    [view addGestureRecognizer:swipeUp];
+    [view addGestureRecognizer:swipeDown];
+    [view addGestureRecognizer:swipeLeft];
+    [view addGestureRecognizer:swipeRight];
+}
+
+
+
+- (void) findIJPositionItemWithPoint:(CGPoint) swipePoint andCompletion:(void(^)(NSDIJStruct * result)) completion {
+  
+    NSOperationQueue * queue = [NSOperationQueue new];
+    [queue setMaxConcurrentOperationCount:2];
+    
+    NSBlockOperation * firstPart = [NSBlockOperation blockOperationWithBlock:^{
+        
+        /*
+         
+         ****0
+         ***00
+         **000
+         *0000
+         00000
+         
+         */
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            for(NSUInteger i=0;i<self.verticalItemsCount;i++){
+                for(NSUInteger j=i;j<self.horizontalItemsCount;j++){
+                    CGPoint tempPoint = [self xyCoordinatesFromI:i j:j];
+                    CGRect tempRect = CGRectMake(tempPoint.x, tempPoint.y, self.itemSize.width, self.itemSize.height);
+                    if(CGRectContainsPoint(tempRect, swipePoint)){
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            completion([[NSDIJStruct alloc] initWithI:i andJ:j]);
+                        });
+                        [queue cancelAllOperations];
+                    }
+                }
+            }
+
+        });
+        
+        
+      
+        
+    }];
     
     
+    NSBlockOperation * secondPart = [NSBlockOperation blockOperationWithBlock:^{
+          dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    /*
+       00000
+       0000*
+       000**
+       00***
+       0****
+    */
+              
+        for(NSInteger j=0;j<self.horizontalItemsCount;j++){
+            for(NSInteger i=(self.verticalItemsCount-1);i>j;i--){
+                CGPoint tempPoint = [self xyCoordinatesFromI:i j:j];
+                CGRect tempRect = CGRectMake(tempPoint.x, tempPoint.y, self.itemSize.width, self.itemSize.height);
+                if(CGRectContainsPoint(tempRect, swipePoint)){
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completion([[NSDIJStruct alloc] initWithI:i andJ:j]);
+                       
+                    });
+                    [queue cancelAllOperations];}
+            }
+        }
+        
+          });
+    }];
+
+    [queue addOperation:firstPart];
+    [queue addOperation:secondPart];
     
-    
-    
-    
-    
+                       
 }
 
 
 - (void) didSwipe:(UISwipeGestureRecognizer *) recognizer{
     
+    if(recognizer.state != UIGestureRecognizerStateEnded || self.isAnimatedField ) return;
     
-    
-    
-    CGPoint point = [recognizer locationInView: self.gameItemsView];
-    
-    NSUInteger x0 = 0;
-    NSUInteger y0 = 0;
-    
-    
-    NSDGameItemView * view0 = nil;
-    
-    for(NSUInteger i=0;i<self.verticalItemsCount;i++){
-        for(NSUInteger j=0;j<self.horizontalItemsCount;j++){
-            
-            NSUInteger tempType =  [[[_gameEngine.gameField objectAtIndex:i] objectAtIndex:j] unsignedIntegerValue];
-            NSDGameItemView * tempGameItemView = [self gameItemViewAtI:i j:j type: tempType ] ;
-            if(CGRectContainsPoint( tempGameItemView.frame , point)){
-                x0 = i;
-                y0 = j;
-                view0 = tempGameItemView;
+    [self findIJPositionItemWithPoint:[recognizer locationInView: self.gameItemsView] andCompletion:^(NSDIJStruct *result) {
+        NSUInteger itemPosI = result.i;
+        NSUInteger itemPosJ = result.j;
+        
+        
+        
+        switch (recognizer.direction) {
+            case UISwipeGestureRecognizerDirectionUp:
+                if(itemPosJ>0)
+                    [self.gameEngine swapItemAtX0:itemPosI y0:itemPosJ withItemAtX1:itemPosI y1:itemPosJ-1];
+                return;
                 break;
-            }
+                
+            case UISwipeGestureRecognizerDirectionDown:
+                if(itemPosJ<(self.verticalItemsCount-1))
+                    [self.gameEngine swapItemAtX0:itemPosI y0:itemPosJ withItemAtX1:itemPosI y1:itemPosJ+1];
+                return;
+                break;
+            case UISwipeGestureRecognizerDirectionLeft:
+                if(itemPosI>0)
+                    [self.gameEngine swapItemAtX0:itemPosI y0:itemPosJ withItemAtX1:itemPosI-1 y1:itemPosJ];
+                return;
+                break;
+            case UISwipeGestureRecognizerDirectionRight:
+                if(itemPosI<(self.horizontalItemsCount-1)){
+                    [self.gameEngine swapItemAtX0:itemPosI y0:itemPosJ withItemAtX1:itemPosI+1 y1:itemPosJ];
+                }
+                break;
+                return;
+            default:
+                return;
+                break;
         }
-    }
-    
-    if(recognizer.direction== UISwipeGestureRecognizerDirectionUp){
-        if(view0!=nil && y0>0 ){
-            [_gameEngine swapItemAtX0:x0 y0:y0 withItemAtX1:x0 y1:y0-1];
-        }
-        return;
-    }
-    
-    if(recognizer.direction== UISwipeGestureRecognizerDirectionDown){
-        if(view0!=nil && y0<(_verticalItemsCount-1)){
-            [_gameEngine swapItemAtX0:x0 y0:y0 withItemAtX1:x0 y1:y0+1];
-        }
-        return;
-    }
-    
-    if(recognizer.direction== UISwipeGestureRecognizerDirectionLeft){
-        if(view0!=nil && x0>0){
-            [_gameEngine swapItemAtX0:x0 y0:y0 withItemAtX1:x0-1 y1:y0];
-        }
-        return;
-    }
-    
 
-    if(recognizer.direction== UISwipeGestureRecognizerDirectionRight){
-        if(view0!=nil && x0<(_horizontalItemsCount-1)){
-            [_gameEngine swapItemAtX0:x0 y0:y0 withItemAtX1:x0+1 y1:y0];
-        }
-        return;
-    }
+    } ];
+    
+    
     
 }
 
@@ -227,27 +271,53 @@
 
 - (void)processItemsDidMoveNotification:(NSNotification *)notification {
     
+    
+    @synchronized (self) {
+        self.isAnimatedField = YES;
+    }
+    
     NSArray *itemTransitions = notification.userInfo[kNSDGameItemTransitions];
     
-    for (NSDGameItemTransition *itemTransition in itemTransitions) {
-        
+    for (NSUInteger i=0;i<itemTransitions.count;i++) {
+        NSDGameItemTransition *itemTransition = itemTransitions[i];
         NSDGameItemView *gameItemView = [self gameItemViewAtI:itemTransition.x0 j:itemTransition.y0 type:itemTransition.type];
         
         CGRect endFrame = CGRectZero;
         endFrame.size = gameItemView.frame.size;
-        endFrame.origin = [self xyCoordinatesFromI:itemTransition.x1 j:itemTransition.y1];
         
-        [UIView animateWithDuration:0.2 animations:^{
+        CGFloat autoresizedMarginX = (self.itemSize.width - endFrame.size.width)/2.0f;
+        CGFloat autoresizedMarginY = (self.itemSize.height - endFrame.size.height)/2.0f;
+        
+        CGPoint tempOriginPoint = [self xyCoordinatesFromI:(CGFloat)itemTransition.x1 j:(CGFloat)itemTransition.y1];
+        endFrame.origin = CGPointMake( tempOriginPoint.x +autoresizedMarginX ,tempOriginPoint.y+autoresizedMarginY);
+        
+        
+       
+    
+        
+        [UIView animateWithDuration:0.44 animations:^{
             gameItemView.frame = endFrame;
         } completion:^(BOOL finished) {
-            if(finished){
-                [self.gameField objectAtIndex:itemTransition.x1][itemTransition.y1] = gameItemView;
+            self.gameField[itemTransition.x1][itemTransition.y1] = gameItemView;
+            if(finished&&(i==(itemTransitions.count-1))) {
+            
+                @synchronized (self) {
+                    self.isAnimatedField = NO;
+                }
+            
             }
         }];
     }
+    
 }
 
 - (void)processItemsDidDeleteNotification:(NSNotification *)notification {
+ 
+    
+    
+    
+    
+    
     
 }
 

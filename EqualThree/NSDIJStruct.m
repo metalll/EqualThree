@@ -1,0 +1,24 @@
+//
+//  NSDIJStruct.m
+//  EqualThree
+//
+//  Created by NSD on 24.07.17.
+//  Copyright © 2017 NSD NULL. All rights reserved.
+//
+
+#import "NSDIJStruct.h"
+
+@implementation NSDIJStruct
+
+
+- (instancetype)initWithI:(NSUInteger) i andJ: (NSUInteger) j;
+{
+    self = [super init];
+    if (self) {
+        self.i = i;
+        self.j = j;
+    }
+    return self;
+}
+
+@end

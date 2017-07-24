@@ -23,6 +23,8 @@
 		4367554B1F12704A00E1C06E /* NSDToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4367554A1F12704A00E1C06E /* NSDToastView.m */; };
 		436755501F1271BE00E1C06E /* UIColor+NSDColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4367554F1F1271BE00E1C06E /* UIColor+NSDColor.m */; };
 		43681F9A1F16ECA70050B3CB /* NSDGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43681F991F16ECA70050B3CB /* NSDGameViewController.m */; };
+		437D35EA1F268B880017DCC5 /* NSDIJStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 437D35E91F268B880017DCC5 /* NSDIJStruct.m */; };
+		437D35ED1F26A57E0017DCC5 /* NSDMatchingSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = 437D35EC1F26A57E0017DCC5 /* NSDMatchingSequence.m */; };
 		438F4A681F13ABA600C48F7A /* NSDCustomHeaderForTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 438F4A671F13ABA600C48F7A /* NSDCustomHeaderForTableView.m */; };
 		438F4A6A1F13ABB600C48F7A /* NSDCustomViewForHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 438F4A691F13ABB600C48F7A /* NSDCustomViewForHeader.xib */; };
 		438F4A701F13B26600C48F7A /* NSDHighscoresManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 438F4A6F1F13B26600C48F7A /* NSDHighscoresManager.m */; };
@@ -65,6 +67,10 @@
 		4367554F1F1271BE00E1C06E /* UIColor+NSDColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+NSDColor.m"; sourceTree = "<group>"; };
 		43681F981F16ECA70050B3CB /* NSDGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDGameViewController.h; sourceTree = "<group>"; };
 		43681F991F16ECA70050B3CB /* NSDGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDGameViewController.m; sourceTree = "<group>"; };
+		437D35E81F268B880017DCC5 /* NSDIJStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDIJStruct.h; sourceTree = "<group>"; };
+		437D35E91F268B880017DCC5 /* NSDIJStruct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDIJStruct.m; sourceTree = "<group>"; };
+		437D35EB1F26A57E0017DCC5 /* NSDMatchingSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDMatchingSequence.h; sourceTree = "<group>"; };
+		437D35EC1F26A57E0017DCC5 /* NSDMatchingSequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDMatchingSequence.m; sourceTree = "<group>"; };
 		438F4A661F13ABA600C48F7A /* NSDCustomHeaderForTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDCustomHeaderForTableView.h; sourceTree = "<group>"; };
 		438F4A671F13ABA600C48F7A /* NSDCustomHeaderForTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDCustomHeaderForTableView.m; sourceTree = "<group>"; };
 		438F4A691F13ABB600C48F7A /* NSDCustomViewForHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NSDCustomViewForHeader.xib; sourceTree = "<group>"; };
@@ -208,6 +214,10 @@
 				438F4A721F13B47700C48F7A /* NSDScoreRecord.m */,
 				43EBEB9D1F20E7DA00EA958B /* NSDGameItemTransition.h */,
 				43EBEB9E1F20E7DA00EA958B /* NSDGameItemTransition.m */,
+				437D35E81F268B880017DCC5 /* NSDIJStruct.h */,
+				437D35E91F268B880017DCC5 /* NSDIJStruct.m */,
+				437D35EB1F26A57E0017DCC5 /* NSDMatchingSequence.h */,
+				437D35EC1F26A57E0017DCC5 /* NSDMatchingSequence.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -311,6 +321,8 @@
 				438F4A701F13B26600C48F7A /* NSDHighscoresManager.m in Sources */,
 				4346AAE41F127E9000F1F639 /* NSDRatingTableViewCell.m in Sources */,
 				43DDC9441F1CD2FF003E95C4 /* NSDButton.m in Sources */,
+				437D35EA1F268B880017DCC5 /* NSDIJStruct.m in Sources */,
+				437D35ED1F26A57E0017DCC5 /* NSDMatchingSequence.m in Sources */,
 				4367552A1F12682100E1C06E /* AppDelegate.m in Sources */,
 				4367554B1F12704A00E1C06E /* NSDToastView.m in Sources */,
 				438F4A681F13ABA600C48F7A /* NSDCustomHeaderForTableView.m in Sources */,

@@ -45,7 +45,7 @@ static NSDHighscoresManager * manager;
 
 
 
-#pragma mark Records accessor
+#pragma mark - Records accessor
 
 -(void)addRecordWithRecord:(NSDScoreRecord *)record andCompletion:(void (^)(void))completion{
     //TBD

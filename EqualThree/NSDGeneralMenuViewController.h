@@ -13,11 +13,8 @@
 extern NSString * const kIsHasSavedGame;
 extern NSString * const kIsFirstLaunch;
 
-
-
 @interface NSDGeneralMenuViewController : UIViewController
 
 - (IBAction)didTapNewGameButtonWithSender:(id)sender ;
-
 
 @end
