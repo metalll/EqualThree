@@ -2,12 +2,16 @@
 #import "NSDGameItemView.h"
 #import "NSDGameEngine.h"
 #import "NSDGameItemTransition.h"
-#include "NSDIJStruct.h"
+#import "NSDIJStruct.h"
+#import "NSDMatchingSequence.h"
+
 @interface NSDGameFieldViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *gameItemsView;
 @property (strong, nonatomic) NSDGameEngine *gameEngine;
 @property (strong, nonatomic) NSMutableArray *gameField;
+
+
 
 
 
@@ -18,6 +22,8 @@
 @property CGSize itemSize;
 
 @property BOOL isAnimatedField;
+
+
 
 - (void)configureGame;
 - (CGPoint)xyCoordinatesFromI:(NSInteger)i j:(NSInteger)j;
@@ -44,15 +50,16 @@
     }
     
     
-    [self subscribeToNotifications];
+   
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.45 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self subscribeToNotifications];
+        
+        
         [self configureGame];
         [self initGestureRecognizerWithView:self.gameItemsView];
-
     });
-    
-   }
+}
 
 - (void)dealloc {
     [self unsubscribeFromNotifications];
@@ -119,6 +126,8 @@
 
 
 
+
+
 #pragma mark - Gesture Recognizer
 
 
@@ -144,7 +153,6 @@
 - (void) findIJPositionItemWithPoint:(CGPoint) swipePoint andCompletion:(void(^)(NSDIJStruct * result)) completion {
   
     NSOperationQueue * queue = [NSOperationQueue new];
-    [queue setMaxConcurrentOperationCount:2];
     
     NSBlockOperation * firstPart = [NSBlockOperation blockOperationWithBlock:^{
         
@@ -271,48 +279,115 @@
 
 - (void)processItemsDidMoveNotification:(NSNotification *)notification {
     
-    
-    @synchronized (self) {
-        self.isAnimatedField = YES;
-    }
-    
-    NSArray *itemTransitions = notification.userInfo[kNSDGameItemTransitions];
-    
-    for (NSUInteger i=0;i<itemTransitions.count;i++) {
-        NSDGameItemTransition *itemTransition = itemTransitions[i];
-        NSDGameItemView *gameItemView = [self gameItemViewAtI:itemTransition.x0 j:itemTransition.y0 type:itemTransition.type];
-        
-        CGRect endFrame = CGRectZero;
-        endFrame.size = gameItemView.frame.size;
-        
-        CGFloat autoresizedMarginX = (self.itemSize.width - endFrame.size.width)/2.0f;
-        CGFloat autoresizedMarginY = (self.itemSize.height - endFrame.size.height)/2.0f;
-        
-        CGPoint tempOriginPoint = [self xyCoordinatesFromI:(CGFloat)itemTransition.x1 j:(CGFloat)itemTransition.y1];
-        endFrame.origin = CGPointMake( tempOriginPoint.x +autoresizedMarginX ,tempOriginPoint.y+autoresizedMarginY);
-        
-        
-       
-    
-        
-        [UIView animateWithDuration:0.44 animations:^{
-            gameItemView.frame = endFrame;
-        } completion:^(BOOL finished) {
-            self.gameField[itemTransition.x1][itemTransition.y1] = gameItemView;
-            if(finished&&(i==(itemTransitions.count-1))) {
             
-                @synchronized (self) {
-                    self.isAnimatedField = NO;
-                }
-            
+            @synchronized (self) {
+                self.isAnimatedField = YES;
             }
-        }];
-    }
+            
+            NSArray *itemTransitions = notification.userInfo[kNSDGameItemTransitions];
+            
+            for (NSUInteger i=0;i<itemTransitions.count;i++) {
+                NSDGameItemTransition *itemTransition = itemTransitions[i];
+                NSDGameItemView *gameItemView = [self gameItemViewAtI:itemTransition.x0 j:itemTransition.y0 type:itemTransition.type];
+                
+                CGRect endFrame = CGRectZero;
+                endFrame.size = gameItemView.frame.size;
+                
+                CGFloat autoresizedMarginX = (self.itemSize.width - endFrame.size.width)/2.0f;
+                CGFloat autoresizedMarginY = (self.itemSize.height - endFrame.size.height)/2.0f;
+                
+                CGPoint tempOriginPoint = [self xyCoordinatesFromI:(CGFloat)itemTransition.x1 j:(CGFloat)itemTransition.y1];
+                endFrame.origin = CGPointMake( tempOriginPoint.x +autoresizedMarginX ,tempOriginPoint.y+autoresizedMarginY);
+                
+                
+                
+                    [UIView animateWithDuration:0.44 animations:^{
+                        gameItemView.frame = endFrame;
+                    } completion:^(BOOL finished) {
+                        self.gameField[itemTransition.x1][itemTransition.y1] = gameItemView;
+                        if(finished&&(i==(itemTransitions.count-1))) {
+                            
+                            @synchronized (self) {
+                                self.isAnimatedField = NO;
+                            }
+                            
+                        }
+                    }];
+
+                    
+           
+                
+                
+            }
+
+            
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
 
 - (void)processItemsDidDeleteNotification:(NSNotification *)notification {
  
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+   
+        NSArray * matchingSequences = notification.userInfo[kNSDGameItems];
+        
+        
+        
+        
+        for (NSDMatchingSequence *matchingSequence in matchingSequences) {
+            for (NSUInteger i = matchingSequence.i0; i <= matchingSequence.i1; i++) {
+                for (NSUInteger j = matchingSequence.j0; j <= matchingSequence.j1; j++) {
+                    
+                    
+                    if(self.gameField[i][j]!=[NSNull null]){
+                        
+                        NSDGameItemView * tempItemView = (NSDGameItemView *) self.gameField[i][j];
+                        
+                        [UIView animateWithDuration:2 animations:^{
+                            tempItemView.frame = CGRectMake( tempItemView.frame.origin.x, tempItemView.frame.origin.y,0.0, 0.0);
+                            [self.gameField[i][j] removeFromSuperview];
+                            self.gameField[i][j] = [NSNull null];
+                        }];
+                        
+                        
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                    
+                    
+                }
+            }
+        }
+        
+        
+
+        
+        
+    });
+   
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

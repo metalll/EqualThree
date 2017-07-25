@@ -13,7 +13,7 @@
 #import "NSDAlertView.h"
 
 @interface NSDGameViewController ()
-@property NSDToastView * toast;
+
 
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 
@@ -23,15 +23,6 @@
 
 - (void)viewDidLoad {
 
-    self.toast = [NSDToastView new];
-    
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:kIsHasSavedGame] isEqual:@YES ]){
-        [self.toast displayOnView:_mainView withMessage:@"Resume game" andColor:[UIColor toastSimpleColor] andIndicator:NO andFaded:YES andIsHasTopBar:NO];
-        
-    }else{
-        [self.toast displayOnView:_mainView withMessage:@"New game" andColor:[UIColor toastAcceptColor] andIndicator:NO andFaded:YES andIsHasTopBar:NO];
-        [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:kIsHasSavedGame];
-    }
     
     [super viewDidLoad];
     
