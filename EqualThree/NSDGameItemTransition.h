@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+
+extern float const defaultAnimationDuration;
+
 @interface NSDGameItemTransition : NSObject
 
 @property NSInteger x0;
@@ -15,11 +18,13 @@
 @property NSInteger x1;
 @property NSInteger y1;
 @property NSInteger type;
-
+@property float animationDuration;
 
 #pragma mark - costructor
 
 - (instancetype)initWithX0:(NSUInteger)x0 andY0:(NSUInteger)y0 andX1:(NSUInteger)x1 andY1:(NSUInteger)y1 andType:(NSUInteger)type;
+
+- (instancetype)initWithX0:(NSUInteger)x0 andY0:(NSUInteger)y0 andX1:(NSUInteger)x1 andY1:(NSUInteger)y1 andType:(NSUInteger)type andAnimationDuration:(float) animationDuration;
 
 
 @end

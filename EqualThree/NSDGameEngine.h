@@ -15,7 +15,7 @@ extern NSString * const kNSDGameItemTransitions;
 
 @interface NSDGameEngine : NSObject
 
-@property (nonatomic, strong,readonly) NSMutableArray * gameField;
+@property (strong) NSMutableArray * gameField;
 
 - (instancetype)initWithHorizontalItemsCount:(NSUInteger)horizontalItemsCount
                           verticalItemsCount:(NSUInteger)verticalItemsCount

@@ -21,4 +21,9 @@
     return self;
 }
 
+- (NSString*)description {
+    return [NSString stringWithFormat:@"-| item at i: %ld j: %ld |- \n", (long)self.i, (long)self.j];
+}
+
+
 @end

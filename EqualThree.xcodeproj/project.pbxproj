@@ -25,6 +25,7 @@
 		43681F9A1F16ECA70050B3CB /* NSDGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43681F991F16ECA70050B3CB /* NSDGameViewController.m */; };
 		437D35EA1F268B880017DCC5 /* NSDIJStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 437D35E91F268B880017DCC5 /* NSDIJStruct.m */; };
 		437D35ED1F26A57E0017DCC5 /* NSDMatchingSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = 437D35EC1F26A57E0017DCC5 /* NSDMatchingSequence.m */; };
+		438830B31F2BD7130012597B /* NSDSwap.m in Sources */ = {isa = PBXBuildFile; fileRef = 438830B21F2BD7130012597B /* NSDSwap.m */; };
 		438F4A681F13ABA600C48F7A /* NSDCustomHeaderForTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 438F4A671F13ABA600C48F7A /* NSDCustomHeaderForTableView.m */; };
 		438F4A6A1F13ABB600C48F7A /* NSDCustomViewForHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 438F4A691F13ABB600C48F7A /* NSDCustomViewForHeader.xib */; };
 		438F4A701F13B26600C48F7A /* NSDHighscoresManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 438F4A6F1F13B26600C48F7A /* NSDHighscoresManager.m */; };
@@ -71,6 +72,8 @@
 		437D35E91F268B880017DCC5 /* NSDIJStruct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDIJStruct.m; sourceTree = "<group>"; };
 		437D35EB1F26A57E0017DCC5 /* NSDMatchingSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDMatchingSequence.h; sourceTree = "<group>"; };
 		437D35EC1F26A57E0017DCC5 /* NSDMatchingSequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDMatchingSequence.m; sourceTree = "<group>"; };
+		438830B11F2BD7130012597B /* NSDSwap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDSwap.h; sourceTree = "<group>"; };
+		438830B21F2BD7130012597B /* NSDSwap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDSwap.m; sourceTree = "<group>"; };
 		438F4A661F13ABA600C48F7A /* NSDCustomHeaderForTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDCustomHeaderForTableView.h; sourceTree = "<group>"; };
 		438F4A671F13ABA600C48F7A /* NSDCustomHeaderForTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDCustomHeaderForTableView.m; sourceTree = "<group>"; };
 		438F4A691F13ABB600C48F7A /* NSDCustomViewForHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NSDCustomViewForHeader.xib; sourceTree = "<group>"; };
@@ -128,9 +131,6 @@
 				438F4A661F13ABA600C48F7A /* NSDCustomHeaderForTableView.h */,
 				438F4A671F13ABA600C48F7A /* NSDCustomHeaderForTableView.m */,
 				438F4A691F13ABB600C48F7A /* NSDCustomViewForHeader.xib */,
-				43DAB7391F16DA7D0042537A /* NSDAlertView.h */,
-				43DAB73A1F16DA7D0042537A /* NSDAlertView.m */,
-				43DAB73B1F16DA7D0042537A /* NSDAlertView.xib */,
 				43DDC9421F1CD2FF003E95C4 /* NSDButton.h */,
 				43DDC9431F1CD2FF003E95C4 /* NSDButton.m */,
 			);
@@ -156,8 +156,7 @@
 		436755241F12682100E1C06E /* EqualThree */ = {
 			isa = PBXGroup;
 			children = (
-				4346AAFB1F12823C00F1F639 /* CustomView */,
-				4346AAE01F127DE400F1F639 /* CustomViewCells */,
+				438830AD1F2BD3A50012597B /* Custom UI */,
 				4367553F1F12686600E1C06E /* Utils */,
 				4367553E1F12685B00E1C06E /* Model */,
 				4367553D1F12684E00E1C06E /* GameLogic */,
@@ -199,10 +198,9 @@
 		4367553D1F12684E00E1C06E /* GameLogic */ = {
 			isa = PBXGroup;
 			children = (
+				438830AF1F2BD5170012597B /* GameEngine */,
 				438F4A6E1F13B26600C48F7A /* NSDHighscoresManager.h */,
 				438F4A6F1F13B26600C48F7A /* NSDHighscoresManager.m */,
-				43EBEB9A1F20E3CD00EA958B /* NSDGameEngine.h */,
-				43EBEB9B1F20E3CD00EA958B /* NSDGameEngine.m */,
 			);
 			name = GameLogic;
 			sourceTree = "<group>";
@@ -218,6 +216,8 @@
 				437D35E91F268B880017DCC5 /* NSDIJStruct.m */,
 				437D35EB1F26A57E0017DCC5 /* NSDMatchingSequence.h */,
 				437D35EC1F26A57E0017DCC5 /* NSDMatchingSequence.m */,
+				438830B11F2BD7130012597B /* NSDSwap.h */,
+				438830B21F2BD7130012597B /* NSDSwap.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -225,20 +225,57 @@
 		4367553F1F12686600E1C06E /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				4344FA111F139351005683A9 /* NSDHttpClient.h */,
-				4344FA121F139351005683A9 /* NSDHttpClient.m */,
+				438830AC1F2BD33D0012597B /* HTTPClient */,
 				4367554E1F1271BE00E1C06E /* UIColor+NSDColor.h */,
 				4367554F1F1271BE00E1C06E /* UIColor+NSDColor.m */,
 				4346AB011F1285B000F1F639 /* NSDPlistController.h */,
 				4346AB021F1285B000F1F639 /* NSDPlistController.m */,
-				43DAB72B1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.h */,
-				43DAB72C1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.m */,
 				43DAB72E1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.h */,
 				43DAB72F1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.m */,
-				43DAB7311F16C4E60042537A /* NSDictionary+NSDBodyEncoder.h */,
-				43DAB7321F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		438830AC1F2BD33D0012597B /* HTTPClient */ = {
+			isa = PBXGroup;
+			children = (
+				43DAB7311F16C4E60042537A /* NSDictionary+NSDBodyEncoder.h */,
+				43DAB7321F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m */,
+				43DAB72B1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.h */,
+				43DAB72C1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.m */,
+				4344FA111F139351005683A9 /* NSDHttpClient.h */,
+				4344FA121F139351005683A9 /* NSDHttpClient.m */,
+			);
+			name = HTTPClient;
+			sourceTree = "<group>";
+		};
+		438830AD1F2BD3A50012597B /* Custom UI */ = {
+			isa = PBXGroup;
+			children = (
+				438830AE1F2BD3BF0012597B /* AlertView */,
+				4346AAFB1F12823C00F1F639 /* CustomView */,
+				4346AAE01F127DE400F1F639 /* CustomViewCells */,
+			);
+			name = "Custom UI";
+			sourceTree = "<group>";
+		};
+		438830AE1F2BD3BF0012597B /* AlertView */ = {
+			isa = PBXGroup;
+			children = (
+				43DAB7391F16DA7D0042537A /* NSDAlertView.h */,
+				43DAB73A1F16DA7D0042537A /* NSDAlertView.m */,
+				43DAB73B1F16DA7D0042537A /* NSDAlertView.xib */,
+			);
+			name = AlertView;
+			sourceTree = "<group>";
+		};
+		438830AF1F2BD5170012597B /* GameEngine */ = {
+			isa = PBXGroup;
+			children = (
+				43EBEB9A1F20E3CD00EA958B /* NSDGameEngine.h */,
+				43EBEB9B1F20E3CD00EA958B /* NSDGameEngine.m */,
+			);
+			name = GameEngine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,6 +376,7 @@
 				4344FA131F139351005683A9 /* NSDHttpClient.m in Sources */,
 				43DAB73C1F16DA7D0042537A /* NSDAlertView.m in Sources */,
 				436755271F12682100E1C06E /* main.m in Sources */,
+				438830B31F2BD7130012597B /* NSDSwap.m in Sources */,
 				43DAB72D1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,12 +9,13 @@
 #import "NSDGameEngine.h"
 #import "NSDGameItemTransition.h"
 #import "NSDMatchingSequence.h"
-
+#import "NSDIJStruct.h"
 
 NSString * const NSDGameItemsDidMoveNotification = @"NSDGameItemDidMoveNotification";
 NSString * const NSDGameItemsDidDeleteNotification = @"NSDGameItemDidDeleteNotification";
 NSString * const kNSDGameItems = @"kNSDGameItems";
 NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
+
 
 
 
@@ -31,6 +32,10 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 
 @property BOOL canRevertUserAction;
 
+
+@property NSUInteger mutex;
+
+@property NSMutableArray * itemsToDelete;
 
 
 - (void)notifyAboutItemsMovement:(NSArray*)items;
@@ -128,13 +133,14 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
      
      */
     
+    NSMutableArray * verticalPatternEnded =[NSMutableArray new];
+  
     NSMutableArray * verticalPattern = [NSMutableArray new];
     [verticalPattern addObject:[NSMutableArray new]];
-    [verticalPattern[0] addObject:[NSNull null]] ;
     [verticalPattern addObject:[NSMutableArray new]];
-    [verticalPattern[1] addObject:[NSNull null]] ;
     [verticalPattern addObject:[NSMutableArray new]];
-    [verticalPattern[2] addObject:[NSNull null]] ;
+    
+    [verticalPatternEnded addObject:verticalPattern];
     
   
     /*
@@ -144,12 +150,15 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
      */
     
     NSMutableArray * squarePattern = [NSMutableArray new] ;
+    
     NSMutableArray * tqP0 =  [NSMutableArray new];
     [tqP0 addObject:[NSNull null]];
     [tqP0 addObject:[NSNull null]];
     NSMutableArray * tqP1 =  [NSMutableArray new];
     [tqP1 addObject:[NSNull null]];
     [tqP1 addObject:[NSNull null]];
+    
+    
     [squarePattern addObject:tqP0];
     [squarePattern addObject:tqP1];
                                 
@@ -161,94 +170,156 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
      */
     
     
-    NSMutableArray * patterns = [[NSMutableArray alloc] initWithArray:@[horizontalPattern,verticalPattern,squarePattern]];
+  //  NSMutableArray * patterns = [[NSMutableArray alloc] initWithArray:@[horizontalPattern,verticalPattern,squarePattern]];
     
-    NSMutableArray * itemsToDelete = [[NSMutableArray alloc] initWithCapacity:(_horizontalItemsCount*_verticalItemsCount)/2];
+    NSMutableArray * patterns = [[NSMutableArray alloc] initWithArray:@[verticalPatternEnded,horizontalPattern,squarePattern]];
     
     
-    for(NSUInteger itemTypeCounter = 0;itemTypeCounter<self.itemTypesCount;itemTypeCounter++){
+    self.mutex = 0;
+    self.itemsToDelete = [NSMutableArray new];
+    
+    
+    for(NSUInteger currentType=0;currentType<self.itemTypesCount;currentType++){
+       NSArray * configuredPatterns = [self configurePatternsWithArray:[patterns copy] andType:currentType];
+    for(NSUInteger i=0;i<configuredPatterns.count;i++){
         
-        [self configurePatternsWithArray:patterns andType:itemTypeCounter];
+        NSArray * resultMatched =  [self checkMatchingItemsWithConfiguredPattern: configuredPatterns[i]];
+        
+        if(resultMatched!=nil){
+            [self.itemsToDelete addObjectsFromArray:resultMatched];
+        
+        }
+    }
+    
+}
+    
+    if(self.itemsToDelete.count>0){
         
         
-                NSMutableArray * tempDeletedItemsArr =[NSMutableArray new];
+        
+    [self deleteItems:self.itemsToDelete];
+    }
+    NSLog(@"items to delete %@",self.itemsToDelete.description);
+    
+}
+        
+        
+
+-(NSArray *) checkMatchingItemsWithConfiguredPattern:(NSMutableArray *)configurePattern{
+    //calculate is global queue
+   
+        //assing in local var
+        NSArray * template = configurePattern;
+      
+        
+        //calculate max template size
+        NSUInteger templateWidth = template.count;
+        NSUInteger templateHeight = 0;
+        
+        NSMutableArray * result = [NSMutableArray new];
+        
+        
+        for(NSUInteger ti=0;ti<templateWidth;ti++){
+            
+            if([template[ti] isKindOfClass:[NSArray class]]){
+                NSUInteger tempTemplateHeight = ((NSArray *) template[ti]).count;
+                if(templateHeight<tempTemplateHeight){
+                    templateHeight = tempTemplateHeight;
+                }
+                
+            }else{
+                if(templateHeight<1){
+                    templateHeight = 1;
+                }
+            }
+        }
+    
+    
+    
+    
+        
+        
+        //checkMathed
+        
+        for(NSUInteger i=0;i<(self.verticalItemsCount-templateWidth+1);i++){
+            for(NSUInteger j=0;j<(self.horizontalItemsCount-templateHeight+1);j++){
+            
                 BOOL isMatched = YES;
-                for(NSUInteger i=0;i<self.horizontalItemsCount;i++){
-                    for(NSUInteger j = 0;j<self.verticalItemsCount;j++){
-                    
-                      //  isMatched = isMatched && (  ) ;
-                    
+                
+                NSMutableArray * checkedItems = [[NSMutableArray alloc] init];
+        
+                for(NSUInteger ti = 0;ti<templateWidth;ti++){
+                    for(NSUInteger tj = 0;tj<templateHeight;tj++){
                         
                         
                         
-                        
-                        
-                        
-                        
+                        if([template[ti] isKindOfClass:[NSArray class]]){
+               
+                            BOOL previosMathed = isMatched;
+                            if([template[ti][tj]isKindOfClass:[NSString class]]){
+                                isMatched = previosMathed && YES;
+                            }else{
+                                
+                                
+                             
+                                
+                            isMatched = ([self.gameField[i+ti][j+tj] unsignedIntegerValue] == [template[ti][tj] unsignedIntegerValue]) && previosMathed && YES;
+                            
+                              
+                            [checkedItems addObject:[[NSDIJStruct alloc] initWithI:i+ti andJ:j+tj]];    
+                        }
+                        }
+                        else{
+                            BOOL previosMathed = isMatched;
+                            
+                            if([template[ti] isKindOfClass:[NSString class]]){
+                                isMatched = previosMathed && YES;
+                                }else{
+                                    
+                                    
+                            isMatched = ([self.gameField[i+ti][j+tj] unsignedIntegerValue] == [template[ti] unsignedIntegerValue]) && previosMathed && YES ;
+                            [checkedItems addObject:[[NSDIJStruct alloc] initWithI:i+ti andJ:j+tj]];
+                            
+                            }
+                     
+                        }
                     }
+                
                     
+                }
                 
+                NSLog(@"checked items %@",[checkedItems description]);
                 
-                
-                
-                
-                
-            
-            
-            
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+                if(isMatched){
+                    [result addObjectsFromArray:checkedItems];
+                }
+             
+            }
         }
         
         
         
         
-       
-        
-        
-        
         
     
-    }
+                
+                if(result.count>0){
+                    NSLog(@"temp result: %@",result);
+                    
+                    return result;
+                }
+                else{
+                
+                    NSLog(@"temp result: %@",result);
+                    
+                    return nil;
+                    
+                }
     
-    
-    
-    
-    
-    
-    
-    
-    
+            
+
+    return nil;
 }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-
 
 
 - (NSArray *) configurePatternsWithArray:(NSMutableArray * )arrayPatterns andType:(NSUInteger) type{
@@ -257,63 +328,31 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
     NSLog(@"array before configure %@",arrayPatterns.description);
     
     
-    
     for(NSUInteger i=0;i<arrayPatterns.count;i++)
     {
         for(NSUInteger j=0;j<((NSMutableArray *)arrayPatterns[i]).count;j++){
-        
             if( [[[arrayPatterns objectAtIndex:i]firstObject] isKindOfClass:[NSArray class]]  ){
-                if([[[[arrayPatterns objectAtIndex:i]firstObject] firstObject]isKindOfClass: [NSString class] ])
-                {
-                    
-                    
-                    for(NSUInteger k0=0;k0<((NSMutableArray *) [arrayPatterns objectAtIndex:i]).count;k0++){
-                        NSMutableArray * pattern = (NSMutableArray *)arrayPatterns[i];
-                        pattern[k0][0] = [@(type) stringValue];
-                    
-                    }
-                
-                
-                }else{
-                    
-                    
-                    
+
                 for(NSUInteger k=0;k<((NSMutableArray *) [[arrayPatterns objectAtIndex:i] objectAtIndex:j]).count;k++){
                     NSMutableArray * pattern = (NSMutableArray *)arrayPatterns[i][j];
-                    pattern[k] = @(type);
                     
-                
+                    if(!([pattern[k] isKindOfClass:[NSString class]])){
+                    pattern[k] = @(type);
+                    }
+                    
+                   
                 }
-                }
-                
-            
+
             }else{
                 NSMutableArray * pattern = (NSMutableArray *)arrayPatterns[i];
+                if(!([pattern[i] isKindOfClass:[NSString class]])){
                 pattern[j] = @(type);
-                
-                
-            
-            
+                }
             }
-            
-            
-        
-        
-        
         }
-        
-        
-    
-    
-    
     }
     
-    
-    
-    
     NSLog(@"array after configure %@",arrayPatterns.description);
-    
-
 
     return arrayPatterns;
 }
@@ -338,7 +377,7 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
                 else {
                     NSUInteger newItemType = [self generateNewItemType];
                     self.gameField[i][j] = @(newItemType);
-                    itemTransition.y0 =  -j - 1 ;
+                    itemTransition.y0 =  - 1 ;
                     itemTransition.type = newItemType;
                 }
                 
@@ -352,14 +391,29 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 }
 
 - (void)deleteItems:(NSArray*)matchingSequences {
-    for (NSDMatchingSequence *matchingSequence in matchingSequences) {
-        for (NSUInteger i = matchingSequence.i0; i <= matchingSequence.i1; i++) {
-            for (NSUInteger j = matchingSequence.j0; j <= matchingSequence.j1; j++) {
-                self.gameField[i][j] = [NSNull null];
-            }
+   
+    
+    for(NSDIJStruct * tempStruct in matchingSequences){
+        
+        
+        if(self.gameField[tempStruct.i][tempStruct.j]!=[NSNull null]){
+            
+            
+        //    [self.gameField[tempStruct.i][tempStruct.j]];
+            
+            
+            
+            self.gameField[tempStruct.i][tempStruct.j]=[NSNull null];
+            
+            
+            
+            
         }
+        
+        
+        
     }
-
+    
      [self fillGaps];
     [self notifyAboutItemsDeletion:matchingSequences];
    
