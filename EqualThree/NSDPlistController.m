@@ -13,9 +13,12 @@
 
 
 
-+(void)loadPlistWithName:(NSString *)name andCompletion:(void (^)(NSArray *))completion{
++(void)loadPlistWithName:(NSString *)name
+           andCompletion:(void (^)(NSArray *))completion{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        
         NSString *documentsDirectory = [paths objectAtIndex:0];
         
         NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:name];
@@ -30,7 +33,7 @@
         
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if(completion!=nil){
+            if(completion){
                 completion(retValArray);
             }
         });
@@ -58,7 +61,7 @@
         [storedArray writeToFile:plistPath atomically: YES];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if(completion!=nil){
+            if(completion){
                 completion();
             }
         });

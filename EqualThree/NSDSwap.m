@@ -10,8 +10,8 @@
 
 @interface NSDSwap ()
 
-@property NSDGameItemTransition * from;
-@property NSDGameItemTransition * to;
+@property NSDIJStruct * from;
+@property NSDIJStruct * to;
 
 @end
 
@@ -19,11 +19,7 @@
 
 @implementation NSDSwap
 
-
-
--(instancetype) initSwapWithFromTransition:(NSDGameItemTransition *)from
-                              toTransition:(NSDGameItemTransition *)to{
-
+-(instancetype)initSwapWithFromTransition:(NSDIJStruct *)from toTransition:(NSDIJStruct *)to{
     
     self = [super init];
     
@@ -31,24 +27,17 @@
     
         self.from = from;
         self.to = to;
-        
+
     }
-    
-    
+
     return self;
 }
 
-- (NSArray *)toArray {
-    NSArray * result = nil;
-    
-    result = [[NSArray alloc] initWithObjects:(NSDGameItemTransition *)self.from,(NSDGameItemTransition*)self.to, nil];
-    
-    return result;
+-(NSArray *)toArray{
+
+    return [NSArray arrayWithObjects:self.from,self.to, nil];
     
 }
-
-
-
 
 
 @end

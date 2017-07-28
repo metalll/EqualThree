@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		433F9EAD1F2BE95C00A077E2 /* NSDGameTransitionElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 433F9EAC1F2BE95C00A077E2 /* NSDGameTransitionElement.m */; };
 		4344FA131F139351005683A9 /* NSDHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4344FA121F139351005683A9 /* NSDHttpClient.m */; };
 		4346AAE41F127E9000F1F639 /* NSDRatingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4346AAE21F127E9000F1F639 /* NSDRatingTableViewCell.m */; };
 		4346AAE51F127E9000F1F639 /* NSDRatingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4346AAE31F127E9000F1F639 /* NSDRatingTableViewCell.xib */; };
@@ -24,7 +25,6 @@
 		436755501F1271BE00E1C06E /* UIColor+NSDColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4367554F1F1271BE00E1C06E /* UIColor+NSDColor.m */; };
 		43681F9A1F16ECA70050B3CB /* NSDGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43681F991F16ECA70050B3CB /* NSDGameViewController.m */; };
 		437D35EA1F268B880017DCC5 /* NSDIJStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 437D35E91F268B880017DCC5 /* NSDIJStruct.m */; };
-		437D35ED1F26A57E0017DCC5 /* NSDMatchingSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = 437D35EC1F26A57E0017DCC5 /* NSDMatchingSequence.m */; };
 		438830B31F2BD7130012597B /* NSDSwap.m in Sources */ = {isa = PBXBuildFile; fileRef = 438830B21F2BD7130012597B /* NSDSwap.m */; };
 		438F4A681F13ABA600C48F7A /* NSDCustomHeaderForTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 438F4A671F13ABA600C48F7A /* NSDCustomHeaderForTableView.m */; };
 		438F4A6A1F13ABB600C48F7A /* NSDCustomViewForHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 438F4A691F13ABB600C48F7A /* NSDCustomViewForHeader.xib */; };
@@ -41,6 +41,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		433F9EAA1F2BE1D500A077E2 /* NSDGameItemType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSDGameItemType.h; sourceTree = "<group>"; };
+		433F9EAB1F2BE95C00A077E2 /* NSDGameTransitionElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDGameTransitionElement.h; sourceTree = "<group>"; };
+		433F9EAC1F2BE95C00A077E2 /* NSDGameTransitionElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDGameTransitionElement.m; sourceTree = "<group>"; };
 		4344FA111F139351005683A9 /* NSDHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDHttpClient.h; sourceTree = "<group>"; };
 		4344FA121F139351005683A9 /* NSDHttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDHttpClient.m; sourceTree = "<group>"; };
 		4346AAE11F127E9000F1F639 /* NSDRatingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDRatingTableViewCell.h; sourceTree = "<group>"; };
@@ -70,8 +73,6 @@
 		43681F991F16ECA70050B3CB /* NSDGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDGameViewController.m; sourceTree = "<group>"; };
 		437D35E81F268B880017DCC5 /* NSDIJStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDIJStruct.h; sourceTree = "<group>"; };
 		437D35E91F268B880017DCC5 /* NSDIJStruct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDIJStruct.m; sourceTree = "<group>"; };
-		437D35EB1F26A57E0017DCC5 /* NSDMatchingSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDMatchingSequence.h; sourceTree = "<group>"; };
-		437D35EC1F26A57E0017DCC5 /* NSDMatchingSequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDMatchingSequence.m; sourceTree = "<group>"; };
 		438830B11F2BD7130012597B /* NSDSwap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDSwap.h; sourceTree = "<group>"; };
 		438830B21F2BD7130012597B /* NSDSwap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDSwap.m; sourceTree = "<group>"; };
 		438F4A661F13ABA600C48F7A /* NSDCustomHeaderForTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDCustomHeaderForTableView.h; sourceTree = "<group>"; };
@@ -214,10 +215,11 @@
 				43EBEB9E1F20E7DA00EA958B /* NSDGameItemTransition.m */,
 				437D35E81F268B880017DCC5 /* NSDIJStruct.h */,
 				437D35E91F268B880017DCC5 /* NSDIJStruct.m */,
-				437D35EB1F26A57E0017DCC5 /* NSDMatchingSequence.h */,
-				437D35EC1F26A57E0017DCC5 /* NSDMatchingSequence.m */,
 				438830B11F2BD7130012597B /* NSDSwap.h */,
 				438830B21F2BD7130012597B /* NSDSwap.m */,
+				433F9EAA1F2BE1D500A077E2 /* NSDGameItemType.h */,
+				433F9EAB1F2BE95C00A077E2 /* NSDGameTransitionElement.h */,
+				433F9EAC1F2BE95C00A077E2 /* NSDGameTransitionElement.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -230,8 +232,6 @@
 				4367554F1F1271BE00E1C06E /* UIColor+NSDColor.m */,
 				4346AB011F1285B000F1F639 /* NSDPlistController.h */,
 				4346AB021F1285B000F1F639 /* NSDPlistController.m */,
-				43DAB72E1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.h */,
-				43DAB72F1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -239,6 +239,8 @@
 		438830AC1F2BD33D0012597B /* HTTPClient */ = {
 			isa = PBXGroup;
 			children = (
+				43DAB72E1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.h */,
+				43DAB72F1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.m */,
 				43DAB7311F16C4E60042537A /* NSDictionary+NSDBodyEncoder.h */,
 				43DAB7321F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m */,
 				43DAB72B1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.h */,
@@ -356,10 +358,10 @@
 				43DAB7301F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.m in Sources */,
 				436400F51F1F80B000C74876 /* NSDGameFieldViewController.m in Sources */,
 				438F4A701F13B26600C48F7A /* NSDHighscoresManager.m in Sources */,
+				433F9EAD1F2BE95C00A077E2 /* NSDGameTransitionElement.m in Sources */,
 				4346AAE41F127E9000F1F639 /* NSDRatingTableViewCell.m in Sources */,
 				43DDC9441F1CD2FF003E95C4 /* NSDButton.m in Sources */,
 				437D35EA1F268B880017DCC5 /* NSDIJStruct.m in Sources */,
-				437D35ED1F26A57E0017DCC5 /* NSDMatchingSequence.m in Sources */,
 				4367552A1F12682100E1C06E /* AppDelegate.m in Sources */,
 				4367554B1F12704A00E1C06E /* NSDToastView.m in Sources */,
 				438F4A681F13ABA600C48F7A /* NSDCustomHeaderForTableView.m in Sources */,

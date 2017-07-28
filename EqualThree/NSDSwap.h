@@ -7,13 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NSDGameItemTransition.h"
+#import "NSDIJStruct.h"
+
 
 @interface NSDSwap : NSObject
 
 
-- (instancetype) initSwapWithFromTransition: (NSDGameItemTransition*) from
-                              toTransition : (NSDGameItemTransition*) to;
+- (instancetype) initSwapWithFromTransition: (NSDIJStruct*) from
+                              toTransition : (NSDIJStruct*) to;
 
 - (NSArray *) toArray;
 

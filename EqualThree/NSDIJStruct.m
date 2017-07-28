@@ -22,7 +22,7 @@
 }
 
 - (NSString*)description {
-    return [NSString stringWithFormat:@"-| item at i: %ld j: %ld |- \n", (long)self.i, (long)self.j];
+    return [NSString stringWithFormat:@"-| item at i: %ld j: %ld |- ", (long)self.i, (long)self.j];
 }
 
 

@@ -12,25 +12,27 @@
 
 
 
+#pragma mark - Init
 
--(instancetype)initWithName:(NSString *)name andScore:(NSUInteger)score{
-    self = [super init];
-    if (self) {
-        self.UUID = [[NSUUID UUID] UUIDString];
-        self.userName = name;
-        self.userScore = score;
-    }
-    return self;
+-(instancetype)initWithName:(NSString *)name
+                      score:(NSUInteger)score {
     
+    return [self initWithUUID: [[NSUUID UUID] UUIDString] name:name score:score];
+
 }
 
--(instancetype)initWithUUID:(NSString *)UUID andName:(NSString *)name andScore:(NSUInteger)score{
+-(instancetype)initWithUUID:(NSString *)UUID
+                       name:(NSString *)name
+                      score:(NSUInteger)score{
+  
     self = [super init];
+    
     if (self) {
-        self.UUID = [[NSUUID UUID] UUIDString];
+        self.UUID = UUID;
         self.userName = name;
         self.userScore = score;
     }
+    
     return self;
     
 }

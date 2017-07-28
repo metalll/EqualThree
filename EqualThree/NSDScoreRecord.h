@@ -15,6 +15,13 @@
 @property NSString * userName;
 @property NSUInteger userScore;
 
--(instancetype)initWithName:(NSString *) name andScore: (NSUInteger) score;
+#pragma mark - Init
+
+-(instancetype)initWithUUID:(NSString *)UUID
+                       name:(NSString *)name
+                      score:(NSUInteger)score;
+
+-(instancetype)initWithName:(NSString *)name
+                      score:(NSUInteger)score;
 
 @end

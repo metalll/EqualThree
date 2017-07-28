@@ -15,23 +15,44 @@ float const defaultAnimationDuration = 2.0f;
 
 #pragma mark - Init
 
-- (instancetype)initWithX0:(NSUInteger)x0 andY0:(NSUInteger)y0 andX1:(NSUInteger)x1 andY1:(NSUInteger)y1 andType:(NSUInteger)type
-{
-    return [self initWithX0:x0 andY0:y0 andX1:x1 andY1:y1 andType:type andAnimationDuration:defaultAnimationDuration];
+
+
+
+- (instancetype) initWithFrom:(NSDGameItemTransition *) from
+                           to:(NSDGameItemTransition *) to{
+    
+
+    return [self initWithFrom:from to:to animationDuration:defaultAnimationDuration];
 }
 
+- (instancetype) initWithFrom:(NSDGameItemTransition *) from
+                           to:(NSDGameItemTransition *) to
+            animationDuration:(float) animationDuration{
 
--(instancetype)initWithX0:(NSUInteger)x0 andY0:(NSUInteger)y0 andX1:(NSUInteger)x1 andY1:(NSUInteger)y1 andType:(NSUInteger)type andAnimationDuration:(float)animationDuration{
+
     self = [super init];
-    if (self) {
-        self.x0 = x0;
-        self.x1 = x1;
-        self.y1 = y1;
-        self.y0 = y0;
-        self.type = type;
+    
+    if(self){
+        
+        self.from = from;
+        self.to = to;
         self.animationDuration = animationDuration;
+        
+        
     }
+    
     return self;
+
+
+}
+
+#pragma mark - Description
+
+-(NSString *)description{
+
+    NSString * description = [NSString stringWithFormat:@" from : %@ to: %@ animation duration : %f",self.from,self.to, self.animationDuration];
+    
+    return description;
 }
 
 @end
