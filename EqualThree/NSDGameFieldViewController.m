@@ -271,7 +271,7 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
                 endFrame.size = gameItemView.frame.size;
                 endFrame.origin = [self xyCoordinatesFromI:itemTransition.to.i j:itemTransition.to.j];
                 
-                [UIView animateWithDuration:3 animations:^{
+                [UIView animateWithDuration:1 animations:^{
                     gameItemView.frame = endFrame;
                 } completion:^(BOOL finished) {
                     self.gameField[itemTransition.to.i][itemTransition.to.j] = gameItemView;
@@ -286,35 +286,45 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
 
 - (void)processItemsDidDeleteNotification:(NSNotification *)notification {
  
-    NSArray *itemTransitions = notification.userInfo[kNSDGameItems];
+    NSArray *itemToDelete = notification.userInfo[kNSDGameItems];
     
     dispatch_async(self.animationQueue, ^{
-
-    
-        
-        
-    for(NSDIJStruct * tempStruct in itemTransitions){
-    
-    if(self.gameField[tempStruct.i][tempStruct.j]!=[NSNull null]){
-        
         
             dispatch_group_t animationGroup = dispatch_group_create();
-            
-                 dispatch_group_enter(animationGroup);
-                dispatch_async(dispatch_get_main_queue(), ^{
+        
+                    
+                    for(NSDIJStruct * tempStruct in itemToDelete){
+
+                        if(self.gameField[tempStruct.i][tempStruct.j]!=[NSNull null]){
+                            
+                        dispatch_group_enter(animationGroup);
+                        dispatch_async(dispatch_get_main_queue(), ^{
+   
+                        
+                            
                     
                     NSUInteger i = tempStruct.i;
                     NSUInteger j = tempStruct.j;
                     
-                    [UIView animateWithDuration:0.5  animations:^{
+                    [UIView animateWithDuration:1  animations:^{
                         [self.gameField[i][j] setAlpha:0.0];
                     } completion:^(BOOL finished) {
-                        [self.gameField[i][j] removeFromSuperview];
-                        self.gameField[i][j] = [NSNull null];
+                        if(self.gameField[i][j]!=[NSNull null]){
+ 
+                            [self.gameField[i][j] removeFromSuperview];
+                        }
+                            self.gameField[i][j] = [NSNull null];
                         dispatch_group_leave(animationGroup);
                     }];
-                });
-            
+                            
+                        
+                        
+                        });
+                        
+                    }
+                }
+                            
+               
             
             dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
      
@@ -323,12 +333,7 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
         
         
         
-        
-        }
-    
-    
-    
-    }
+   
     
    });
 }

@@ -1,4 +1,4 @@
-//
+    //
 //  NSDGameEngine.m
 //  EqualThree
 //
@@ -133,11 +133,12 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
     
     NSMutableArray * horizontalCheckPattern = [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null], [NSNull null] ] copyItems:NO];
     
-    NSMutableArray * verticalCheckPattern = [[NSMutableArray alloc] initWithArray:horizontalCheckPattern copyItems:YES];
+    NSMutableArray * verticalCheckPattern = [[NSMutableArray alloc] initWithObjects:[[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],[NSNull null]] copyItems:NO], nil];
+    
     
     NSMutableArray * squareCheckPattern = [[NSMutableArray alloc] initWithObjects:[[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null]] copyItems:NO],[[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null]] copyItems:NO], nil];
     
-    NSMutableArray * patterns = [[NSMutableArray alloc] initWithArray:@[horizontalCheckPattern,squareCheckPattern,verticalCheckPattern] copyItems:NO];
+    NSMutableArray * patterns = [[NSMutableArray alloc] initWithArray:@[verticalCheckPattern,squareCheckPattern,horizontalCheckPattern] copyItems:NO];
     
     
     
@@ -166,6 +167,17 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 
         NSLog(@"no has matches");
 
+        for(int i=0;i<_verticalItemsCount;i++){
+            NSString * str = @"|";
+            for(int j=0;j<_horizontalItemsCount;j++){
+             str = [str stringByAppendingString: [NSString stringWithFormat:@"%@|",_gameField[j][i]] ] ;
+            }
+            NSLog(@"%@",str);
+        }
+        
+        
+        
+        
         
         [self checkPotentialMatches];
         
@@ -187,7 +199,7 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 
 -(NSUInteger) calculatePatternJMaxSize : (NSMutableArray *) pattern{
     
-    if(pattern.count == 1){ return 1;}
+  //  if(pattern.count == 1){ return 1;}
 
     NSUInteger result = 0;
     
@@ -239,8 +251,9 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
     
     NSUInteger jPatternMaxSize = [self calculatePatternJMaxSize:pattern];
     
+    
     for(NSUInteger i = 0; i <= (self.horizontalItemsCount - pattern.count); i++){
-        for(NSUInteger j=0; j <= (self.verticalItemsCount-jPatternMaxSize);j++){
+        for(NSUInteger j = 0; j <= (self.verticalItemsCount-jPatternMaxSize);j++){
             
             BOOL isPatternMatched = YES;
             
@@ -262,13 +275,10 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
                     
                     isPatternMatched = [self compareItemsWithPatternItem:pattern[patternI] gameFieldItem:self.gameField[i+patternI][j]] && isPatternMatched;
                     [checkedItems addObject:[[NSDIJStruct alloc] initWithI:i+patternI andJ:j]];
-                    
-                     
-                }
                 }
                 
-                
-                
+            }
+            
                 NSLog(@"checked items %@",[checkedItems description]);
                 
                 if(isPatternMatched){

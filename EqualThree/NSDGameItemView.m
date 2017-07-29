@@ -17,8 +17,8 @@
     CALayer *layer = self.layer;
     
     layer.masksToBounds = YES;
-    layer.cornerRadius = 20.0;
-    layer.borderWidth = 3.0;
+    layer.cornerRadius = 10.0;
+    layer.borderWidth = 2.0;
     layer.borderColor = [[UIColor whiteColor] CGColor];
     
     
@@ -74,19 +74,12 @@
 
 -(void)setType:(NSUInteger)type{
     
-    
+    if(_type!=type)
     _type = type;
     
     
-    
     [self setBackgroundColor:[self colorForType:_type]];
-    
-    
-    
 
-        
-    
-    
 }
 
 @end
