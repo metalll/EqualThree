@@ -106,7 +106,7 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
     }
     else {
         NSDGameViewController * target = [self.storyboard instantiateViewControllerWithIdentifier:@"NSDGameViewController"];
-        [self.navigationController presentViewController:target animated:YES completion:nil];
+        [self.navigationController pushViewController:target animated:YES];
     }
     
     

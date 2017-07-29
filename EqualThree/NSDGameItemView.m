@@ -40,8 +40,6 @@
     
     switch (type) {
    
-        case 0:
-            result = [UIColor lightGrayColor];
             
         case 1:
            result = [UIColor redColor];
@@ -50,19 +48,18 @@
          result =   [UIColor greenColor];
             break;
         case 3:
-          result=   [UIColor orangeColor];
+          result=   [UIColor blackColor];
             break;
         case 4:
          result =   [UIColor blueColor];
             break;
         case 5:
-        result=      [UIColor cyanColor];
+        result=      [UIColor yellowColor];
             break;
         case 6:
-          result =  [UIColor yellowColor];
+          result = [UIColor brownColor];
             break;
         case 7:
-            result = [UIColor magentaColor];
             break;
           
             
@@ -78,9 +75,7 @@
 -(void)setType:(NSUInteger)type{
     
     
-    if(_type!=type){
-        _type = type;
-    }
+    _type = type;
     
     
     

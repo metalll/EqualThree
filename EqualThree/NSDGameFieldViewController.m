@@ -1,4 +1,4 @@
-#import "NSDGameFieldViewController.h"
+    #import "NSDGameFieldViewController.h"
 #import "NSDGameItemView.h"
 #import "NSDGameEngine.h"
 #import "NSDGameItemTransition.h"
@@ -52,19 +52,19 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
     [self initGestureRecognizerWithView:self.gameItemsView];
         
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        
-        
-        [self configureGame];
-    });
     
-
+        
+        
+    
     
     
 }
 
 
+
+-(void)viewDidLayoutSubviews{
+    [self configureGame];
+}
 
 - (void)dealloc {
     [self unsubscribeFromNotifications];
@@ -73,6 +73,17 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
 #pragma mark - Private Methods
 
 - (void)configureGame {
+    
+    
+    
+    
+    static BOOL isConfigured = NO;
+    
+    if(isConfigured){ return; }
+    
+    
+    
+    
     
     self.horizontalItemsCount = 8;
     self.verticalItemsCount = 8;
@@ -94,6 +105,8 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
     self.gameEngine = [[NSDGameEngine alloc] initWithHorizontalItemsCount:self.horizontalItemsCount
                                                        verticalItemsCount:self.verticalItemsCount
                                                            itemTypesCount:self.itemTypesCount];
+    
+    isConfigured = YES;
 }
 
 - (NSDGameItemView*)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type{
@@ -234,7 +247,7 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
 
 - (void)subscribeToNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidMoveNotification:) name:NSDGameItemsDidMoveNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidMoveNotification:) name:NSDGameItemsDidDeleteNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidDeleteNotification:) name:NSDGameItemsDidDeleteNotification object:nil];
 }
 
 - (void)unsubscribeFromNotifications {
@@ -278,6 +291,8 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
     dispatch_async(self.animationQueue, ^{
 
     
+        
+        
     for(NSDIJStruct * tempStruct in itemTransitions){
     
     if(self.gameField[tempStruct.i][tempStruct.j]!=[NSNull null]){
@@ -291,7 +306,7 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
                     NSUInteger i = tempStruct.i;
                     NSUInteger j = tempStruct.j;
                     
-                    [UIView animateWithDuration:3 animations:^{
+                    [UIView animateWithDuration:0.5  animations:^{
                         [self.gameField[i][j] setAlpha:0.0];
                     } completion:^(BOOL finished) {
                         [self.gameField[i][j] removeFromSuperview];
