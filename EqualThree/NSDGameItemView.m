@@ -14,13 +14,12 @@
 -(void)drawRect:(CGRect)rect{
 
     
+    CALayer *layer = self.layer;
     
-    
-    self.bounds = CGRectInset(rect, 2.0f, 2.0f);
-    CALayer * layer  = self.layer;
-    
-    layer.cornerRadius = 5.0;
     layer.masksToBounds = YES;
+    layer.cornerRadius = 20.0;
+    layer.borderWidth = 3.0;
+    layer.borderColor = [[UIColor whiteColor] CGColor];
     
     
     

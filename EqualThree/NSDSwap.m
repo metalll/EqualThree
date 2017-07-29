@@ -8,18 +8,12 @@
 
 #import "NSDSwap.h"
 
-@interface NSDSwap ()
-
-@property NSDIJStruct * from;
-@property NSDIJStruct * to;
-
-@end
 
 
 
 @implementation NSDSwap
 
--(instancetype)initSwapWithFromTransition:(NSDIJStruct *)from toTransition:(NSDIJStruct *)to{
+-(instancetype)initSwapWithFrom:(NSDIJStruct *)from to:(NSDIJStruct *)to{
     
     self = [super init];
     
@@ -37,6 +31,15 @@
 
     return [NSArray arrayWithObjects:self.from,self.to, nil];
     
+}
+
+#pragma mark - Description
+
+-(NSString *)description{
+    
+    NSString * description = [NSString stringWithFormat:@"from : %@ to: %@ ",self.from,self.to];
+    
+    return description;
 }
 
 

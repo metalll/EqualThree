@@ -12,9 +12,6 @@
 @interface NSDHighscoresManager : NSObject
 
 
-
-
-
 +(instancetype) sharedManager;
 
 

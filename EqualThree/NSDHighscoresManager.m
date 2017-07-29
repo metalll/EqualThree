@@ -22,10 +22,16 @@
 
 -(void) loadManager{
     self->records = [NSMutableArray new];
-    [self->records addObject:[[NSDScoreRecord alloc]initWithName:@"Vasya" andScore:133242342]];
-    [self->records addObject:[[NSDScoreRecord alloc]initWithName:@"Petya" andScore:543242342]];
-    [self->records addObject:[[NSDScoreRecord alloc]initWithName:@"Dasha" andScore:223233342]];
-    [self->records addObject:[[NSDScoreRecord alloc]initWithName:@"Masha" andScore:243242]];
+    
+    
+    [self->records addObject:[[NSDScoreRecord alloc] initWithName:@"user" score:43224]];
+    [self->records addObject:[[NSDScoreRecord alloc] initWithName:@"user" score:43224]];
+    [self->records addObject:[[NSDScoreRecord alloc] initWithName:@"user" score:43224]];
+    [self->records addObject:[[NSDScoreRecord alloc] initWithName:@"user" score:43224]];
+    [self->records addObject:[[NSDScoreRecord alloc] initWithName:@"user" score:43224]];
+    [self->records addObject:[[NSDScoreRecord alloc] initWithName:@"user" score:43224]];
+    
+    
 }
 
 

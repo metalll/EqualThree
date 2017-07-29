@@ -10,8 +10,8 @@
 
 @interface NSDIJStruct : NSObject
 
-@property NSUInteger i;
-@property NSUInteger j;
+@property NSInteger i;
+@property NSInteger j;
 
 - (instancetype)initWithI:(NSUInteger) i andJ: (NSUInteger) j;
 

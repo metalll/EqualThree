@@ -7,28 +7,29 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NSDGameItemTransition.h"
+#import "NSDIJStruct.h"
 #import "NSDGameItemType.h"
+#import "NSDSwap.h"
 extern float const defaultAnimationDuration;
 
-@interface NSDGameItemTransition : NSObject
+@interface NSDGameItemTransition : NSDSwap
 
 
-
+@property NSInteger type;
 @property float animationDuration;
 
-@property NSDGameItemTransition * from;
-@property NSDGameItemTransition * to;
+
 
 
 #pragma mark - Init
 
-- (instancetype) initWithFrom:(NSDGameItemTransition *) from
-                           to:(NSDGameItemTransition *) to;
+- (instancetype) initWithFrom:(NSDIJStruct *) from
+                           to:(NSDIJStruct *) to
+                         type:(NSDGameItemType)type;
 
-
-- (instancetype) initWithFrom:(NSDGameItemTransition *) from
-                           to:(NSDGameItemTransition *) to
+- (instancetype) initWithFrom:(NSDIJStruct *) from
+                           to:(NSDIJStruct *) to
+                         type:(NSDGameItemType)type
             animationDuration:(float) animationDuration;
 
 

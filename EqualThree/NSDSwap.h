@@ -12,9 +12,11 @@
 
 @interface NSDSwap : NSObject
 
+@property NSDIJStruct * from;
+@property NSDIJStruct * to;
 
-- (instancetype) initSwapWithFromTransition: (NSDIJStruct*) from
-                              toTransition : (NSDIJStruct*) to;
+- (instancetype) initSwapWithFrom: (NSDIJStruct*) from
+                              to : (NSDIJStruct*) to;
 
 - (NSArray *) toArray;
 

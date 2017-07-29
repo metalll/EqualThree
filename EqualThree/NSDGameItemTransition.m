@@ -18,24 +18,24 @@ float const defaultAnimationDuration = 2.0f;
 
 
 
-- (instancetype) initWithFrom:(NSDGameItemTransition *) from
-                           to:(NSDGameItemTransition *) to{
+- (instancetype) initWithFrom:(NSDIJStruct *) from
+                           to:(NSDIJStruct *) to
+                         type:(NSDGameItemType)type{
     
-
-    return [self initWithFrom:from to:to animationDuration:defaultAnimationDuration];
+    return [self initWithFrom:from to:to type:type animationDuration:defaultAnimationDuration];
 }
 
-- (instancetype) initWithFrom:(NSDGameItemTransition *) from
-                           to:(NSDGameItemTransition *) to
+- (instancetype) initWithFrom:(NSDIJStruct *) from
+                           to:(NSDIJStruct *) to
+                         type:(NSDGameItemType)type
             animationDuration:(float) animationDuration{
 
 
-    self = [super init];
+    self = [super initSwapWithFrom:from to:to];
     
     if(self){
         
-        self.from = from;
-        self.to = to;
+        self.type = type;
         self.animationDuration = animationDuration;
         
         
@@ -50,7 +50,7 @@ float const defaultAnimationDuration = 2.0f;
 
 -(NSString *)description{
 
-    NSString * description = [NSString stringWithFormat:@" from : %@ to: %@ animation duration : %f",self.from,self.to, self.animationDuration];
+    NSString * description = [NSString stringWithFormat:@" from : %@ to: %@ type: %ld, animation duration: %f",self.from,self.to,(long)self.type,self.animationDuration ];
     
     return description;
 }

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "NSDSwap.h"
+
 extern NSString * const NSDGameItemsDidMoveNotification;
 extern NSString * const NSDGameItemsDidDeleteNotification;
 extern NSString * const kNSDGameItems;
@@ -21,9 +23,6 @@ extern NSString * const kNSDGameItemTransitions;
                           verticalItemsCount:(NSUInteger)verticalItemsCount
                               itemTypesCount:(NSUInteger)itemTypesCount;
 
-- (void)swapItemAtX0:(NSUInteger)x0
-                  y0:(NSUInteger)y0
-        withItemAtX1:(NSUInteger)x1
-                  y1:(NSUInteger)y1;
+- (void)swapItemsWithSwap:(NSDSwap *) swap;
 
 @end

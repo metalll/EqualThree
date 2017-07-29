@@ -3,7 +3,7 @@
 #import "NSDGameEngine.h"
 #import "NSDGameItemTransition.h"
 #import "NSDIJStruct.h"
-#import "NSDMatchingSequence.h"
+
 
 @interface NSDGameFieldViewController ()
 
@@ -21,16 +21,17 @@
 @property NSUInteger itemTypesCount;
 @property CGSize itemSize;
 
-@property BOOL isAnimatedField;
 
 
+
+@property (strong) dispatch_queue_t animationQueue;
 
 - (void)configureGame;
 - (CGPoint)xyCoordinatesFromI:(NSInteger)i j:(NSInteger)j;
 - (NSDGameItemView*)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type;
 - (NSDGameItemView*)gameItemViewAtI:(NSInteger)i j:(NSInteger)j type:(NSUInteger)type;
 
-- (void) didSwipe:(UISwipeGestureRecognizer *) recognizer;
+- (void) didRecognizePan:(UIPanGestureRecognizer *) recognizer;
 
 
 - (void)subscribeToNotifications;
@@ -44,18 +45,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QUEUE_SERIAL);
+    [self subscribeToNotifications];
     
-        self.isAnimatedField = YES;
-        [self subscribeToNotifications];
+    
+    [self initGestureRecognizerWithView:self.gameItemsView];
         
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        
+        
         [self configureGame];
-        [self initGestureRecognizerWithView:self.gameItemsView];
-        
     });
+    
+
     
     
 }
+
+
 
 - (void)dealloc {
     [self unsubscribeFromNotifications];
@@ -92,6 +101,17 @@
     
     itemView.type = type;
     
+    itemView.autoresizingMask =
+    UIViewAutoresizingFlexibleLeftMargin |
+    UIViewAutoresizingFlexibleWidth |
+    UIViewAutoresizingFlexibleRightMargin |
+    UIViewAutoresizingFlexibleTopMargin |
+    UIViewAutoresizingFlexibleHeight |
+    UIViewAutoresizingFlexibleBottomMargin;
+    
+    itemView.translatesAutoresizingMaskIntoConstraints = YES;
+   
+    
     [self.gameItemsView addSubview:itemView];
     
     return itemView;
@@ -104,6 +124,7 @@
 }
 
 - (NSDGameItemView*)gameItemViewAtI:(NSInteger)i j:(NSInteger)j type:(NSUInteger)type{
+    
     NSDGameItemView *result = nil;
     
     if ((i >= 0) && (i < self.horizontalItemsCount) && (j >= 0) && (j < self.verticalItemsCount)) {
@@ -129,139 +150,82 @@
 
 - (void) initGestureRecognizerWithView:(UIView *) view {
     
-    UISwipeGestureRecognizer * swipeUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
-    swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
-    UISwipeGestureRecognizer * swipeDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
-    swipeDown.direction = UISwipeGestureRecognizerDirectionDown;
-    UISwipeGestureRecognizer * swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
-    swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
-    UISwipeGestureRecognizer * swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
-    swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
+    UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didRecognizePan:)];
     
-    [view addGestureRecognizer:swipeUp];
-    [view addGestureRecognizer:swipeDown];
-    [view addGestureRecognizer:swipeLeft];
-    [view addGestureRecognizer:swipeRight];
+    [view addGestureRecognizer:pan];
+    
 }
 
 
 
-- (void) findIJPositionItemWithPoint:(CGPoint) swipePoint andCompletion:(void(^)(NSDIJStruct * result)) completion {
+- (NSDIJStruct *) iJPositionItemWithPoint:(CGPoint) point {
   
-    NSOperationQueue * queue = [NSOperationQueue new];
+    NSDIJStruct * result = nil ;
     
-    NSBlockOperation * firstPart = [NSBlockOperation blockOperationWithBlock:^{
-        
-        /*
-         
-         ****0
-         ***00
-         **000
-         *0000
-         00000
-         
-         */
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            for(NSUInteger i=0;i<self.verticalItemsCount;i++){
-                for(NSUInteger j=i;j<self.horizontalItemsCount;j++){
-                    CGPoint tempPoint = [self xyCoordinatesFromI:i j:j];
-                    CGRect tempRect = CGRectMake(tempPoint.x, tempPoint.y, self.itemSize.width, self.itemSize.height);
-                    
-                    
-                    if(CGRectContainsPoint(tempRect, swipePoint)){
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            completion([[NSDIJStruct alloc] initWithI:i andJ:j]);
-                        });
-                        [queue cancelAllOperations];
-                    }
-                
-                
-                }
-            }
-
-        });
-        
-        
-      
-        
-    }];
+    result = [[NSDIJStruct alloc] initWithI:point.x/self.itemSize.width andJ: point.y / self.itemSize.height];
     
-    
-    NSBlockOperation * secondPart = [NSBlockOperation blockOperationWithBlock:^{
-          dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    /*
-       00000
-       0000*
-       000**
-       00***
-       0****
-    */
-              
-        for(NSInteger j=0;j<self.horizontalItemsCount;j++){
-            for(NSInteger i=(self.verticalItemsCount-1);i>j;i--){
-                CGPoint tempPoint = [self xyCoordinatesFromI:i j:j];
-                CGRect tempRect = CGRectMake(tempPoint.x, tempPoint.y, self.itemSize.width, self.itemSize.height);
-                if(CGRectContainsPoint(tempRect, swipePoint)){
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completion([[NSDIJStruct alloc] initWithI:i andJ:j]);
-                       
-                    });
-                    [queue cancelAllOperations];}
-            }
-        }
-        
-          });
-    }];
-
-    [queue addOperation:firstPart];
-    [queue addOperation:secondPart];
-    
-                       
+    return result;
 }
 
 
-- (void) didSwipe:(UISwipeGestureRecognizer *) recognizer{
+- (void) didRecognizePan:(UISwipeGestureRecognizer *) recognizer{
     
-    if(recognizer.state != UIGestureRecognizerStateEnded || self.isAnimatedField ) return;
+    static CGPoint startingLocation;
+    static CGPoint currentLocation;
+    static BOOL finished;
     
-    [self findIJPositionItemWithPoint:[recognizer locationInView: self.gameItemsView] andCompletion:^(NSDIJStruct *result) {
-        NSUInteger itemPosI = result.i;
-        NSUInteger itemPosJ = result.j;
+    switch (recognizer.state) {
+        case UIGestureRecognizerStateBegan:
+            startingLocation = [recognizer locationInView:self.gameItemsView];
+            currentLocation = startingLocation;
+            finished = NO;
+            break;
+        case UIGestureRecognizerStateChanged:
+            currentLocation = [recognizer locationInView:self.gameItemsView];
+            break;
+        default:
+            return;
+    }
+    
+    if (!finished ) {
+        CGFloat deltaX = currentLocation.x - startingLocation.x;
+        CGFloat deltaY = currentLocation.y - startingLocation.y;
         
-        
-        
-        switch (recognizer.direction) {
-            case UISwipeGestureRecognizerDirectionUp:
-                if(itemPosJ>0)
-                    [self.gameEngine swapItemAtX0:itemPosI y0:itemPosJ withItemAtX1:itemPosI y1:itemPosJ-1];
-                return;
-                break;
-                
-            case UISwipeGestureRecognizerDirectionDown:
-                if(itemPosJ<(self.verticalItemsCount-1))
-                    [self.gameEngine swapItemAtX0:itemPosI y0:itemPosJ withItemAtX1:itemPosI y1:itemPosJ+1];
-                return;
-                break;
-            case UISwipeGestureRecognizerDirectionLeft:
-                if(itemPosI>0)
-                    [self.gameEngine swapItemAtX0:itemPosI y0:itemPosJ withItemAtX1:itemPosI-1 y1:itemPosJ];
-                return;
-                break;
-            case UISwipeGestureRecognizerDirectionRight:
-                if(itemPosI<(self.horizontalItemsCount-1)){
-                    [self.gameEngine swapItemAtX0:itemPosI y0:itemPosJ withItemAtX1:itemPosI+1 y1:itemPosJ];
+        if ((fabs(deltaX) > (self.itemSize.width / 3)) || (fabs(deltaY) > (self.itemSize.height / 3))) {
+            
+            finished = YES;
+            
+            NSDIJStruct * ijstruct = [self iJPositionItemWithPoint:startingLocation];
+            NSUInteger i = ijstruct.i;
+            NSUInteger j = ijstruct.j;
+            
+            
+            if (fabs(deltaX) > fabs(deltaY)) {
+                if (deltaX > 0) {
+                    if (i < (self.horizontalItemsCount - 1)) {
+                       // [self.gameEngine swapItemAtX0:i y0:j withItemAtX1:(i + 1) y1:j];
+                        
+                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i+1 andJ:j]]];
+                        
+                    }
+                } else {
+                    if (i > 0) {
+                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i-1 andJ:j]]];
+                    }
                 }
-                break;
-                return;
-            default:
-                return;
-                break;
+            } else {
+                if (deltaY > 0) {
+                    if (j < (self.verticalItemsCount - 1)) {
+                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i andJ:j+1]]];
+                         }
+                } else {
+                    if (j > 0) {
+                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i andJ:j-1]]];
+                    }
+                }
+            }
         }
-
-    } ];
-    
-    
+    }
     
 }
 
@@ -278,56 +242,71 @@
 }
 
 - (void)processItemsDidMoveNotification:(NSNotification *)notification {
+    NSArray *itemTransitions = notification.userInfo[kNSDGameItemTransitions];
     
+    dispatch_async(self.animationQueue, ^{
+        
+        dispatch_group_t animationGroup = dispatch_group_create();
+        
+        for (NSDGameItemTransition *itemTransition in itemTransitions) {
             
-            @synchronized (self) {
-                self.isAnimatedField = YES;
-            }
-            
-            NSArray *itemTransitions = notification.userInfo[kNSDGameItemTransitions];
-            
-            for (NSUInteger i=0;i<itemTransitions.count;i++) {
-                NSDGameItemTransition *itemTransition = itemTransitions[i];
-                NSDGameItemView *gameItemView = [self gameItemViewAtI:itemTransition.x0 j:itemTransition.y0 type:itemTransition.type];
+            dispatch_group_enter(animationGroup);
+            dispatch_async(dispatch_get_main_queue(), ^{
                 
+                NSDGameItemView *gameItemView = [self gameItemViewAtI:itemTransition.from.i j:itemTransition.from.j type:itemTransition.type];
                 CGRect endFrame = CGRectZero;
                 endFrame.size = gameItemView.frame.size;
+                endFrame.origin = [self xyCoordinatesFromI:itemTransition.to.i j:itemTransition.to.j];
                 
-                CGFloat autoresizedMarginX = (self.itemSize.width - endFrame.size.width)/2.0f;
-                CGFloat autoresizedMarginY = (self.itemSize.height - endFrame.size.height)/2.0f;
-                
-                CGPoint tempOriginPoint = [self xyCoordinatesFromI:(CGFloat)itemTransition.x1 j:(CGFloat)itemTransition.y1];
-                endFrame.origin = CGPointMake( tempOriginPoint.x +autoresizedMarginX ,tempOriginPoint.y+autoresizedMarginY);
-                
-                
-                    [UIView animateWithDuration:2 animations:^{
-                        gameItemView.frame = endFrame;
-                    } completion:^(BOOL finished) {
-                        self.gameField[itemTransition.x1][itemTransition.y1] = gameItemView;
-                        if(finished&&(i==(itemTransitions.count-1))) {
-                              self.isAnimatedField = NO;
-                            }
-                    }];
-            }
+                [UIView animateWithDuration:3 animations:^{
+                    gameItemView.frame = endFrame;
+                } completion:^(BOOL finished) {
+                    self.gameField[itemTransition.to.i][itemTransition.to.j] = gameItemView;
+                    dispatch_group_leave(animationGroup);
+                }];
+            });
+        }
+        dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
+    });
+
 }
 
 - (void)processItemsDidDeleteNotification:(NSNotification *)notification {
  
     NSArray *itemTransitions = notification.userInfo[kNSDGameItems];
     
+    dispatch_async(self.animationQueue, ^{
+
+    
     for(NSDIJStruct * tempStruct in itemTransitions){
     
     if(self.gameField[tempStruct.i][tempStruct.j]!=[NSNull null]){
         
+        
+            dispatch_group_t animationGroup = dispatch_group_create();
             
-            [self.gameField[tempStruct.i][tempStruct.j] setAlpha:0.0f];
-            [self.gameField[tempStruct.i][tempStruct.j]removeFromSuperview];
-            ;
+                 dispatch_group_enter(animationGroup);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    NSUInteger i = tempStruct.i;
+                    NSUInteger j = tempStruct.j;
+                    
+                    [UIView animateWithDuration:3 animations:^{
+                        [self.gameField[i][j] setAlpha:0.0];
+                    } completion:^(BOOL finished) {
+                        [self.gameField[i][j] removeFromSuperview];
+                        self.gameField[i][j] = [NSNull null];
+                        dispatch_group_leave(animationGroup);
+                    }];
+                });
             
-          
-            self.gameField[tempStruct.i][tempStruct.j]=[NSNull null];
             
- 
+            dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
+     
+        
+        
+        
+        
         
         
         }
@@ -336,23 +315,7 @@
     
     }
     
-    
-    
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+   });
 }
 
 
