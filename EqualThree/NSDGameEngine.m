@@ -189,7 +189,44 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
         
 
 -(void) checkPotentialMatches {
-
+    
+    //todo 26 patterns
+    
+    NSMutableArray * squarePatternAbstract = [[NSMutableArray alloc] initWithObjects:
+    [[NSMutableArray alloc] initWithArray:@[ [NSNull null],[NSNull null],[NSNull null]]],
+    [[NSMutableArray alloc] initWithArray:@[ [NSNull null],[NSNull null],[NSNull null]]],
+     [[NSMutableArray alloc] initWithArray:@[ [NSNull null],[NSNull null],[NSNull null]]],
+                                               nil];
+    
+    NSMutableArray * squarePotentialPattern1 = [[NSMutableArray alloc] initWithObjects:
+                                              [[NSMutableArray alloc] initWithArray:
+  @[ [NSNull null],[NSNull null],]],
+                                              [[NSMutableArray alloc] initWithArray:
+  @[ [NSNull null],@"*"         ,]],
+                                              [[NSMutableArray alloc] initWithArray:
+  @[ @"*"         ,[NSNull null]]],
+                                              nil];
+   
+    NSMutableArray * squarePotentialPattern2 = [[NSMutableArray alloc] initWithObjects:
+                                       [[NSMutableArray alloc] initWithArray:
+  @[ [NSNull null],[NSNull null],]],
+                                       [[NSMutableArray alloc] initWithArray:
+  @[ @"*"         ,[NSNull null],]],
+                                       [[NSMutableArray alloc] initWithArray:
+  @[ [NSNull null],@"*"          ]],
+                                       nil];
+    
+    NSMutableArray * squarePotentialPattern3 = [[NSMutableArray alloc] initWithObjects:
+                                                [[NSMutableArray alloc] initWithArray:
+                                                 @[ [NSNull null],[NSNull null],]],
+                                                [[NSMutableArray alloc] initWithArray:
+                                                 @[ @"*"         ,[NSNull null],]],
+                                                [[NSMutableArray alloc] initWithArray:
+                                                 @[ [NSNull null],@"*"          ]],
+                                                nil];
+    
+    
+        
     
     //to do
 
