@@ -7,16 +7,16 @@
 //
 
 #import "NSDGeneralMenuViewController.h"
-#import "NSDToastView.h"
+
 #import "UIColor+NSDColor.h"
 #include "NSDGameViewController.h"
 #import "NSDAlertView.h"
 
 
 
-@interface NSDGeneralMenuViewController (){
-    NSDToastView * toast;
-}
+@interface NSDGeneralMenuViewController ()
+
+
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 
 @property (weak, nonatomic) IBOutlet UIButton *resumeButton;
@@ -43,14 +43,8 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
     [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [bar setTintColor:[UIColor whiteColor]];
 
-    self->toast = [NSDToastView new];
+   
     
-    if([[NSUserDefaults standardUserDefaults] objectForKey:kIsFirstLaunch]){
-        [self->toast displayOnView:self.mainView withMessage:@"Welcome back" andColor:[UIColor toastSimpleColor] andIndicator:NO andFaded:YES];
-    }else{
-        [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:kIsFirstLaunch];
-         [self->toast displayOnView:self.mainView withMessage:@"Welcome to EqualThree" andColor:[UIColor toastSimpleColor] andIndicator:NO andFaded:YES];
-    }
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{
                                                               kIsHasSavedGame:@NO}];

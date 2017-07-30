@@ -24,6 +24,17 @@
     
     self.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:20.0f];
     [self setTitleColor: [UIColor buttonTitleFontColor] forState:UIControlStateNormal];
+    
+    self.layer.borderWidth = 2.0;
+    self.layer.borderColor = [[UIColor clearColor] CGColor];
+    
+    self.layer.shadowColor = [UIColor colorWithRed:(100.0f/255.0f) green:0.0 blue:0.0 alpha:1.0].CGColor;
+    self.layer.shadowOpacity = 1.0f;
+    self.layer.shadowRadius = 1.0f;
+    self.layer.shadowOffset = CGSizeMake(0, 3);
+    
+    
+    
 }
 
 @end

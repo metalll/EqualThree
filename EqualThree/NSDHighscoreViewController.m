@@ -8,7 +8,7 @@
 
 #import "NSDHighscoreViewController.h"
 #import "UIColor+NSDColor.h"
-#import "NSDToastView.h"
+
 #import "NSDPlistController.h"
 #import "NSDRatingTableViewCell.h"
 #import "NSDCustomHeaderForTableView.h"

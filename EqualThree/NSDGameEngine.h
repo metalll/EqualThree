@@ -12,8 +12,11 @@
 
 extern NSString * const NSDGameItemsDidMoveNotification;
 extern NSString * const NSDGameItemsDidDeleteNotification;
+extern NSString * const NSDEndOfTransitions;
+
 extern NSString * const kNSDGameItems;
 extern NSString * const kNSDGameItemTransitions;
+
 
 @interface NSDGameEngine : NSObject
 

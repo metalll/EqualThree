@@ -13,6 +13,8 @@
 
 NSString * const NSDGameItemsDidMoveNotification = @"NSDGameItemDidMoveNotification";
 NSString * const NSDGameItemsDidDeleteNotification = @"NSDGameItemDidDeleteNotification";
+NSString * const NSDEndOfTransitions = @"kNSDEndOfTransitions";
+
 NSString * const kNSDGameItems = @"kNSDGameItems";
 NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 
@@ -42,6 +44,8 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 - (void)fillGaps;
 - (void)deleteItems:(NSArray*)matchingSequences;
 - (void)revertUserAction;
+
+
 
 @property NSDSwap * lastUserSwap;
 
@@ -120,14 +124,19 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 }
 
 - (void)applyUserAction {
-    //todo: do stuff
-    //todo: notifyAboutItemsMovement
+  
+    
+    
+    
     self.canRevertUserAction = YES;
     [self checkMatchingItems];
 }
 
 - (void)checkMatchingItems {
 
+    
+    
+    
     NSMutableSet * result = [[NSMutableSet alloc] init];
     
     
@@ -159,6 +168,9 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 }
    
     if(result.count>0){
+        
+        self.canRevertUserAction = NO;
+        
         [self deleteItems:result.allObjects];
         [self fillGaps];
         NSLog(@"items to delete %@", result );
@@ -176,10 +188,20 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
         }
         
         
+        if(self.canRevertUserAction){
+        
+            [self revertUserAction];
+            
+        }else{
+        
+            [self notifyAboutkEndOfTransitions];
+            
+            [self checkPotentialMatches];
+            
+            
+        }
         
         
-        
-        [self checkPotentialMatches];
         
         
     }
@@ -226,7 +248,7 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
                                                 nil];
     
     
-        
+    
     
     //to do
 
@@ -426,19 +448,46 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
         
     }
     
+    
+    
     [self notifyAboutItemsDeletion:matchingSequences];
     
    
 }
 
 - (void)revertUserAction {
-    //todo: do stuff
-    //todo: notifyAboutItemsMovement
+    
+    NSMutableArray * newItemTransitions = [[NSMutableArray alloc] initWithCapacity:2];
+    
+    newItemTransitions[0] = [[NSDGameItemTransition alloc] initWithFrom:self.lastUserSwap.to to:self.lastUserSwap.from type:[self.gameField[self.lastUserSwap.to.i][self.lastUserSwap.to.j] unsignedIntegerValue]];
+    
+    newItemTransitions[1] = [[NSDGameItemTransition alloc] initWithFrom:self.lastUserSwap.from to:self.lastUserSwap.to type:[self.gameField[self.lastUserSwap.from.i][self.lastUserSwap.from.j] unsignedIntegerValue]];
+    
+    [self notifyAboutItemsMovement:newItemTransitions];
+    
+    
+    id tmp = self.gameField[self.lastUserSwap.from.i][self.lastUserSwap.from.j];
+    self.gameField[self.lastUserSwap.from.i][self.lastUserSwap.from.j] = self.gameField[self.lastUserSwap.to.i][self.lastUserSwap.to.j];
+    self.gameField[self.lastUserSwap.to.i][self.lastUserSwap.to.j] = tmp;
+
+    
+    self.canRevertUserAction=NO;
+    
+    [self notifyAboutkEndOfTransitions];
+    
 }
 
 
 
 #pragma mark - Notifications
+
+- (void)notifyAboutkEndOfTransitions{
+    NSNotification *notification = [NSNotification notificationWithName:NSDEndOfTransitions
+                                                                 object:nil
+                                                               userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+    
+}
 
 - (void)notifyAboutItemsMovement:(NSArray*)itemTransitions {
     NSNotification *notification = [NSNotification notificationWithName:NSDGameItemsDidMoveNotification

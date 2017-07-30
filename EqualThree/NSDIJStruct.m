@@ -26,4 +26,24 @@
 }
 
 
+- (BOOL)isEqual:(id)other
+{
+    
+   
+    
+    BOOL isEqual = NO;
+    
+    NSDIJStruct * castedOther = (NSDIJStruct *)other;
+    
+    isEqual = (castedOther.i == self.i) && (castedOther.j == self.j);
+    
+    return isEqual ;
+}
+
+-(NSUInteger)hash{
+    
+    return (self.i*2)+(self.j*5);
+    
+}
+
 @end

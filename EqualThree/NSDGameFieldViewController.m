@@ -1,4 +1,4 @@
-    #import "NSDGameFieldViewController.h"
+#import "NSDGameFieldViewController.h"
 #import "NSDGameItemView.h"
 #import "NSDGameEngine.h"
 #import "NSDGameItemTransition.h"
@@ -20,9 +20,7 @@
 @property NSUInteger verticalItemsCount;
 @property NSUInteger itemTypesCount;
 @property CGSize itemSize;
-
-
-
+@property (atomic)BOOL animated;
 
 @property (strong) dispatch_queue_t animationQueue;
 
@@ -45,16 +43,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QUEUE_SERIAL);
+    self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QUEUE_SERIAL);
     [self subscribeToNotifications];
     
     
     [self initGestureRecognizerWithView:self.gameItemsView];
-        
     
     
-        
-        
+    
+    
+    
     
     
     
@@ -63,7 +61,10 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
 
 
 -(void)viewDidLayoutSubviews{
-    [self configureGame];
+    
+    if(self.gameEngine==nil){
+        [self configureGame];
+    }
 }
 
 - (void)dealloc {
@@ -77,9 +78,6 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
     
     
     
-    static BOOL isConfigured = NO;
-    
-    if(isConfigured){ return; }
     
     
     
@@ -106,7 +104,6 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
                                                        verticalItemsCount:self.verticalItemsCount
                                                            itemTypesCount:self.itemTypesCount];
     
-    isConfigured = YES;
 }
 
 - (NSDGameItemView*)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type{
@@ -123,7 +120,7 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
     UIViewAutoresizingFlexibleBottomMargin;
     
     itemView.translatesAutoresizingMaskIntoConstraints = YES;
-   
+    
     
     [self.gameItemsView addSubview:itemView];
     
@@ -172,16 +169,21 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
 
 
 - (NSDIJStruct *) iJPositionItemWithPoint:(CGPoint) point {
-  
+    
     NSDIJStruct * result = nil ;
     
-    result = [[NSDIJStruct alloc] initWithI:point.x/self.itemSize.width andJ: point.y / self.itemSize.height];
+    
+    
+    
+    result =  [[NSDIJStruct alloc] initWithI:floor( (CGFloat) point.x/(CGFloat)self.itemSize.width) andJ: floor( (CGFloat) point.y / (CGFloat)self.itemSize.height)];
     
     return result;
 }
 
 
 - (void) didRecognizePan:(UISwipeGestureRecognizer *) recognizer{
+    
+    if(self.animated) return;
     
     static CGPoint startingLocation;
     static CGPoint currentLocation;
@@ -204,7 +206,7 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
         CGFloat deltaX = currentLocation.x - startingLocation.x;
         CGFloat deltaY = currentLocation.y - startingLocation.y;
         
-        if ((fabs(deltaX) > (self.itemSize.width / 3)) || (fabs(deltaY) > (self.itemSize.height / 3))) {
+        if ((fabs(deltaX) > (self.itemSize.width / 2)) || (fabs(deltaY) > (self.itemSize.height / 2))) {
             
             finished = YES;
             
@@ -216,8 +218,7 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
             if (fabs(deltaX) > fabs(deltaY)) {
                 if (deltaX > 0) {
                     if (i < (self.horizontalItemsCount - 1)) {
-                       // [self.gameEngine swapItemAtX0:i y0:j withItemAtX1:(i + 1) y1:j];
-                        
+                       
                         [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i+1 andJ:j]]];
                         
                     }
@@ -230,7 +231,7 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
                 if (deltaY > 0) {
                     if (j < (self.verticalItemsCount - 1)) {
                         [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i andJ:j+1]]];
-                         }
+                    }
                 } else {
                     if (j > 0) {
                         [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i andJ:j-1]]];
@@ -248,6 +249,9 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
 - (void)subscribeToNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidMoveNotification:) name:NSDGameItemsDidMoveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidDeleteNotification:) name:NSDGameItemsDidDeleteNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processGotoAwaitStateNotification:) name:NSDEndOfTransitions object:nil];
+    
+    
 }
 
 - (void)unsubscribeFromNotifications {
@@ -255,6 +259,7 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
 }
 
 - (void)processItemsDidMoveNotification:(NSNotification *)notification {
+    self.animated = YES;
     NSArray *itemTransitions = notification.userInfo[kNSDGameItemTransitions];
     
     dispatch_async(self.animationQueue, ^{
@@ -281,61 +286,89 @@ self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QU
         }
         dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
     });
+    
+}
+
+
+
+-(void)processGotoAwaitStateNotification:(NSNotification *)notification{
+
+    dispatch_async(self.animationQueue, ^{
+        
+        dispatch_group_t animationGroup = dispatch_group_create();
+        dispatch_group_enter(animationGroup);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+           
+            self.animated = NO;
+            dispatch_group_leave(animationGroup);
+            
+        });
+        
+        
+    });
+    
+    
 
 }
 
 - (void)processItemsDidDeleteNotification:(NSNotification *)notification {
- 
+    self.animated = YES;
     NSArray *itemToDelete = notification.userInfo[kNSDGameItems];
+    
+    
+    
+    
+    
+    
+    
     
     dispatch_async(self.animationQueue, ^{
         
-            dispatch_group_t animationGroup = dispatch_group_create();
+        dispatch_group_t animationGroup = dispatch_group_create();
         
+        
+        for(NSDIJStruct * tempStruct in itemToDelete){
+            
+            if(self.gameField[tempStruct.i][tempStruct.j]!=[NSNull null]){
+                
+                dispatch_group_enter(animationGroup);
+                dispatch_async(dispatch_get_main_queue(), ^{
                     
-                    for(NSDIJStruct * tempStruct in itemToDelete){
-
-                        if(self.gameField[tempStruct.i][tempStruct.j]!=[NSNull null]){
-                            
-                        dispatch_group_enter(animationGroup);
-                        dispatch_async(dispatch_get_main_queue(), ^{
-   
-                        
-                            
+                    
+                    
                     
                     NSUInteger i = tempStruct.i;
                     NSUInteger j = tempStruct.j;
                     
                     [UIView animateWithDuration:1  animations:^{
-                        [self.gameField[i][j] setAlpha:0.0];
+                            [self.gameField[i][j] setAlpha:0.0];
                     } completion:^(BOOL finished) {
-                        if(self.gameField[i][j]!=[NSNull null]){
- 
-                            [self.gameField[i][j] removeFromSuperview];
-                        }
-                            self.gameField[i][j] = [NSNull null];
+                        
+                        [self.gameField[i][j] removeFromSuperview];
+                        self.gameField[i][j] = [NSNull null];
                         dispatch_group_leave(animationGroup);
                     }];
-                            
-                        
-                        
-                        });
-                        
-                    }
-                }
-                            
-               
-            
-            dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
-     
+                    
+                    
+                    
+                });
+                
+            }
+        }
+        
+        
+        
+        dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
         
         
         
         
         
-   
-    
-   });
+        
+        
+        
+    });
 }
 
 

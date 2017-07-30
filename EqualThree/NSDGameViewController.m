@@ -7,7 +7,7 @@
 //
 
 #import "NSDGameViewController.h"
-#import "NSDToastView.h"
+
 #import "UIColor+NSDColor.h"
 #import "NSDGeneralMenuViewController.h"
 #import "NSDAlertView.h"
