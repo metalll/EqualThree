@@ -11,14 +11,23 @@
 
 #import "NSDIJStruct.h"
 
+
+
 NSString * const NSDGameItemsDidMoveNotification = @"NSDGameItemDidMoveNotification";
 NSString * const NSDGameItemsDidDeleteNotification = @"NSDGameItemDidDeleteNotification";
-NSString * const NSDEndOfTransitions = @"kNSDEndOfTransitions";
+NSString * const NSDEndOfTransitions = @"NSDEndOfTransitions";
+NSString * const NSDDidUpdateUserScore = @"NSDDidUpdateUserScore";
+NSString * const NSDDidUpdateMoviesCount = @"NSDDidUpdateMoviesCount";
+
+
+
+NSString * const kNSDUserScore = @"kNSDUserScore";
+NSString * const kNSDMoviesCount = @"kNSDUserMoviesCount";
 
 NSString * const kNSDGameItems = @"kNSDGameItems";
 NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 
-
+NSUInteger const NSDGameItemScoreCost = 10;
 
 
 
@@ -31,6 +40,10 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 @property NSUInteger horizontalItemsCount;
 @property NSUInteger verticalItemsCount;
 @property NSUInteger itemTypesCount;
+
+
+@property NSUInteger userScore;
+@property NSUInteger moviesCount;
 
 @property BOOL canRevertUserAction;
 
@@ -63,6 +76,8 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
         self.horizontalItemsCount = horizontalItemsCount;
         self.verticalItemsCount = verticalItemsCount;
         self.itemTypesCount = itemTypesCount;
+        self.userScore = 0;
+        self.moviesCount = 0;
         [self configureGameField];
         [self fillGaps];
     }
@@ -85,6 +100,8 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
     id tmp = self.gameField[swap.from.i][swap.from.j];
     self.gameField[swap.from.i][swap.from.j] = self.gameField[swap.to.i][swap.to.j];
     self.gameField[swap.to.i][swap.to.j] = tmp;
+    
+    
     
     
     NSMutableArray * newItemTransitions = [[NSMutableArray alloc] initWithCapacity:2];
@@ -169,7 +186,15 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
    
     if(result.count>0){
         
-        self.canRevertUserAction = NO;
+        if(self.canRevertUserAction){
+            self.moviesCount++;
+            
+            self.canRevertUserAction = NO;
+            
+            [self notifyAboutDidUpdateMoviesCount];
+            
+        }
+        
         
         [self deleteItems:result.allObjects];
         [self fillGaps];
@@ -441,6 +466,7 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
         
         
         if(self.gameField[tempStruct.i][tempStruct.j]!=[NSNull null]){
+            
             self.gameField[tempStruct.i][tempStruct.j]=[NSNull null];
         }
         
@@ -452,6 +478,9 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
     
     [self notifyAboutItemsDeletion:matchingSequences];
     
+    self.userScore += matchingSequences.count * NSDGameItemScoreCost;
+    
+    [self notifyAboutDidUpdateUserScore];
    
 }
 
@@ -480,6 +509,22 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 
 
 #pragma mark - Notifications
+
+- (void)notifyAboutDidUpdateUserScore{
+    NSNotification *notification = [NSNotification notificationWithName:NSDDidUpdateUserScore
+                                                                 object:nil
+                                                               userInfo:@{ kNSDUserScore : @(self.userScore)}];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+
+}
+
+-(void) notifyAboutDidUpdateMoviesCount{
+    NSNotification *notification = [NSNotification notificationWithName:NSDDidUpdateMoviesCount
+                                                                 object:nil
+                                                               userInfo:@{ kNSDMoviesCount : @(self.moviesCount)}];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+
+}
 
 - (void)notifyAboutkEndOfTransitions{
     NSNotification *notification = [NSNotification notificationWithName:NSDEndOfTransitions
