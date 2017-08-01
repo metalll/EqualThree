@@ -21,6 +21,8 @@ extern NSString * const NSDDidUpdateMoviesCount ;
 extern NSString * const kNSDGameItems;
 extern NSString * const kNSDGameItemTransitions;
 
+extern NSString * const NSDDidFindPotentialMathed ;
+extern NSString * const NSDDidDetectGameOver;
 
 extern NSString * const kNSDUserScore;
 extern NSString * const kNSDMoviesCount ;

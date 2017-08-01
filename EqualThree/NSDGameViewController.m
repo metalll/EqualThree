@@ -14,6 +14,8 @@
 #import "NSDGameEngine.h"
 #import "NSDGameFieldViewController.h"
 
+NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
+
 @interface NSDGameViewController ()
 
 
@@ -49,6 +51,11 @@
     
 }
 
+- (IBAction)didTapHintButton:(id)sender {
+    
+    NSNotification * notification = [NSNotification notificationWithName:NSDUserDidTapHintButton object:nil] ;
+    [[NSNotificationCenter defaultCenter]postNotification:notification];
+}
 
 
 -(void) subscribeToNotifacations{
@@ -90,8 +97,8 @@
 -(void)viewWillAppear:(BOOL)animated{
 
     [super viewWillAppear:animated];
-
-
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
@@ -103,7 +110,7 @@
         self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 
     }
-    
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 

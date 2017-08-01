@@ -1,4 +1,4 @@
-    //
+//
 //  NSDGameEngine.m
 //  EqualThree
 //
@@ -18,6 +18,11 @@ NSString * const NSDGameItemsDidDeleteNotification = @"NSDGameItemDidDeleteNotif
 NSString * const NSDEndOfTransitions = @"NSDEndOfTransitions";
 NSString * const NSDDidUpdateUserScore = @"NSDDidUpdateUserScore";
 NSString * const NSDDidUpdateMoviesCount = @"NSDDidUpdateMoviesCount";
+
+
+NSString * const NSDDidFindPotentialMathed = @"NSDDidFindPotentialMathed";
+NSString * const NSDDidDetectGameOver = @"NSDDidDetectGameOver";
+
 
 
 
@@ -41,6 +46,9 @@ NSUInteger const NSDGameItemScoreCost = 10;
 @property NSUInteger verticalItemsCount;
 @property NSUInteger itemTypesCount;
 
+@property NSLock * mutex;
+@property dispatch_queue_t operationQueue;
+
 
 @property NSUInteger userScore;
 @property NSUInteger moviesCount;
@@ -49,6 +57,9 @@ NSUInteger const NSDGameItemScoreCost = 10;
 
 - (void)notifyAboutItemsMovement:(NSArray*)items;
 - (void)notifyAboutItemsDeletion:(NSArray*)items;
+- (void)notifyAboutkEndOfTransitions;
+-(void) notifyAboutDidUpdateMoviesCount;
+- (void)notifyAboutDidUpdateUserScore;
 
 - (void)configureGameField;
 - (NSUInteger)generateNewItemType;
@@ -57,7 +68,6 @@ NSUInteger const NSDGameItemScoreCost = 10;
 - (void)fillGaps;
 - (void)deleteItems:(NSArray*)matchingSequences;
 - (void)revertUserAction;
-
 
 
 @property NSDSwap * lastUserSwap;
@@ -73,6 +83,8 @@ NSUInteger const NSDGameItemScoreCost = 10;
                               itemTypesCount:(NSUInteger)itemTypesCount {
     self = [super init];
     if (self) {
+        self.mutex = [[NSLock alloc] init];
+        self.operationQueue = dispatch_queue_create("com.nsd.game.engine.queue", DISPATCH_QUEUE_SERIAL);
         self.horizontalItemsCount = horizontalItemsCount;
         self.verticalItemsCount = verticalItemsCount;
         self.itemTypesCount = itemTypesCount;
@@ -90,9 +102,9 @@ NSUInteger const NSDGameItemScoreCost = 10;
 
 - (void)swapItemsWithSwap:(NSDSwap *) swap{
     
-#ifdef _DEBUG
+#ifdef DEBUG
     
-    NSLog("swap items %@",swap);
+    NSLog(@"swap items %@",swap);
     
 #endif
     
@@ -110,12 +122,13 @@ NSUInteger const NSDGameItemScoreCost = 10;
     
     newItemTransitions[1] = [[NSDGameItemTransition alloc] initWithFrom:swap.to to:swap.from type:[self.gameField[swap.to.i][swap.to.j] unsignedIntegerValue]];
     
+    
     self.lastUserSwap = swap;
     
     [self notifyAboutItemsMovement:newItemTransitions];
     
     [self applyUserAction];
-
+    
 }
 
 
@@ -141,7 +154,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
 }
 
 - (void)applyUserAction {
-  
+    
     
     
     
@@ -150,7 +163,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
 }
 
 - (void)checkMatchingItems {
-
+    
     
     
     
@@ -170,20 +183,20 @@ NSUInteger const NSDGameItemScoreCost = 10;
     
     
     for(NSUInteger currentType=1;currentType<=self.itemTypesCount;currentType++){
-      
+        
         NSArray * configuredPatterns = [self configurePatternsWithArray:patterns andType:currentType];
-    
+        
         for(NSUInteger i=0;i<configuredPatterns.count;i++){
-        
-        NSArray * resultMatched =  [self checkMatchingItemsWithConfiguredPattern: configuredPatterns[i]];
-        
-        if(resultMatched!=nil){
-            [result addObjectsFromArray:resultMatched];
+            
+            NSArray * resultMatched =  [self checkMatchingItemsWithConfiguredPattern: configuredPatterns[i]];
+            
+            if(resultMatched!=nil){
+                [result addObjectsFromArray:resultMatched];
+            }
         }
+        
     }
     
-}
-   
     if(result.count>0){
         
         if(self.canRevertUserAction){
@@ -201,24 +214,24 @@ NSUInteger const NSDGameItemScoreCost = 10;
         NSLog(@"items to delete %@", result );
         
     } else {
-
+        
         NSLog(@"no has matches");
-
+        
         for(int i=0;i<_verticalItemsCount;i++){
             NSString * str = @"|";
             for(int j=0;j<_horizontalItemsCount;j++){
-             str = [str stringByAppendingString: [NSString stringWithFormat:@"%@|",_gameField[j][i]] ] ;
+                str = [str stringByAppendingString: [NSString stringWithFormat:@"%@|",_gameField[j][i]] ] ;
             }
             NSLog(@"%@",str);
         }
         
         
         if(self.canRevertUserAction){
-        
+            
             [self revertUserAction];
             
         }else{
-        
+            
             [self notifyAboutkEndOfTransitions];
             
             [self checkPotentialMatches];
@@ -230,61 +243,212 @@ NSUInteger const NSDGameItemScoreCost = 10;
         
         
     }
-   
-
+    
+    
 }
-        
+
 
 -(void) checkPotentialMatches {
     
-    //todo 26 patterns
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        
     
-    NSMutableArray * squarePatternAbstract = [[NSMutableArray alloc] initWithObjects:
-    [[NSMutableArray alloc] initWithArray:@[ [NSNull null],[NSNull null],[NSNull null]]],
-    [[NSMutableArray alloc] initWithArray:@[ [NSNull null],[NSNull null],[NSNull null]]],
-     [[NSMutableArray alloc] initWithArray:@[ [NSNull null],[NSNull null],[NSNull null]]],
-                                               nil];
     
-    NSMutableArray * squarePotentialPattern1 = [[NSMutableArray alloc] initWithObjects:
-                                              [[NSMutableArray alloc] initWithArray:
-  @[ [NSNull null],[NSNull null],]],
-                                              [[NSMutableArray alloc] initWithArray:
-  @[ [NSNull null],@"*"         ,]],
-                                              [[NSMutableArray alloc] initWithArray:
-  @[ @"*"         ,[NSNull null]]],
-                                              nil];
-   
-    NSMutableArray * squarePotentialPattern2 = [[NSMutableArray alloc] initWithObjects:
-                                       [[NSMutableArray alloc] initWithArray:
-  @[ [NSNull null],[NSNull null],]],
-                                       [[NSMutableArray alloc] initWithArray:
-  @[ @"*"         ,[NSNull null],]],
-                                       [[NSMutableArray alloc] initWithArray:
-  @[ [NSNull null],@"*"          ]],
+    NSMutableArray * verticalPattern1 = [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*",[NSNull null]]];
+    
+    NSMutableArray * verticalPattern2 = [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null],[NSNull null]]];
+    
+    
+    NSMutableArray * verticalPattern3 = [[NSMutableArray alloc] initWithObjects:
+                                         [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null],[NSNull null]]],
+                                         [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",@"*"]],
+                                         nil];
+    
+    
+    NSMutableArray * verticalPattern4 = [[NSMutableArray alloc] initWithObjects:
+                                         [[NSMutableArray alloc] initWithArray:@[@"*",@"*",[NSNull null]]],
+                                         [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*"]],
+                                         nil];
+    
+    
+    
+    NSMutableArray * verticalPattern5 = [[NSMutableArray alloc] initWithObjects:
+                                         [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*"]],
+                                         [[NSMutableArray alloc] initWithArray:@[@"*",@"*",[NSNull null]]],
+                                         nil];
+    
+    
+    NSMutableArray * verticalPattern6 = [[NSMutableArray alloc] initWithObjects:
+                                         [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",@"*"]],
+                                         [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null],[NSNull null]]],
+                                         nil];
+    
+    
+    
+    NSMutableArray * verticalPattern7 = [[NSMutableArray alloc] initWithObjects:
+                                         [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null]]],
+                                         [[NSMutableArray alloc] initWithArray:@[@"*",      [NSNull null]   ,@"*"]],
+                                         nil];
+    
+    NSMutableArray * verticalPattern8 = [[NSMutableArray alloc] initWithObjects:
+                                         [[NSMutableArray alloc] initWithArray:@[@"*",      [NSNull null]   ,@"*"]],
+                                         [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null]]],
+                                         nil];
+    
+    
+    NSMutableArray * horisontalPattern1 = [[NSMutableArray alloc] initWithObjects:
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*",[NSNull null]]], nil];
+    NSMutableArray * horisontalPattern2 = [[NSMutableArray alloc] initWithObjects:
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null],[NSNull null]]], nil];
+    
+    NSMutableArray * horisontalPattern3 = [[NSMutableArray alloc] initWithObjects:
+                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                           nil];
+    
+    NSMutableArray * horisontalPattern4 = [[NSMutableArray alloc] initWithObjects:
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                           
+                                           nil];
+    
+    NSMutableArray * horisontalPattern5 = [[NSMutableArray alloc] initWithObjects:
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                           nil];
+    
+    
+    NSMutableArray * horisontalPattern6 = [[NSMutableArray alloc] initWithObjects:
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                           nil];
+    
+    NSMutableArray * horisontalPattern7 = [[NSMutableArray alloc] initWithObjects:
+                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                           nil];
+    
+    NSMutableArray * horisontalPattern8 = [[NSMutableArray alloc] initWithObjects:
+                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                           nil];
+    
+    
+    
+    
+    
+    
+    
+    NSMutableArray * squarePattern1 = [[NSMutableArray alloc] initWithObjects:
+                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*"]],
+                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null]]],
                                        nil];
     
-    NSMutableArray * squarePotentialPattern3 = [[NSMutableArray alloc] initWithObjects:
-                                                [[NSMutableArray alloc] initWithArray:
-                                                 @[ [NSNull null],[NSNull null],]],
-                                                [[NSMutableArray alloc] initWithArray:
-                                                 @[ @"*"         ,[NSNull null],]],
-                                                [[NSMutableArray alloc] initWithArray:
-                                                 @[ [NSNull null],@"*"          ]],
-                                                nil];
+    NSMutableArray * squarePattern2 = [[NSMutableArray alloc] initWithObjects:
+                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null]]],
+                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*"]],
+                                       nil];
+    NSMutableArray * squarePattern3 = [[NSMutableArray alloc] initWithObjects:
+                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null]]],
+                                       [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null],[NSNull null]]],
+                                       nil];
+    
+    NSMutableArray * squarePattern4 = [[NSMutableArray alloc] initWithObjects:
+                                       [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null],[NSNull null]]],
+                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null]]],
+                                       nil];
+    
+    
+    NSMutableArray * squarePattern5 = [[NSMutableArray alloc] initWithObjects:
+                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null]]],
+                                       [[NSMutableArray alloc] initWithArray:@[@"*",         [NSNull null]]],
+                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                       nil];
+    
+    NSMutableArray * squarePattern6 = [[NSMutableArray alloc] initWithObjects:
+                                       [[NSMutableArray alloc] initWithArray:@[@"*",         [NSNull null]]],
+                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null]]],
+                                       nil];
     
     
     
     
-    //to do
+    
+    
+    
+        NSMutableArray * patterns = [[NSMutableArray alloc] initWithArray:@[squarePattern1,squarePattern2,squarePattern3,
+                                                                            squarePattern4,squarePattern5,squarePattern6,
+                                                                        verticalPattern1,verticalPattern2,verticalPattern3,verticalPattern4,verticalPattern5,verticalPattern6,verticalPattern7,verticalPattern8,
+                                                                        horisontalPattern1,horisontalPattern2,horisontalPattern3,
+                                                                        horisontalPattern4,horisontalPattern5,horisontalPattern6,horisontalPattern7,horisontalPattern8
+                                                                        ] copyItems:NO];
+    
+    
+    NSMutableArray * result = [NSMutableArray new];
+    
+    BOOL isFinded = NO;
+    
+    
+    
+    for(NSUInteger currentType=1;currentType<=self.itemTypesCount;currentType++){
+        if(isFinded)break;
+        NSArray * configuredPatterns = [self configurePatternsWithArray:patterns andType:currentType];
+        
+        for(NSUInteger i=0;i<configuredPatterns.count;i++){
+            NSArray * resultMatched =  [self checkMatchingItemsWithConfiguredPattern: configuredPatterns[i] supportMultiplyMatches:NO];
+            
+            
+            
+            if(resultMatched!=nil){
+                [result addObjectsFromArray:resultMatched];
+                isFinded = YES;
+                
+                
+                for(NSDIJStruct * tempIJ in [result copy]){
+                
+                    if([self.gameField[tempIJ.i][tempIJ.j] unsignedIntegerValue]!=currentType){
+                        [result removeObject:tempIJ];
+                }
+                    
+                }
+                    
+                    
+                
+                
+                
+                
+                
+                break;
+            }
+        }
+        
+    }
+    
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(result.count>0){
+                NSLog(@"potential match : %@",result);
+                [self notifyAboutDidFindPotentialMatch:result];
+            }else{
+                [self notifyAboutDidDetectGameOver];
+            }
+        });
 
-
+    });
+    
 }
 
 
 -(NSUInteger) calculatePatternJMaxSize : (NSMutableArray *) pattern{
     
-  //  if(pattern.count == 1){ return 1;}
-
+    //  if(pattern.count == 1){ return 1;}
+    
     NSUInteger result = 0;
     
     for(int i=0;i<pattern.count;i++){
@@ -292,7 +456,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
         NSUInteger tmpResult = 0;
         
         if([pattern[i] isKindOfClass:[NSArray class]]){
-           
+            
             NSMutableArray * __weak subPatternArray = pattern[i];
             
             tmpResult = subPatternArray.count;
@@ -306,7 +470,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
             
             result = tmpResult;
         }
-    
+        
     }
     
     return result;
@@ -324,12 +488,16 @@ NSUInteger const NSDGameItemScoreCost = 10;
         return [(NSNumber *)patternItem isEqualToNumber:gameFieldItem]
         || ([patternItem unsignedIntegerValue] == [gameFieldItem unsignedIntegerValue]);
     }
-
+    
     return NO;
     
 }
 
 -(NSArray *) checkMatchingItemsWithConfiguredPattern:(NSMutableArray *)pattern{
+   return [self checkMatchingItemsWithConfiguredPattern:(NSMutableArray *)pattern supportMultiplyMatches:YES];
+}
+
+-(NSArray *) checkMatchingItemsWithConfiguredPattern:(NSMutableArray *)pattern supportMultiplyMatches:(BOOL) supportMultiplyMatches{
     
     NSMutableArray * result = [NSMutableArray new];
     
@@ -363,21 +531,26 @@ NSUInteger const NSDGameItemScoreCost = 10;
                 
             }
             
-                NSLog(@"checked items %@",[checkedItems description]);
+            NSLog(@"checked items %@",[checkedItems description]);
+            
+            if(isPatternMatched){
                 
-                if(isPatternMatched){
-                    
-                    [result addObjectsFromArray:checkedItems];
+                [result addObjectsFromArray:checkedItems];
+                
+                if(!supportMultiplyMatches){
+                    return result;
                 }
                 
+            }
+            
             
         }
     }
     
     if(result.count>0){
-
+        
         NSLog(@"matched items in pattern: %@ result: %@",pattern,result);
-
+        
         return result;
     }
     return nil;
@@ -386,34 +559,34 @@ NSUInteger const NSDGameItemScoreCost = 10;
 
 
 - (NSArray *) configurePatternsWithArray:(NSMutableArray * )arrayPatterns andType:(NSUInteger) type{
-
+    
     NSLog(@"configure pattering with type %ld pattern before configure: %@",(long)type,arrayPatterns.description);
-
+    
     
     for(NSUInteger i=0;i<arrayPatterns.count;i++)
     {
         for(NSUInteger j=0;j<((NSMutableArray *)arrayPatterns[i]).count;j++){
             if( [[[arrayPatterns objectAtIndex:i]firstObject] isKindOfClass:[NSArray class]]  ){
-
+                
                 for(NSUInteger k=0;k<((NSMutableArray *) [[arrayPatterns objectAtIndex:i] objectAtIndex:j]).count;k++){
                     NSMutableArray * pattern = (NSMutableArray *)arrayPatterns[i][j];
                     
-                    if(!([pattern[k] isKindOfClass:[NSString class]])){
-                    pattern[k] = @(type);
+                    if(! ([pattern[k] isKindOfClass:[NSString class]])){
+                        pattern[k] = @(type);
                     }
                     
-                   
+                    
                 }
-
+                
             }else{
                 NSMutableArray * pattern = (NSMutableArray *)arrayPatterns[i];
-                if(!([pattern[i] isKindOfClass:[NSString class]])){
-                pattern[j] = @(type);
+                if(!([pattern[j] isKindOfClass:[NSString class]])){
+                    pattern[j] = @(type);
                 }
             }
         }
     }
-
+    
     NSLog(@"array after configure %@",arrayPatterns.description);
     return arrayPatterns;
 }
@@ -460,7 +633,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
 }
 
 - (void)deleteItems:(NSArray*)matchingSequences {
-   
+    
     
     for(NSDIJStruct * tempStruct in matchingSequences){
         
@@ -481,7 +654,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
     self.userScore += matchingSequences.count * NSDGameItemScoreCost;
     
     [self notifyAboutDidUpdateUserScore];
-   
+    
 }
 
 - (void)revertUserAction {
@@ -498,7 +671,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
     id tmp = self.gameField[self.lastUserSwap.from.i][self.lastUserSwap.from.j];
     self.gameField[self.lastUserSwap.from.i][self.lastUserSwap.from.j] = self.gameField[self.lastUserSwap.to.i][self.lastUserSwap.to.j];
     self.gameField[self.lastUserSwap.to.i][self.lastUserSwap.to.j] = tmp;
-
+    
     
     self.canRevertUserAction=NO;
     
@@ -510,12 +683,33 @@ NSUInteger const NSDGameItemScoreCost = 10;
 
 #pragma mark - Notifications
 
+
+
+-(void) notifyAboutDidDetectGameOver{
+    
+    NSNotification * notification = [NSNotification notificationWithName:NSDDidDetectGameOver object:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+    
+}
+
+
+-(void) notifyAboutDidFindPotentialMatch:(NSArray *) items{
+    
+    NSNotification *notification = [NSNotification notificationWithName:NSDDidFindPotentialMathed
+                                                                 object:nil
+                                                               userInfo:@{kNSDGameItems : items}];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+
+    
+}
+
 - (void)notifyAboutDidUpdateUserScore{
     NSNotification *notification = [NSNotification notificationWithName:NSDDidUpdateUserScore
                                                                  object:nil
                                                                userInfo:@{ kNSDUserScore : @(self.userScore)}];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
-
+    
 }
 
 -(void) notifyAboutDidUpdateMoviesCount{
@@ -523,7 +717,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
                                                                  object:nil
                                                                userInfo:@{ kNSDMoviesCount : @(self.moviesCount)}];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
-
+    
 }
 
 - (void)notifyAboutkEndOfTransitions{

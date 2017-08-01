@@ -12,6 +12,7 @@
 
 @property (nonatomic) NSUInteger type;
 
+-(void)setHighlighted:(BOOL)highlighted;
 
 
 @end

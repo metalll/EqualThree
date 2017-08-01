@@ -3,7 +3,7 @@
 #import "NSDGameEngine.h"
 #import "NSDGameItemTransition.h"
 #import "NSDIJStruct.h"
-
+#import "NSDGameViewController.h"
 
 NSString * const NSDGameDidFieldEndDeletig = @"NSDGameFieldDidFieldEndDeleting";
 
@@ -19,6 +19,10 @@ NSUInteger const NSDCostItem = 10;
 
 
 
+
+@property NSArray * hint;
+@property BOOL isUserHelpNeeded;
+@property BOOL isUserRecivedHint;
 
 
 @property NSUInteger horizontalItemsCount;
@@ -48,11 +52,22 @@ NSUInteger const NSDCostItem = 10;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QUEUE_SERIAL);
-    [self subscribeToNotifications];
+    
+    self.isUserHelpNeeded = NO;
+    self.hint = nil;
+    self.isUserRecivedHint = NO;
     
     
-    [self initGestureRecognizerWithView:self.gameItemsView];
+    [self.gameItemsView setBackgroundColor:[UIColor clearColor]];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QUEUE_SERIAL);
+        [self subscribeToNotifications];
+        
+        
+        [self initGestureRecognizerWithView:self.gameItemsView];
+        
+    });
+    
     
     
     
@@ -66,10 +81,12 @@ NSUInteger const NSDCostItem = 10;
 
 
 -(void)viewDidLayoutSubviews{
-    
-    if(self.gameEngine==nil){
-        [self configureGame];
-    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        if(self.gameEngine==nil){
+            [self configureGame];
+        }
+    });
 }
 
 - (void)dealloc {
@@ -90,7 +107,7 @@ NSUInteger const NSDCostItem = 10;
     
     self.horizontalItemsCount = 8;
     self.verticalItemsCount = 8;
-    self.itemTypesCount = 5;
+    self.itemTypesCount = NSDGameItemTypesCount;
     
     self.itemSize = CGSizeMake(self.gameItemsView.frame.size.width / (CGFloat) self.horizontalItemsCount,
                                self.gameItemsView.frame.size.height / (CGFloat) self.verticalItemsCount);
@@ -158,7 +175,23 @@ NSUInteger const NSDCostItem = 10;
 
 
 
+-(void)removeUserHint{
+    
+    if(!self.isUserRecivedHint){
+        return;
+    }
+    
+    for (NSUInteger i=0; i<self.hint.count; i++) {
+        
+        NSDIJStruct * tempIJ = self.hint[i];
+        
+        [self.gameField[tempIJ.i][tempIJ.j] setHighlighted:NO];
+        
+    };
 
+    self.isUserRecivedHint = NO;
+    
+}
 
 #pragma mark - Gesture Recognizer
 
@@ -170,6 +203,8 @@ NSUInteger const NSDCostItem = 10;
     [view addGestureRecognizer:pan];
     
 }
+
+
 
 
 
@@ -189,6 +224,8 @@ NSUInteger const NSDCostItem = 10;
 - (void) didRecognizePan:(UISwipeGestureRecognizer *) recognizer{
     
     if(self.animated) return;
+    
+    [self removeUserHint];
     
     static CGPoint startingLocation;
     static CGPoint currentLocation;
@@ -211,7 +248,7 @@ NSUInteger const NSDCostItem = 10;
         CGFloat deltaX = currentLocation.x - startingLocation.x;
         CGFloat deltaY = currentLocation.y - startingLocation.y;
         
-        if ((fabs(deltaX) > (self.itemSize.width / 2)) || (fabs(deltaY) > (self.itemSize.height / 2))) {
+        if ((fabs(deltaX) > (self.itemSize.width / 3.2f)) || (fabs(deltaY) > (self.itemSize.height / 3.2f))) {
             
             finished = YES;
             
@@ -249,13 +286,47 @@ NSUInteger const NSDCostItem = 10;
 }
 
 
+-(void) hintUser{
+    if(self.hint==nil){
+        self.isUserHelpNeeded=YES;
+        return;
+    }
+    
+    if(self.animated){
+        return;
+    }
+    
+    if(self.isUserRecivedHint){
+        return;
+    }
+    
+    self.isUserHelpNeeded = NO;
+    
+    
+    for(NSUInteger i=0;i<self.hint.count;i++){
+        
+        NSDIJStruct * item = self.hint[i];
+        
+        [((NSDGameItemView *)self.gameField[item.i][item.j]) setHighlighted:YES];
+        
+        
+        
+    }
+    
+    self.isUserRecivedHint = YES;
+    
+    
+}
+
+
 #pragma mark - Notifications
 
 - (void)subscribeToNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidMoveNotification:) name:NSDGameItemsDidMoveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidDeleteNotification:) name:NSDGameItemsDidDeleteNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processGotoAwaitStateNotification:) name:NSDEndOfTransitions object:nil];
-    
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processDidFindPotentialMatch:) name:NSDDidFindPotentialMathed object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hintUser) name:NSDUserDidTapHintButton object:nil];
     
 }
 
@@ -280,9 +351,15 @@ NSUInteger const NSDCostItem = 10;
     
 }
 
+
+
+
+
 - (void)processItemsDidMoveNotification:(NSNotification *)notification {
     self.animated = YES;
     NSArray *itemTransitions = notification.userInfo[kNSDGameItemTransitions];
+    
+    
     
     dispatch_async(self.animationQueue, ^{
         
@@ -334,7 +411,22 @@ NSUInteger const NSDCostItem = 10;
     
 }
 
+
+-(void)processDidFindPotentialMatch:(NSNotification *) notification{
+    
+    self.hint = notification.userInfo[kNSDGameItems];
+    
+    if(self.isUserHelpNeeded){
+        [self hintUser];
+    }
+    
+}
+
 - (void)processItemsDidDeleteNotification:(NSNotification *)notification {
+    
+    self.hint = nil;
+    self.isUserHelpNeeded = NO;
+    
     self.animated = YES;
     NSArray *itemsToDelete = notification.userInfo[kNSDGameItems];
     
@@ -366,8 +458,8 @@ NSUInteger const NSDCostItem = 10;
                     [UIView animateWithDuration:0.2  animations:^{
                         [self.gameField[i][j] setAlpha:0.0];
                     } completion:^(BOOL finished) {
-                        [self notifyAboutDidFieldEndDeletingWithScoreCount:NSDCostItem*itemsToDelete.count];
-
+                        
+                        
                         [self.gameField[i][j] removeFromSuperview];
                         self.gameField[i][j] = [NSNull null];
                         
@@ -394,7 +486,10 @@ NSUInteger const NSDCostItem = 10;
         
         
         dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
-        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self notifyAboutDidFieldEndDeletingWithScoreCount:NSDCostItem*itemsToDelete.count];
+            
+        });
         
         
         

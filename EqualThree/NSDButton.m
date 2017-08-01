@@ -18,11 +18,8 @@
     layer.cornerRadius = 10.0;
     layer.masksToBounds = YES;
     
-    self.backgroundColor = [UIColor buttonBackgroundColor];
-    [self.backgroundColor setFill];
-    CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
     
-    self.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:20.0f];
+    self.titleLabel.font = [UIFont fontWithName:@"Noteworthy-Bold" size:20.0f];
     [self setTitleColor: [UIColor buttonTitleFontColor] forState:UIControlStateNormal];
     
     self.layer.borderWidth = 2.0;
