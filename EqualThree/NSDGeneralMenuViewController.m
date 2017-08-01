@@ -40,7 +40,8 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
 
     UINavigationBar *bar = [self.navigationController navigationBar];
     [bar setBarTintColor:[UIColor navigationBackgroundColor]];
-    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    [bar setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Noteworthy-Bold" size:20.0f],
+                                  NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [bar setTintColor:[UIColor whiteColor]];
 
    

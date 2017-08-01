@@ -298,7 +298,8 @@ NSUInteger const NSDGameItemScoreCost = 10;
     
     NSMutableArray * horisontalPattern1 = [[NSMutableArray alloc] initWithObjects:
                                            [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*",[NSNull null]]], nil];
-    NSMutableArray * horisontalPattern2 = [[NSMutableArray alloc] initWithObjects:
+   
+        NSMutableArray * horisontalPattern2 = [[NSMutableArray alloc] initWithObjects:
                                            [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null],[NSNull null]]], nil];
     
     NSMutableArray * horisontalPattern3 = [[NSMutableArray alloc] initWithObjects:
@@ -346,33 +347,33 @@ NSUInteger const NSDGameItemScoreCost = 10;
     
     
     NSMutableArray * squarePattern1 = [[NSMutableArray alloc] initWithObjects:
-                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*"]],
-                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null]]],
+                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],     [NSNull null],@"*"]],
+                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],     @"*",         [NSNull null]]],
                                        nil];
     
     NSMutableArray * squarePattern2 = [[NSMutableArray alloc] initWithObjects:
-                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null]]],
+                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],         @"*",[NSNull null]]],
                                        [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*"]],
                                        nil];
     NSMutableArray * squarePattern3 = [[NSMutableArray alloc] initWithObjects:
-                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null]]],
-                                       [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null],[NSNull null]]],
+                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],   @"*",         [NSNull null]]],
+                                       [[NSMutableArray alloc] initWithArray:@[@"*",            [NSNull null],[NSNull null]]],
                                        nil];
     
     NSMutableArray * squarePattern4 = [[NSMutableArray alloc] initWithObjects:
-                                       [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null],[NSNull null]]],
-                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null]]],
+                                       [[NSMutableArray alloc] initWithArray:@[@"*"         ,[NSNull null],[NSNull null]]],
+                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",         [NSNull null]]],
                                        nil];
     
     
     NSMutableArray * squarePattern5 = [[NSMutableArray alloc] initWithObjects:
                                        [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null]]],
-                                       [[NSMutableArray alloc] initWithArray:@[@"*",         [NSNull null]]],
+                                       [[NSMutableArray alloc] initWithArray:@[@"*"         ,[NSNull null]]],
                                        [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
                                        nil];
     
     NSMutableArray * squarePattern6 = [[NSMutableArray alloc] initWithObjects:
-                                       [[NSMutableArray alloc] initWithArray:@[@"*",         [NSNull null]]],
+                                       [[NSMutableArray alloc] initWithArray:@[@"*"         , [NSNull null]]],
                                        [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
                                        [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null]]],
                                        nil];
