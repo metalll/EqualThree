@@ -5,6 +5,11 @@
 #import "NSDIJStruct.h"
 
 
+NSString * const NSDGameDidFieldEndDeletig = @"NSDGameFieldDidFieldEndDeleting";
+
+NSString * const kNSDCostDeletedItems = @"kNSDCostDeletedItems";
+NSUInteger const NSDCostItem = 10;
+
 @interface NSDGameFieldViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *gameItemsView;
@@ -20,7 +25,7 @@
 @property NSUInteger verticalItemsCount;
 @property NSUInteger itemTypesCount;
 @property CGSize itemSize;
-@property (atomic)BOOL animated;
+@property (nonatomic)BOOL animated;
 
 @property (strong) dispatch_queue_t animationQueue;
 
@@ -218,7 +223,7 @@
             if (fabs(deltaX) > fabs(deltaY)) {
                 if (deltaX > 0) {
                     if (i < (self.horizontalItemsCount - 1)) {
-                       
+                        
                         [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i+1 andJ:j]]];
                         
                     }
@@ -258,6 +263,23 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+
+
+
+-(void)notifyAboutDidFieldEndDeletingWithScoreCount:(NSUInteger) scoreCount{
+    
+    
+    NSNotification * notification = [NSNotification notificationWithName:NSDGameDidFieldEndDeletig
+                                                                  object:nil
+                                                                userInfo:@{
+                                                                           kNSDCostDeletedItems : @(scoreCount)
+                                                                           }];
+    
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+    
+    
+}
+
 - (void)processItemsDidMoveNotification:(NSNotification *)notification {
     self.animated = YES;
     NSArray *itemTransitions = notification.userInfo[kNSDGameItemTransitions];
@@ -276,7 +298,7 @@
                 endFrame.size = gameItemView.frame.size;
                 endFrame.origin = [self xyCoordinatesFromI:itemTransition.to.i j:itemTransition.to.j];
                 
-                [UIView animateWithDuration:1 animations:^{
+                [UIView animateWithDuration:0.4 animations:^{
                     gameItemView.frame = endFrame;
                 } completion:^(BOOL finished) {
                     self.gameField[itemTransition.to.i][itemTransition.to.j] = gameItemView;
@@ -292,14 +314,14 @@
 
 
 -(void)processGotoAwaitStateNotification:(NSNotification *)notification{
-
+    
     dispatch_async(self.animationQueue, ^{
         
         dispatch_group_t animationGroup = dispatch_group_create();
         dispatch_group_enter(animationGroup);
         
         dispatch_async(dispatch_get_main_queue(), ^{
-           
+            
             self.animated = NO;
             dispatch_group_leave(animationGroup);
             
@@ -309,12 +331,12 @@
     });
     
     
-
+    
 }
 
 - (void)processItemsDidDeleteNotification:(NSNotification *)notification {
     self.animated = YES;
-    NSArray *itemToDelete = notification.userInfo[kNSDGameItems];
+    NSArray *itemsToDelete = notification.userInfo[kNSDGameItems];
     
     
     
@@ -328,7 +350,7 @@
         dispatch_group_t animationGroup = dispatch_group_create();
         
         
-        for(NSDIJStruct * tempStruct in itemToDelete){
+        for(NSDIJStruct * tempStruct in itemsToDelete){
             
             if(self.gameField[tempStruct.i][tempStruct.j]!=[NSNull null]){
                 
@@ -341,13 +363,25 @@
                     NSUInteger i = tempStruct.i;
                     NSUInteger j = tempStruct.j;
                     
-                    [UIView animateWithDuration:1  animations:^{
-                            [self.gameField[i][j] setAlpha:0.0];
+                    [UIView animateWithDuration:0.2  animations:^{
+                        [self.gameField[i][j] setAlpha:0.0];
                     } completion:^(BOOL finished) {
-                        
+                        [self notifyAboutDidFieldEndDeletingWithScoreCount:NSDCostItem*itemsToDelete.count];
+
                         [self.gameField[i][j] removeFromSuperview];
                         self.gameField[i][j] = [NSNull null];
+                        
+                        
+                        
+                        
+                        
                         dispatch_group_leave(animationGroup);
+                        
+                        
+                        
+                        
+                        
+                        
                     }];
                     
                     
@@ -360,7 +394,6 @@
         
         
         dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
-        
         
         
         

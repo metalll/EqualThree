@@ -41,9 +41,16 @@
 }
 
 -(void)downloadResourceWithURLString:(NSString *)url andCompletion:(void (^)(NSString * localPath, NSString * errorString))completion{
+    
+    
+    
+    
     NSURL * URL = [NSURL URLWithString:url];
     NSURLRequest * request = [NSURLRequest requestWithURL:URL cachePolicy: NSURLRequestUseProtocolCachePolicy  timeoutInterval:10];
     NSURLSession * session = self.urlSession;
+    
+    
+    
     [[session downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         if(error){

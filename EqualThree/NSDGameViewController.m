@@ -12,7 +12,7 @@
 #import "NSDGeneralMenuViewController.h"
 #import "NSDAlertView.h"
 #import "NSDGameEngine.h"
-
+#import "NSDGameFieldViewController.h"
 
 @interface NSDGameViewController ()
 
@@ -43,7 +43,7 @@
                        andSecondButtonText:@"Exit"
                        andFirstButtonBlock:^{
                        } andSecondButtonBlock:^{
-                           [self dismissViewControllerAnimated:YES completion:nil];
+                           [self.navigationController popViewControllerAnimated:YES];
                        } andParentViewController:self];
     
     
@@ -53,7 +53,7 @@
 
 -(void) subscribeToNotifacations{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateMoviesCount:) name:NSDDidUpdateMoviesCount object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserScore:) name:NSDDidUpdateUserScore object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserScore:) name:NSDGameDidFieldEndDeletig object:nil];
     
     
     
@@ -70,9 +70,12 @@
 
 
 -(void)didUpdateUserScore:(NSNotification *)notification{
-    NSUInteger resivedScore  = [notification.userInfo[kNSDUserScore] unsignedIntegerValue];
+    NSUInteger resivedScore  = [notification.userInfo[kNSDCostDeletedItems] unsignedIntegerValue];
+    NSUInteger currentScore = [self.scoreLabel.text integerValue];
     
-    self.scoreLabel.text = [NSString stringWithFormat:@"%ld",(long)resivedScore];
+    
+    
+    self.scoreLabel.text = [NSString stringWithFormat:@"%ld",(long)resivedScore+currentScore];
     
     
     

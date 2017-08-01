@@ -14,7 +14,7 @@ static NSUInteger const count = 6;
 
 
 typedef NS_ENUM(NSUInteger, NSDGameItemType) {
-    Croissant,
+    Croissant = 1,
     Cupcake,
     Danish,
     Donut,

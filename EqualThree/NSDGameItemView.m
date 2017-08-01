@@ -7,67 +7,77 @@
 //
 
 #import "NSDGameItemView.h"
-
+#import "NSDGameItemType.h"
 @implementation NSDGameItemView
 
 
--(void)drawRect:(CGRect)rect{
 
+
+
+-(void)drawRect:(CGRect)rect{
+    
     
     CALayer *layer = self.layer;
-    
+    self.contentMode= UIViewContentModeScaleToFill;
     layer.masksToBounds = YES;
     layer.cornerRadius = 10.0;
     layer.borderWidth = 2.0;
     layer.borderColor = [[UIColor whiteColor] CGColor];
     
-    
-    
-    
-    
-    
-    
-    
-    
-
 }
 
 
-- (UIColor *) colorForType:(NSUInteger)type{
-
-    UIColor * result = nil;
+- (UIImage *) imageForType:(NSUInteger)type{
     
+   UIImage * resultImage = nil;
     
     switch (type) {
-   
-            
-        case 1:
-           result = [UIColor redColor];
-            break;
-        case 2:
-         result =   [UIColor greenColor];
-            break;
-        case 3:
-          result=   [UIColor blackColor];
-            break;
-        case 4:
-         result =   [UIColor blueColor];
-            break;
-        case 5:
-        result=      [UIColor yellowColor];
-            break;
-        case 6:
-          result = [UIColor brownColor];
-            break;
-        case 7:
-            break;
-          
             
             
-           }
-    
-    return result;
+            
+//            Croissant = 1,
+//            Cupcake,
+//            Danish,
+//            Donut,
+//            Macaroon,
+//            SugarCookie
 
+        case Croissant:
+            resultImage = [UIImage imageNamed:@"Croissant"];
+            break;
+        case Cupcake:
+            resultImage = [UIImage imageNamed:@"Cupcake"];
+            break;
+        case Danish:
+            resultImage = [UIImage imageNamed:@"Danish"];
+            break;
+        case Donut:
+            resultImage = [UIImage imageNamed:@"Donut"];
+            break;
+        case Macaroon:
+            resultImage = [UIImage imageNamed:@"Macaroon"];
+            break;
+    
+        case SugarCookie:
+            resultImage = [UIImage imageNamed:@"SugarCookie"];
+            break;
+        
+            
+            
+            
+            
+            
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    return resultImage;
+    
 }
 
 
@@ -75,11 +85,16 @@
 -(void)setType:(NSUInteger)type{
     
     if(_type!=type)
-    _type = type;
+        _type = type;
     
     
-    [self setBackgroundColor:[self colorForType:_type]];
-
+    [self setImage:[self imageForType:_type]];
+    
 }
 
+
+
 @end
+
+
+

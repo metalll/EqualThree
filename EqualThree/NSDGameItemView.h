@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NSDGameItemView : UIView
+@interface NSDGameItemView : UIImageView
 
 @property (nonatomic) NSUInteger type;
 
