@@ -252,186 +252,182 @@ NSUInteger const NSDGameItemScoreCost = 10;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         
-    
-    
-    NSMutableArray * verticalPattern1 = [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*",[NSNull null]]];
-    
-    NSMutableArray * verticalPattern2 = [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null],[NSNull null]]];
-    
-    
-    NSMutableArray * verticalPattern3 = [[NSMutableArray alloc] initWithObjects:
-                                         [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null],[NSNull null]]],
-                                         [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",@"*"]],
-                                         nil];
-    
-    
-    NSMutableArray * verticalPattern4 = [[NSMutableArray alloc] initWithObjects:
-                                         [[NSMutableArray alloc] initWithArray:@[@"*",@"*",[NSNull null]]],
-                                         [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*"]],
-                                         nil];
-    
-    
-    
-    NSMutableArray * verticalPattern5 = [[NSMutableArray alloc] initWithObjects:
-                                         [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*"]],
-                                         [[NSMutableArray alloc] initWithArray:@[@"*",@"*",[NSNull null]]],
-                                         nil];
-    
-    
-    NSMutableArray * verticalPattern6 = [[NSMutableArray alloc] initWithObjects:
-                                         [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",@"*"]],
-                                         [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null],[NSNull null]]],
-                                         nil];
-    
-    
-    
-    NSMutableArray * verticalPattern7 = [[NSMutableArray alloc] initWithObjects:
-                                         [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null]]],
-                                         [[NSMutableArray alloc] initWithArray:@[@"*",      [NSNull null]   ,@"*"]],
-                                         nil];
-    
-    NSMutableArray * verticalPattern8 = [[NSMutableArray alloc] initWithObjects:
-                                         [[NSMutableArray alloc] initWithArray:@[@"*",      [NSNull null]   ,@"*"]],
-                                         [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null]]],
-                                         nil];
-    
-    
-    NSMutableArray * horisontalPattern1 = [[NSMutableArray alloc] initWithObjects:
-                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*",[NSNull null]]], nil];
-   
+        
+        
+        NSMutableArray * verticalPattern1 = [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*",[NSNull null]]];
+        
+        NSMutableArray * verticalPattern2 = [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null],[NSNull null]]];
+        
+        
+        NSMutableArray * verticalPattern3 = [[NSMutableArray alloc] initWithObjects:
+                                             [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null],[NSNull null]]],
+                                             [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",@"*"]],
+                                             nil];
+        
+        
+        NSMutableArray * verticalPattern4 = [[NSMutableArray alloc] initWithObjects:
+                                             [[NSMutableArray alloc] initWithArray:@[@"*",@"*",         [NSNull null]]],
+                                             [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*"]],
+                                             nil];
+        
+        
+        
+        NSMutableArray * verticalPattern5 = [[NSMutableArray alloc] initWithObjects:
+                                             [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*"]],
+                                             [[NSMutableArray alloc] initWithArray:@[@"*",@"*",[NSNull null]]],
+                                             nil];
+        
+        
+        NSMutableArray * verticalPattern6 = [[NSMutableArray alloc] initWithObjects:
+                                             [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",@"*"]],
+                                             [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null],[NSNull null]]],
+                                             nil];
+        
+        
+        
+        NSMutableArray * verticalPattern7 = [[NSMutableArray alloc] initWithObjects:
+                                             [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null]]],
+                                             [[NSMutableArray alloc] initWithArray:@[@"*",      [NSNull null]   ,@"*"]],
+                                             nil];
+        
+        NSMutableArray * verticalPattern8 = [[NSMutableArray alloc] initWithObjects:
+                                             [[NSMutableArray alloc] initWithArray:@[@"*",      [NSNull null]   ,@"*"]],
+                                             [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null]]],
+                                             nil];
+        
+        
+        NSMutableArray * horisontalPattern1 = [[NSMutableArray alloc] initWithObjects:
+                                               [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*",[NSNull null]]], nil];
+        
         NSMutableArray * horisontalPattern2 = [[NSMutableArray alloc] initWithObjects:
-                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null],[NSNull null]]], nil];
-    
-    NSMutableArray * horisontalPattern3 = [[NSMutableArray alloc] initWithObjects:
-                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
-                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                               [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",[NSNull null],[NSNull null]]], nil];
+        
+        NSMutableArray * horisontalPattern3 = [[NSMutableArray alloc] initWithObjects:
+                                               [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                               [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                               [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                               nil];
+        
+        NSMutableArray * horisontalPattern4 = [[NSMutableArray alloc] initWithObjects:
+                                               [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                               [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                               [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                               
+                                               nil];
+        
+        NSMutableArray * horisontalPattern5 = [[NSMutableArray alloc] initWithObjects:
+                                               [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                               [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                               [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                               nil];
+        
+        
+        NSMutableArray * horisontalPattern6 = [[NSMutableArray alloc] initWithObjects:
+                                               [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                               [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                               [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                               nil];
+        
+        NSMutableArray * horisontalPattern7 = [[NSMutableArray alloc] initWithObjects:
+                                               [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                               [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                               [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                               nil];
+        
+        NSMutableArray * horisontalPattern8 = [[NSMutableArray alloc] initWithObjects:
+                                               [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                               [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
+                                               [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
+                                               nil];
+        
+        
+        
+        NSMutableArray * squarePattern1 = [[NSMutableArray alloc] initWithObjects:
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],     [NSNull null],@"*"]],
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],     @"*",         [NSNull null]]],
+                                           nil];
+        
+        NSMutableArray * squarePattern2 = [[NSMutableArray alloc] initWithObjects:
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],         @"*",[NSNull null]]],
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*"]],
+                                           nil];
+        NSMutableArray * squarePattern3 = [[NSMutableArray alloc] initWithObjects:
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],   @"*",         [NSNull null]]],
+                                           [[NSMutableArray alloc] initWithArray:@[@"*",            [NSNull null],[NSNull null]]],
+                                           nil];
+        
+        NSMutableArray * squarePattern4 = [[NSMutableArray alloc] initWithObjects:
+                                           [[NSMutableArray alloc] initWithArray:@[@"*"         ,[NSNull null],[NSNull null]]],
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",         [NSNull null]]],
+                                           nil];
+        
+        
+        NSMutableArray * squarePattern5 = [[NSMutableArray alloc] initWithObjects:
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null]]],
+                                           [[NSMutableArray alloc] initWithArray:@[@"*"         ,[NSNull null]]],
                                            [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
                                            nil];
-    
-    NSMutableArray * horisontalPattern4 = [[NSMutableArray alloc] initWithObjects:
+        
+        NSMutableArray * squarePattern6 = [[NSMutableArray alloc] initWithObjects:
+                                           [[NSMutableArray alloc] initWithArray:@[@"*"         , [NSNull null]]],
                                            [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
-                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
-                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
-                                           
+                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null]]],
                                            nil];
-    
-    NSMutableArray * horisontalPattern5 = [[NSMutableArray alloc] initWithObjects:
-                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
-                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
-                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
-                                           nil];
-    
-    
-    NSMutableArray * horisontalPattern6 = [[NSMutableArray alloc] initWithObjects:
-                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
-                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
-                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
-                                           nil];
-    
-    NSMutableArray * horisontalPattern7 = [[NSMutableArray alloc] initWithObjects:
-                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
-                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
-                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
-                                           nil];
-    
-    NSMutableArray * horisontalPattern8 = [[NSMutableArray alloc] initWithObjects:
-                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
-                                           [[NSMutableArray alloc] initWithArray:@[@"*",[NSNull null]]],
-                                           [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
-                                           nil];
-    
-    
-    
-    
-    
-    
-    
-    NSMutableArray * squarePattern1 = [[NSMutableArray alloc] initWithObjects:
-                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],     [NSNull null],@"*"]],
-                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],     @"*",         [NSNull null]]],
-                                       nil];
-    
-    NSMutableArray * squarePattern2 = [[NSMutableArray alloc] initWithObjects:
-                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],         @"*",[NSNull null]]],
-                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null],@"*"]],
-                                       nil];
-    NSMutableArray * squarePattern3 = [[NSMutableArray alloc] initWithObjects:
-                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],   @"*",         [NSNull null]]],
-                                       [[NSMutableArray alloc] initWithArray:@[@"*",            [NSNull null],[NSNull null]]],
-                                       nil];
-    
-    NSMutableArray * squarePattern4 = [[NSMutableArray alloc] initWithObjects:
-                                       [[NSMutableArray alloc] initWithArray:@[@"*"         ,[NSNull null],[NSNull null]]],
-                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*",         [NSNull null]]],
-                                       nil];
-    
-    
-    NSMutableArray * squarePattern5 = [[NSMutableArray alloc] initWithObjects:
-                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null]]],
-                                       [[NSMutableArray alloc] initWithArray:@[@"*"         ,[NSNull null]]],
-                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
-                                       nil];
-    
-    NSMutableArray * squarePattern6 = [[NSMutableArray alloc] initWithObjects:
-                                       [[NSMutableArray alloc] initWithArray:@[@"*"         , [NSNull null]]],
-                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],@"*"]],
-                                       [[NSMutableArray alloc] initWithArray:@[[NSNull null],[NSNull null]]],
-                                       nil];
-    
-    
-    
-    
-    
-    
-    
+        
+        
+        
+        
+        
+        
+        
         NSMutableArray * patterns = [[NSMutableArray alloc] initWithArray:@[squarePattern1,squarePattern2,squarePattern3,
                                                                             squarePattern4,squarePattern5,squarePattern6,
-                                                                        verticalPattern1,verticalPattern2,verticalPattern3,verticalPattern4,verticalPattern5,verticalPattern6,verticalPattern7,verticalPattern8,
-                                                                        horisontalPattern1,horisontalPattern2,horisontalPattern3,
-                                                                        horisontalPattern4,horisontalPattern5,horisontalPattern6,horisontalPattern7,horisontalPattern8
-                                                                        ] copyItems:NO];
-    
-    
-    NSMutableArray * result = [NSMutableArray new];
-    
-    BOOL isFinded = NO;
-    
-    
-    
-    for(NSUInteger currentType=1;currentType<=self.itemTypesCount;currentType++){
-        if(isFinded)break;
-        NSArray * configuredPatterns = [self configurePatternsWithArray:patterns andType:currentType];
+                                                                            verticalPattern1,verticalPattern2,verticalPattern3,verticalPattern4,verticalPattern5,verticalPattern6,verticalPattern7,verticalPattern8,
+                                                                            horisontalPattern1,horisontalPattern2,horisontalPattern3,
+                                                                            horisontalPattern4,horisontalPattern5,horisontalPattern6,horisontalPattern7,horisontalPattern8
+                                                                            ] copyItems:NO];
         
-        for(NSUInteger i=0;i<configuredPatterns.count;i++){
-            NSArray * resultMatched =  [self checkMatchingItemsWithConfiguredPattern: configuredPatterns[i] supportMultiplyMatches:NO];
+        
+        NSMutableArray * result = [NSMutableArray new];
+        
+        BOOL isFinded = NO;
+        
+        
+        
+        for(NSUInteger currentType=1;currentType<=self.itemTypesCount;currentType++){
+            if(isFinded)break;
+            NSArray * configuredPatterns = [self configurePatternsWithArray:patterns andType:currentType];
             
-            
-            
-            if(resultMatched!=nil){
-                [result addObjectsFromArray:resultMatched];
-                isFinded = YES;
+            for(NSUInteger i=0;i<configuredPatterns.count;i++){
+                NSArray * resultMatched =  [self checkMatchingItemsWithConfiguredPattern: configuredPatterns[i] supportMultiplyMatches:NO includeSearchedElemetsOnly:YES];
                 
                 
-                for(NSDIJStruct * tempIJ in [result copy]){
                 
-                    if([self.gameField[tempIJ.i][tempIJ.j] unsignedIntegerValue]!=currentType){
-                        [result removeObject:tempIJ];
+                if(resultMatched!=nil){
+                    [result addObjectsFromArray:resultMatched];
+                    isFinded = YES;
+                    
+                    
+                    for(NSDIJStruct * tempIJ in [result copy]){
+                        
+                        if([self.gameField[tempIJ.i][tempIJ.j] unsignedIntegerValue]!=currentType){
+                            [result removeObject:tempIJ];
+                        }
+                        
+                    }
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    break;
                 }
-                    
-                }
-                    
-                    
-                
-                
-                
-                
-                
-                break;
             }
+            
         }
         
-    }
-    
         dispatch_async(dispatch_get_main_queue(), ^{
             if(result.count>0){
                 NSLog(@"potential match : %@",result);
@@ -440,7 +436,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
                 [self notifyAboutDidDetectGameOver];
             }
         });
-
+        
     });
     
 }
@@ -495,10 +491,10 @@ NSUInteger const NSDGameItemScoreCost = 10;
 }
 
 -(NSArray *) checkMatchingItemsWithConfiguredPattern:(NSMutableArray *)pattern{
-   return [self checkMatchingItemsWithConfiguredPattern:(NSMutableArray *)pattern supportMultiplyMatches:YES];
+    return [self checkMatchingItemsWithConfiguredPattern:(NSMutableArray *)pattern supportMultiplyMatches:YES includeSearchedElemetsOnly:NO];
 }
 
--(NSArray *) checkMatchingItemsWithConfiguredPattern:(NSMutableArray *)pattern supportMultiplyMatches:(BOOL) supportMultiplyMatches{
+-(NSArray *) checkMatchingItemsWithConfiguredPattern:(NSMutableArray *)pattern supportMultiplyMatches:(BOOL) supportMultiplyMatches includeSearchedElemetsOnly:(BOOL) isIncludeSearchedElemetsOnly{
     
     NSMutableArray * result = [NSMutableArray new];
     
@@ -518,16 +514,22 @@ NSUInteger const NSDGameItemScoreCost = 10;
                     
                     for(NSUInteger patternJ = 0;patternJ < jPatternMaxSize;patternJ++){
                         
+                        
                         isPatternMatched = [self compareItemsWithPatternItem:pattern[patternI][patternJ] gameFieldItem:self.gameField[i+patternI][j+patternJ]] && isPatternMatched;
                         
                         
-                        [checkedItems addObject:[[NSDIJStruct alloc] initWithI:i+patternI andJ:j+patternJ]];
+                        if(!(isIncludeSearchedElemetsOnly && [pattern[patternI][patternJ] isKindOfClass:[NSString class]])){
+                            [checkedItems addObject:[[NSDIJStruct alloc] initWithI:i+patternI andJ:j+patternJ]];
+                        }
                         
                     }
                 }else{
                     
                     isPatternMatched = [self compareItemsWithPatternItem:pattern[patternI] gameFieldItem:self.gameField[i+patternI][j]] && isPatternMatched;
-                    [checkedItems addObject:[[NSDIJStruct alloc] initWithI:i+patternI andJ:j]];
+                    
+                    if(!(isIncludeSearchedElemetsOnly && [pattern[patternI] isKindOfClass:[NSString class]])){
+                        [checkedItems addObject:[[NSDIJStruct alloc] initWithI:i+patternI andJ:j]];
+                    }
                 }
                 
             }
@@ -539,6 +541,13 @@ NSUInteger const NSDGameItemScoreCost = 10;
                 [result addObjectsFromArray:checkedItems];
                 
                 if(!supportMultiplyMatches){
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     return result;
                 }
                 
@@ -701,7 +710,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
                                                                  object:nil
                                                                userInfo:@{kNSDGameItems : items}];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
-
+    
     
 }
 

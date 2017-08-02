@@ -25,54 +25,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EqualThree/NSDGameEngine.m"
-            timestampString = "523315379.11835"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "413"
-            endingLineNumber = "413"
-            landmarkName = "-checkPotentialMatches"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__38-[NSDGameEngine checkPotentialMatches]_block_invoke"
-                  moduleName = "EqualThree"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nsd/EqualThree/EqualThree/NSDGameEngine.m"
-                  timestampString = "523312044.332977"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "414"
-                  endingLineNumber = "414"
-                  offsetFromSymbolStart = "14460">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__38-[NSDGameEngine checkPotentialMatches]_block_invoke"
-                  moduleName = "EqualThree"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nsd/EqualThree/EqualThree/NSDGameEngine.m"
-                  timestampString = "523312044.336663"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "414"
-                  endingLineNumber = "414"
-                  offsetFromSymbolStart = "14476">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "EqualThree/NSDGameFieldViewController.m"
             timestampString = "523312042.872793"
             startingColumnNumber = "9223372036854775807"

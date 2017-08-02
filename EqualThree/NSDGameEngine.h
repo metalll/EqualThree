@@ -10,13 +10,12 @@
 
 #import "NSDSwap.h"
 
+
 extern NSString * const NSDGameItemsDidMoveNotification;
 extern NSString * const NSDGameItemsDidDeleteNotification;
 extern NSString * const NSDEndOfTransitions;
 extern NSString * const NSDDidUpdateUserScore ;
 extern NSString * const NSDDidUpdateMoviesCount ;
-
-
 
 extern NSString * const kNSDGameItems;
 extern NSString * const kNSDGameItemTransitions;
