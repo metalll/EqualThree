@@ -16,6 +16,7 @@ extern NSString * const NSDGameItemsDidDeleteNotification;
 extern NSString * const NSDEndOfTransitions;
 extern NSString * const NSDDidUpdateUserScore ;
 extern NSString * const NSDDidUpdateMoviesCount ;
+extern NSString * const NSDDidUpdadeSharedUserScore;
 
 extern NSString * const kNSDGameItems;
 extern NSString * const kNSDGameItemTransitions;
@@ -26,7 +27,10 @@ extern NSString * const NSDDidDetectGameOver;
 extern NSString * const kNSDUserScore;
 extern NSString * const kNSDMoviesCount ;
 
+
 extern NSUInteger const NSDGameItemScoreCost;
+
+
 
 @interface NSDGameEngine : NSObject
 

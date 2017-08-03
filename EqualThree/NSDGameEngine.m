@@ -21,7 +21,7 @@ NSString * const NSDGameItemsDidDeleteNotification = @"NSDGameItemDidDeleteNotif
 NSString * const NSDEndOfTransitions = @"NSDEndOfTransitions";
 NSString * const NSDDidUpdateUserScore = @"NSDDidUpdateUserScore";
 NSString * const NSDDidUpdateMoviesCount = @"NSDDidUpdateMoviesCount";
-
+NSString * const NSDDidUpdadeSharedUserScore = @"NSDDidUpdadeSharedUserScore";
 
 NSString * const NSDDidFindPermissibleStroke = @"NSDDidFindPermissibleStroke";
 NSString * const NSDDidDetectGameOver = @"NSDDidDetectGameOver";
@@ -78,7 +78,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
                                  andType:(NSUInteger) type;
 
 
--(void) restoreGameField;
+- (void) restoreGameField;
 
 - (void)notifyAboutItemsMovement:(NSArray*)items;
 - (void)notifyAboutItemsDeletion:(NSArray*)items;
@@ -86,6 +86,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
 - (void)notifyAboutkEndOfTransitions;
 - (void)notifyAboutDidUpdateMoviesCount;
 - (void)notifyAboutDidUpdateUserScore;
+- (void)notifyAboutDidUpdateSharedUserScore;
 
 
 @end
@@ -107,6 +108,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
         self.userScore = sharedInstance.score;
         self.moviesCount = sharedInstance.moves;
         [self restoreGameField];
+        
     }
     
     return self;
@@ -130,12 +132,6 @@ NSUInteger const NSDGameItemScoreCost = 10;
 }
 
 #pragma mark - Public Methods
-
-
-
-
-
-
 
 - (void)swapItemsWithSwap:(NSDSwap *) swap{
     
@@ -201,11 +197,16 @@ NSUInteger const NSDGameItemScoreCost = 10;
             itemTransition.from.j = j - self.verticalItemsCount;
 
             [storedItemTransitions addObject:itemTransition];
-
+            
+            
+            
         }
     }
     
     [self notifyAboutItemsMovement:storedItemTransitions];
+    [self notifyAboutDidUpdateMoviesCount];
+    [self notifyAboutDidUpdateSharedUserScore];
+    
     [self checkMatchingItems];
 }
 
@@ -766,5 +767,17 @@ NSUInteger const NSDGameItemScoreCost = 10;
     [[NSNotificationCenter defaultCenter] postNotification:notification];
     
 }
+
+- (void)notifyAboutDidUpdateSharedUserScore{
+    NSNotification * notification = [NSNotification notificationWithName:NSDDidUpdadeSharedUserScore
+                                                                  object:nil
+                                                                userInfo:@{
+                                                                           kNSDUserScore : @(self.userScore)
+                                                                           }];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+
+
+}
+
 
 @end
