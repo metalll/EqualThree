@@ -105,8 +105,8 @@ NSUInteger const NSDCostItem = 10;
     
     
     
-    self.horizontalItemsCount = 9;
-    self.verticalItemsCount = 9;
+    self.horizontalItemsCount = 10;
+    self.verticalItemsCount = 10;
     self.itemTypesCount = NSDGameItemTypesCount;
     
     self.itemSize = CGSizeMake(self.gameItemsView.frame.size.width / (CGFloat) self.horizontalItemsCount,
