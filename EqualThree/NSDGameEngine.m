@@ -182,20 +182,20 @@ NSUInteger const NSDGameItemScoreCost = 10;
 
 
 -(void) restoreGameField {
-
+    
     NSMutableArray *storedItemTransitions = [[NSMutableArray alloc] initWithCapacity:self.verticalItemsCount*self.horizontalItemsCount];
     
     for(NSUInteger i=0;i<self.verticalItemsCount;i++){
         for(NSUInteger j=0;j<self.horizontalItemsCount;j++){
-        
+            
             NSDGameItemTransition * itemTransition =[[NSDGameItemTransition alloc] initWithFrom:[NSDIJStruct new]
-                                                                                            to:[NSDIJStruct new]
-                                                                                          type:[self.gameField[i][j] unsignedIntegerValue ] ];
+                                                                                             to:[NSDIJStruct new]
+                                                                                           type:[self.gameField[i][j] unsignedIntegerValue ] ];
             itemTransition.from.i = i;
             itemTransition.to.i = i;
             itemTransition.to.j = j;
             itemTransition.from.j = j - self.verticalItemsCount;
-
+            
             [storedItemTransitions addObject:itemTransition];
             
             
@@ -265,7 +265,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
     if(result.count>0){
         
         if(self.canRevertUserAction){
-         
+            
             self.moviesCount++;
             
             self.canRevertUserAction = NO;
@@ -283,13 +283,13 @@ NSUInteger const NSDGameItemScoreCost = 10;
     } else {
 #ifdef DEBUG
         NSLog(@"no has matches");
-
+        
         for(int i=0;i<_verticalItemsCount;i++){
             NSString * str = @"|";
             for(int j=0;j<_horizontalItemsCount;j++){
                 str = [str stringByAppendingString: [NSString stringWithFormat:@"%@|",_gameField[j][i]] ] ;
             }
-
+            
             NSLog(@"game field %@",str);
         }
 #endif
@@ -473,11 +473,11 @@ NSUInteger const NSDGameItemScoreCost = 10;
 
 
 -(NSUInteger) calculatePatternJMaxSize : (NSMutableArray *) pattern {
-
+    
     NSUInteger result = 0;
     
     for(int i=0;i<pattern.count;i++){
-       
+        
         NSUInteger tmpResult = 0;
         
         if([pattern[i] isKindOfClass:[NSArray class]]){
@@ -494,7 +494,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
         if(tmpResult > result){
             
             result = tmpResult;
-        
+            
         }
     }
     
@@ -775,8 +775,8 @@ NSUInteger const NSDGameItemScoreCost = 10;
                                                                            kNSDUserScore : @(self.userScore)
                                                                            }];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
-
-
+    
+    
 }
 
 
