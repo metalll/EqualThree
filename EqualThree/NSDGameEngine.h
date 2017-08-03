@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "NSDSwap.h"
-
+#import "NSDGameSharedInstance.h"
 
 extern NSString * const NSDGameItemsDidMoveNotification;
 extern NSString * const NSDGameItemsDidDeleteNotification;
@@ -20,7 +20,7 @@ extern NSString * const NSDDidUpdateMoviesCount ;
 extern NSString * const kNSDGameItems;
 extern NSString * const kNSDGameItemTransitions;
 
-extern NSString * const NSDDidFindPotentialMathed ;
+extern NSString * const NSDDidFindPermissibleStroke;
 extern NSString * const NSDDidDetectGameOver;
 
 extern NSString * const kNSDUserScore;
@@ -35,6 +35,9 @@ extern NSUInteger const NSDGameItemScoreCost;
 - (instancetype)initWithHorizontalItemsCount:(NSUInteger)horizontalItemsCount
                           verticalItemsCount:(NSUInteger)verticalItemsCount
                               itemTypesCount:(NSUInteger)itemTypesCount;
+
+- (instancetype)initWithSharedInstance:(NSDGameSharedInstance *) sharedInstance;
+
 
 - (void)swapItemsWithSwap:(NSDSwap *) swap;
 

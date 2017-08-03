@@ -6,7 +6,6 @@
 #import "NSDGameViewController.h"
 
 NSString * const NSDGameDidFieldEndDeletig = @"NSDGameFieldDidFieldEndDeleting";
-
 NSString * const kNSDCostDeletedItems = @"kNSDCostDeletedItems";
 NSUInteger const NSDCostItem = 10;
 
@@ -96,12 +95,6 @@ NSUInteger const NSDCostItem = 10;
 #pragma mark - Private Methods
 
 - (void)configureGame {
-    
-    
-    
-    
-    
-    
     
     
     
@@ -325,7 +318,7 @@ NSUInteger const NSDCostItem = 10;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidMoveNotification:) name:NSDGameItemsDidMoveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidDeleteNotification:) name:NSDGameItemsDidDeleteNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processGotoAwaitStateNotification:) name:NSDEndOfTransitions object:nil];
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processDidFindPotentialMatch:) name:NSDDidFindPotentialMathed object:nil];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processDidFindPotentialMatch:) name:NSDDidFindPermissibleStroke object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hintUser) name:NSDUserDidTapHintButton object:nil];
     
 }
@@ -333,10 +326,7 @@ NSUInteger const NSDCostItem = 10;
 - (void)unsubscribeFromNotifications {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
-
-
-
+ 
 -(void)notifyAboutDidFieldEndDeletingWithScoreCount:(NSUInteger) scoreCount{
     
     

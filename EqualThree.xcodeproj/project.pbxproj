@@ -28,6 +28,7 @@
 		438F4A6A1F13ABB600C48F7A /* NSDCustomViewForHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 438F4A691F13ABB600C48F7A /* NSDCustomViewForHeader.xib */; };
 		438F4A701F13B26600C48F7A /* NSDHighscoresManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 438F4A6F1F13B26600C48F7A /* NSDHighscoresManager.m */; };
 		438F4A731F13B47700C48F7A /* NSDScoreRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 438F4A721F13B47700C48F7A /* NSDScoreRecord.m */; };
+		439DD2F41F338F8E00F6F0E7 /* NSDGameSharedInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 439DD2F31F338F8E00F6F0E7 /* NSDGameSharedInstance.m */; };
 		43DAB72D1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB72C1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.m */; };
 		43DAB7301F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB72F1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.m */; };
 		43DAB7331F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB7321F16C4E60042537A /* NSDictionary+NSDBodyEncoder.m */; };
@@ -76,6 +77,8 @@
 		438F4A6F1F13B26600C48F7A /* NSDHighscoresManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDHighscoresManager.m; sourceTree = "<group>"; };
 		438F4A711F13B47700C48F7A /* NSDScoreRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDScoreRecord.h; sourceTree = "<group>"; };
 		438F4A721F13B47700C48F7A /* NSDScoreRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDScoreRecord.m; sourceTree = "<group>"; };
+		439DD2F21F338F8E00F6F0E7 /* NSDGameSharedInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDGameSharedInstance.h; sourceTree = "<group>"; };
+		439DD2F31F338F8E00F6F0E7 /* NSDGameSharedInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDGameSharedInstance.m; sourceTree = "<group>"; };
 		43DAB72B1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+NSDURLDictionaryWrapper.h"; sourceTree = "<group>"; };
 		43DAB72C1F16C3930042537A /* NSURL+NSDURLDictionaryWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+NSDURLDictionaryWrapper.m"; sourceTree = "<group>"; };
 		43DAB72E1F16C4360042537A /* NSMutableURLRequest+NSDBodySetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+NSDBodySetter.h"; sourceTree = "<group>"; };
@@ -218,6 +221,8 @@
 				438830B11F2BD7130012597B /* NSDSwap.h */,
 				438830B21F2BD7130012597B /* NSDSwap.m */,
 				433F9EAA1F2BE1D500A077E2 /* NSDGameItemType.h */,
+				439DD2F21F338F8E00F6F0E7 /* NSDGameSharedInstance.h */,
+				439DD2F31F338F8E00F6F0E7 /* NSDGameSharedInstance.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -366,6 +371,7 @@
 				43EBEB9F1F20E7DA00EA958B /* NSDGameItemTransition.m in Sources */,
 				43EBEB9C1F20E3CD00EA958B /* NSDGameEngine.m in Sources */,
 				438F4A731F13B47700C48F7A /* NSDScoreRecord.m in Sources */,
+				439DD2F41F338F8E00F6F0E7 /* NSDGameSharedInstance.m in Sources */,
 				43681F9A1F16ECA70050B3CB /* NSDGameViewController.m in Sources */,
 				436755501F1271BE00E1C06E /* UIColor+NSDColor.m in Sources */,
 				4346AB001F12827C00F1F639 /* NSDGameItemView.m in Sources */,
