@@ -15,6 +15,8 @@ extern NSString * const kIsFirstLaunch;
 
 @interface NSDGeneralMenuViewController : UIViewController
 
+@property BOOL isNewGame ;
+
 - (IBAction)didTapNewGameButtonWithSender:(id)sender ;
 
 @end

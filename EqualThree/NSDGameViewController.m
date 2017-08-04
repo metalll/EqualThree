@@ -131,22 +131,12 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
-
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-
-    
-
-    
     if([segue.identifier isEqualToString:@"InitGameField"]){
-    
-        if(self.isNewGame){
         
-            ((NSDGameFieldViewController *)segue.destinationViewController).isNewGame = YES;
-            
-        }
-        
+        ((NSDGameFieldViewController *)segue.destinationViewController).isNewGame =  self.isNewGame;
+
     }
-    
     
 }
 

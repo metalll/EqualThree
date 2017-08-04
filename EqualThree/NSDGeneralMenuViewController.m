@@ -21,7 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *resumeButton;
 
-@property BOOL isNewGame ;
+
 
 @end
 
@@ -69,6 +69,8 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
         [self.resumeButton setEnabled:YES];
     }
     
+    self.isNewGame = NO;
+    
     [super viewDidAppear:animated];
     
 }
@@ -106,13 +108,17 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
 
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-
+    
+    
+    
     if([segue.identifier isEqualToString:@"ShowGameViewController"]){
-            ((NSDGameViewController *)segue.destinationViewController).isNewGame = self.isNewGame;
+        ((NSDGameViewController *)segue.destinationViewController).isNewGame = self.isNewGame ;
         
     }
     
     [super prepareForSegue:segue sender:sender];
+    
+    
     
     
 }

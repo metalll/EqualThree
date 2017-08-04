@@ -72,16 +72,27 @@ NSUInteger const NSDCostItem = 10;
 
 
 
--(void)viewDidLayoutSubviews{
-  
+-(void)viewDidAppear:(BOOL)animated{
+
+    
+    
     dispatch_async(dispatch_get_main_queue(),^{
-        if(self.gameEngine==nil){
-            if(self.isNewGame)
-                [self configureGame];
-            else
-                [self restoreLastSavedGame];
+        if(self.isNewGame){
+               if(self.gameField.count>0){
+                   for(UIView * view in self.gameField){
+                       [view removeFromSuperview];
+                   }
+                   
+               }
+            self.gameField = nil;
+            [self configureGame];
+        }
+        else {
+            [self restoreLastSavedGame];
         }
     });
+
+
 }
 
 - (void)dealloc {
@@ -121,6 +132,7 @@ NSUInteger const NSDCostItem = 10;
 - (void)configureGame {
     
     
+    self.gameEngine = nil;
     
     self.horizontalItemsCount = 8;
     self.verticalItemsCount = 8;
@@ -142,6 +154,8 @@ NSUInteger const NSDCostItem = 10;
     self.gameEngine = [[NSDGameEngine alloc] initWithHorizontalItemsCount:self.horizontalItemsCount
                                                        verticalItemsCount:self.verticalItemsCount
                                                            itemTypesCount:self.itemTypesCount];
+    
+    
     
 }
 
@@ -512,6 +526,8 @@ NSUInteger const NSDCostItem = 10;
         
     });
 }
+
+
 
 
 

@@ -10,7 +10,6 @@
 
 
 extern NSString * const NSDGameDidFieldEndDeletig;
-
 extern NSString * const kNSDCostDeletedItems;
 extern NSUInteger const NSDCostItem;
 

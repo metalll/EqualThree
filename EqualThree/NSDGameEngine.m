@@ -179,6 +179,10 @@ NSUInteger const NSDGameItemScoreCost = 10;
         }
         [self.gameField addObject:column];
     }
+    
+    [self notifyAboutDidUpdateMoviesCount];
+    [self notifyAboutDidUpdateSharedUserScore];
+
 }
 
 
