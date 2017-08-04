@@ -326,13 +326,13 @@ NSUInteger const NSDGameItemScoreCost = 10;
         NSMutableArray * verticalPattern2 = [[NSMutableArray alloc] initWithArray:@[X,ANY,X,X]];
         
         NSMutableArray * verticalPattern3 = [[NSMutableArray alloc] initWithObjects:
-                                             [[NSMutableArray alloc] initWithArray:@[ANY,X,X]],
-                                             [[NSMutableArray alloc] initWithArray:@[X,ANY,ANY]],
+                                             [[NSMutableArray alloc] initWithArray:@[ANY,X  ,X]],
+                                             [[NSMutableArray alloc] initWithArray:@[X  ,ANY,ANY]],
                                              nil];
         
         NSMutableArray * verticalPattern4 = [[NSMutableArray alloc] initWithObjects:
                                              [[NSMutableArray alloc] initWithArray:@[ANY,ANY,X]],
-                                             [[NSMutableArray alloc] initWithArray:@[X,X,ANY]],
+                                             [[NSMutableArray alloc] initWithArray:@[X  ,X    ,ANY]],
                                              nil];
         
         NSMutableArray * verticalPattern5 = [[NSMutableArray alloc] initWithObjects:
@@ -359,7 +359,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
                                                [[NSMutableArray alloc] initWithArray:@[X,X,ANY,X]], nil];
         
         NSMutableArray * horisontalPattern2 = [[NSMutableArray alloc] initWithObjects:
-                                               [[NSMutableArray alloc] initWithArray:@[X,ANY,X,ANY]], nil];
+                                               [[NSMutableArray alloc] initWithArray:@[X,ANY,X,X]], nil];
         
         NSMutableArray * horisontalPattern3 = [[NSMutableArray alloc] initWithObjects:
                                                [[NSMutableArray alloc] initWithArray:@[ANY,X]],
@@ -566,7 +566,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
                     }
                 }
                 
-            }
+           }
 #ifdef DEBUG
             NSLog(@"checked items %@",[checkedItems description]);
 #endif

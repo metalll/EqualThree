@@ -25,7 +25,9 @@
         NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:name];
         if (![[NSFileManager defaultManager] fileExistsAtPath: plistPath])
         {
-            if(completion) completion(nil);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if(completion) completion(nil);
+            });
             return ;
         }
         
@@ -66,6 +68,8 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         if(![storedObject respondsToSelector:@selector(writeToFile:atomically:)]){
+            
+            
             return ;
         }
         

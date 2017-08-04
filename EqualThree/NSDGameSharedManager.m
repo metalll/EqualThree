@@ -26,9 +26,6 @@ NSString * const kNSDfName = @"NSDGameSharedSession";
 @implementation NSDGameSharedManager
 
 
-
-
-
 static NSDGameSharedManager * instance;
 +(instancetype)sharedInstance{
 
