@@ -247,7 +247,7 @@ float const NSDRevertAnimationDuration = 0.29f;
     
     
     NSMutableArray * squareCheckPattern = [[NSMutableArray alloc] initWithObjects:[[NSMutableArray alloc] initWithArray:@[X,X] copyItems:NO],
-                                           [[NSMutableArray alloc] initWithArray:@[X,X] copyItems:NO],
+                                                                                  [[NSMutableArray alloc] initWithArray:@[X,X] copyItems:NO],
                                            nil];
     
     NSMutableArray * patterns = [[NSMutableArray alloc] initWithArray:@[verticalCheckPattern,squareCheckPattern,horizontalCheckPattern] copyItems:NO];

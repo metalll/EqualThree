@@ -7,12 +7,13 @@
 //
 
 #import "NSDGameViewController.h"
-
+#import "NSDGameViewController.h"
 #import "UIColor+NSDColor.h"
 #import "NSDGeneralMenuViewController.h"
 #import "NSDAlertView.h"
 #import "NSDGameEngine.h"
 #import "NSDGameFieldViewController.h"
+#import "NSDGameOverViewController.h"
 
 NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 
@@ -64,6 +65,8 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserSharedScore:) name:NSDDidUpdadeSharedUserScore object:nil];
     
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDetectGameOver:) name:NSDDidDetectGameOver object:nil];
+    
     
 }
 
@@ -106,6 +109,23 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
     
     self.moviesLabel.text  = [NSString stringWithFormat:@"%ld",(long)resivedMoviesCount];
 }
+
+
+
+-(void) didDetectGameOver:(NSNotification *) notification{
+    
+    
+    NSDGameOverViewController * gameOverVC = [[NSDGameOverViewController alloc] init];
+    
+    
+    [self presentViewController:gameOverVC animated:YES completion:^{
+        
+    }];
+    
+    
+
+}
+
 
 -(void)viewWillAppear:(BOOL)animated{
 
