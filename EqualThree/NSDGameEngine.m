@@ -87,7 +87,7 @@ float const NSDRevertAnimationDuration = 0.29f;
 - (void)notifyAboutItemsMovement:(NSArray*)items;
 - (void)notifyAboutItemsDeletion:(NSArray*)items;
 - (void)notifyAboutDidFindPermissibleStroke:(NSArray *) gameItems;
-- (void)notifyAboutkEndOfTransitions;
+- (void)notifyAboutkDidGoToAwaitState;
 - (void)notifyAboutDidUpdateMoviesCount;
 - (void)notifyAboutDidUpdateUserScore;
 - (void)notifyAboutDidUpdateSharedUserScore;
@@ -307,7 +307,7 @@ float const NSDRevertAnimationDuration = 0.29f;
             
         } else{
             
-            [self notifyAboutkEndOfTransitions];
+            [self notifyAboutkDidGoToAwaitState];
             
             [self checkPermissibleStroke];
             
@@ -707,7 +707,7 @@ float const NSDRevertAnimationDuration = 0.29f;
     
     self.canRevertUserAction=NO;
     
-    [self notifyAboutkEndOfTransitions];
+    [self notifyAboutkDidGoToAwaitState];
     
 }
 
@@ -774,7 +774,7 @@ float const NSDRevertAnimationDuration = 0.29f;
     
 }
 
-- (void)notifyAboutkEndOfTransitions{
+- (void)notifyAboutkDidGoToAwaitState{
     NSNotification *notification = [NSNotification notificationWithName:NSDDidGoToAwaitState
                                                                  object:nil
                                                                userInfo:@{
