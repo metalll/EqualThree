@@ -8,6 +8,7 @@
 NSString * const NSDGameDidFieldEndDeletig = @"NSDGameFieldDidFieldEndDeleting";
 NSString * const kNSDCostDeletedItems = @"kNSDCostDeletedItems";
 NSUInteger const NSDCostItem = 10;
+float const NSDDeleteAnimationDuration = 0.2f;
 
 @interface NSDGameFieldViewController ()
 
@@ -279,7 +280,7 @@ NSUInteger const NSDCostItem = 10;
         CGFloat deltaX = currentLocation.x - startingLocation.x;
         CGFloat deltaY = currentLocation.y - startingLocation.y;
         
-        if ((fabs(deltaX) > (self.itemSize.width / 3.2f)) || (fabs(deltaY) > (self.itemSize.height / 3.2f))) {
+        if ((fabs(deltaX) > (self.itemSize.width / 3.4f)) || (fabs(deltaY) > (self.itemSize.height / 3.4f))) {
             
             finished = YES;
             
@@ -403,7 +404,7 @@ NSUInteger const NSDCostItem = 10;
                 endFrame.size = gameItemView.frame.size;
                 endFrame.origin = [self xyCoordinatesFromI:itemTransition.to.i j:itemTransition.to.j];
                 
-                [UIView animateWithDuration:0.4 animations:^{
+                [UIView animateWithDuration:itemTransition.animationDuration animations:^{
                     gameItemView.frame = endFrame;
                 } completion:^(BOOL finished) {
                     self.gameField[itemTransition.to.i][itemTransition.to.j] = gameItemView;
@@ -432,8 +433,10 @@ NSUInteger const NSDCostItem = 10;
             
         });
         
-        
+        dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
+
     });
+    
     
     
     
@@ -483,7 +486,7 @@ NSUInteger const NSDCostItem = 10;
                     NSUInteger i = tempStruct.i;
                     NSUInteger j = tempStruct.j;
                     
-                    [UIView animateWithDuration:0.2  animations:^{
+                    [UIView animateWithDuration:NSDDeleteAnimationDuration animations:^{
                         [self.gameField[i][j] setAlpha:0.0];
                     } completion:^(BOOL finished) {
                         

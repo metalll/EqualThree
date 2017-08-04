@@ -16,6 +16,8 @@
 #define ANY @"*"
 
 
+
+
 NSString * const NSDGameItemsDidMoveNotification = @"NSDGameItemDidMoveNotification";
 NSString * const NSDGameItemsDidDeleteNotification = @"NSDGameItemDidDeleteNotification";
 NSString * const NSDEndOfTransitions = @"NSDEndOfTransitions";
@@ -35,6 +37,7 @@ NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 
 NSUInteger const NSDGameItemScoreCost = 10;
 
+float const NSDRevertAnimationDuration = 0.29f;
 
 @interface NSDGameEngine ()
 
@@ -689,12 +692,13 @@ NSUInteger const NSDGameItemScoreCost = 10;
     
     NSMutableArray * newItemTransitions = [[NSMutableArray alloc] initWithCapacity:2];
     
-    newItemTransitions[0] = [[NSDGameItemTransition alloc] initWithFrom:self.lastUserSwap.to to:self.lastUserSwap.from type:[self.gameField[self.lastUserSwap.to.i][self.lastUserSwap.to.j] unsignedIntegerValue]];
+    newItemTransitions[0] = [[NSDGameItemTransition alloc] initWithFrom:self.lastUserSwap.to to:self.lastUserSwap.from type:[self.gameField[self.lastUserSwap.to.i][self.lastUserSwap.to.j] unsignedIntegerValue] animationDuration:NSDRevertAnimationDuration];
     
-    newItemTransitions[1] = [[NSDGameItemTransition alloc] initWithFrom:self.lastUserSwap.from to:self.lastUserSwap.to type:[self.gameField[self.lastUserSwap.from.i][self.lastUserSwap.from.j] unsignedIntegerValue]];
+    newItemTransitions[1] = [[NSDGameItemTransition alloc] initWithFrom:self.lastUserSwap.from to:self.lastUserSwap.to type:[self.gameField[self.lastUserSwap.from.i][self.lastUserSwap.from.j] unsignedIntegerValue] animationDuration:NSDRevertAnimationDuration];
     
     [self notifyAboutItemsMovement:newItemTransitions];
     
+
     
     id tmp = self.gameField[self.lastUserSwap.from.i][self.lastUserSwap.from.j];
     self.gameField[self.lastUserSwap.from.i][self.lastUserSwap.from.j] = self.gameField[self.lastUserSwap.to.i][self.lastUserSwap.to.j];

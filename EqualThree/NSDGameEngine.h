@@ -30,6 +30,7 @@ extern NSString * const kNSDMoviesCount ;
 
 extern NSUInteger const NSDGameItemScoreCost;
 
+extern float const NSDRevertAnimationDuration;
 
 
 @interface NSDGameEngine : NSObject
