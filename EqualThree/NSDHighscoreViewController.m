@@ -41,8 +41,8 @@
                                   NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [bar setTintColor:[UIColor whiteColor]];
     
- 
-
+    
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.alpha=0.0f;

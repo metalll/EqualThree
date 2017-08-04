@@ -1,4 +1,4 @@
-//
+    //
 //  NSDGameViewController.m
 //  EqualThree
 //
@@ -45,8 +45,7 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
                        andSecondButtonText:@"Exit"
                        andFirstButtonBlock:^{
                        } andSecondButtonBlock:^{
-                           NSLog(@"nav %@", self.navigationController);
-                           [self.navigationController popToRootViewControllerAnimated:YES];
+                           [self.navigationController popViewControllerAnimated:YES];
                        } andParentViewController:self];
     
     

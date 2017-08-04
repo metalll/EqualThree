@@ -41,7 +41,7 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
     [super viewDidLoad];
     self.navigationItem.title = @"Menu";
     self.navigationController.navigationBar.translucent = NO;
-
+    
     
     [[NSDGameSharedManager sharedInstance] hasSavedGameWithCompletion:^(BOOL isHasSavedGame) {
         
@@ -54,14 +54,14 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
     [bar setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Noteworthy-Bold" size:20.0f],
                                   NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [bar setTintColor:[UIColor whiteColor]];
-
+    
     
     
     
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-
+    
     if([[NSDGameSharedManager sharedInstance] lastSavedGame]==nil){
         [self.resumeButton setEnabled:NO];
     }
@@ -84,16 +84,16 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
     if([[NSDGameSharedManager sharedInstance] lastSavedGame]!=nil){
         
         [NSDAlertView showAlertWithMessageText:@"Do you really want to start a new game?\nAll progress will be lost."
-                          andFirstButtonText:@"Yes"
-                         andSecondButtonText:@"No"
-                         andFirstButtonBlock:^{
-                             
-                             //todo refactor to seque;
-                             self.isNewGame = YES;
-                             [self performSegueWithIdentifier:@"ShowGameViewController" sender:self];
-                             
-                         } andSecondButtonBlock:^{
-                         } andParentViewController:self];
+                            andFirstButtonText:@"Yes"
+                           andSecondButtonText:@"No"
+                           andFirstButtonBlock:^{
+                               
+                               //todo refactor to seque;
+                               self.isNewGame = YES;
+                               [self performSegueWithIdentifier:@"ShowGameViewController" sender:self];
+                               
+                           } andSecondButtonBlock:^{
+                           } andParentViewController:self];
     }
     else {
         self.isNewGame = YES;
