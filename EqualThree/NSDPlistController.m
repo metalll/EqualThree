@@ -14,9 +14,10 @@
 
 
 +(void)loadPlistWithName:(NSString *)name
-           andCompletion:(void (^)(NSArray *))completion{
+    andLoadedObjectClass:(Class) loadedObjectClass
+           andCompletion:(void (^)(id))completion{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    
+        
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         
         NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -24,28 +25,50 @@
         NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:name];
         if (![[NSFileManager defaultManager] fileExistsAtPath: plistPath])
         {
-            if(completion) completion(NULL);
+            if(completion) completion(nil);
             return ;
-    }
+        }
         
-        NSArray * retValArray = [NSArray arrayWithContentsOfFile:plistPath];
+        id retValObject = nil;
+        
+        if(loadedObjectClass == [NSArray class]){
+            retValObject = [NSArray arrayWithContentsOfFile:plistPath];
+        }
+        
+        if(loadedObjectClass == [NSMutableArray class]){
+            retValObject = [NSMutableArray arrayWithContentsOfFile:plistPath];
+        }
+        
+        if(loadedObjectClass == [NSDictionary class]){
+            retValObject = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+        }
+        
+        if(loadedObjectClass == [NSMutableDictionary class]){
+            retValObject = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
+        }
+        
         
         
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if(completion){
-                completion(retValArray);
+                completion(retValObject);
             }
         });
         
     });
-
- 
+    
+    
 }
 
-+(void)savePlistWithName:(NSString *)name andStoredArray:(NSArray *)storedArray andCompletion:(void (^)(void))completion{
++(void)savePlistWithName:(NSString *)name andStoredObject:(id)storedObject andCompletion:(void (^)(void))completion{
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        if(![storedObject respondsToSelector:@selector(writeToFile:atomically:)]){
+            return ;
+        }
+        
         NSError *error;
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -58,7 +81,8 @@
             NSString *bundle = [[NSBundle mainBundle] pathForResource:tempNameArr[0] ofType:tempNameArr[1]];
             [[NSFileManager defaultManager] copyItemAtPath:bundle toPath:plistPath error:&error];
         }
-        [storedArray writeToFile:plistPath atomically: YES];
+        
+        [storedObject writeToFile:plistPath atomically: YES];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if(completion){
@@ -67,7 +91,7 @@
         });
         
     });
-
+    
     
 }
 

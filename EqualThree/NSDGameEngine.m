@@ -25,6 +25,7 @@ NSString * const NSDDidUpdadeSharedUserScore = @"NSDDidUpdadeSharedUserScore";
 
 NSString * const NSDDidFindPermissibleStroke = @"NSDDidFindPermissibleStroke";
 NSString * const NSDDidDetectGameOver = @"NSDDidDetectGameOver";
+NSString * const kNSDGameItemsTypeCount = @"kNSDGameItemsTypeCount";
 
 NSString * const kNSDUserScore = @"kNSDUserScore";
 NSString * const kNSDMoviesCount = @"kNSDUserMoviesCount";
@@ -104,7 +105,7 @@ NSUInteger const NSDGameItemScoreCost = 10;
         self.gameField = sharedInstance.field;
         self.horizontalItemsCount =sharedInstance.field.count;
         self.verticalItemsCount = ((NSArray *)sharedInstance.field.firstObject).count;
-        self.itemTypesCount = sharedInstance.itemTypesCount;
+        self.itemTypesCount = sharedInstance.sharedItemTypesCount;
         self.userScore = sharedInstance.score;
         self.moviesCount = sharedInstance.moves;
         [self restoreGameField];
@@ -763,7 +764,12 @@ NSUInteger const NSDGameItemScoreCost = 10;
 - (void)notifyAboutkEndOfTransitions{
     NSNotification *notification = [NSNotification notificationWithName:NSDEndOfTransitions
                                                                  object:nil
-                                                               userInfo:nil];
+                                                               userInfo:@{
+                                                                          kNSDGameItems:[self.gameField copy],
+                                                                          kNSDUserScore:@(self.userScore),
+                                                                          kNSDMoviesCount:@(self.moviesCount),
+                                                                          kNSDGameItemsTypeCount : @(self.itemTypesCount)
+                                                                        }];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
     
 }

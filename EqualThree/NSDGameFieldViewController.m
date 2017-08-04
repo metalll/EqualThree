@@ -39,7 +39,6 @@ NSUInteger const NSDCostItem = 10;
 
 - (void) didRecognizePan:(UIPanGestureRecognizer *) recognizer;
 
-
 - (void)subscribeToNotifications;
 - (void)unsubscribeFromNotifications;
 

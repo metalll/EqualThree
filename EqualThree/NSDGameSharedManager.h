@@ -7,16 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NSDGameSharedInstance.m"
+#import "NSDGameSharedInstance.h"
+
+extern NSString * const kNSDfName;
+
 @interface NSDGameSharedManager : NSObject
 
 
 +(instancetype) sharedInstance;
 
--(void)loadGameWithCompletion;
-
-
-
+-(NSDGameSharedInstance *)lastSavedGame;
 
 
 

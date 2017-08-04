@@ -8,7 +8,7 @@
 
 #import "NSDGameItemTransition.h"
 
-float const defaultAnimationDuration = 2.0f;
+float const defaultAnimationDuration = 0.3f;
 
 @implementation NSDGameItemTransition
 
