@@ -66,18 +66,12 @@ static NSDGameSharedManager * instance;
         [new subscribeToNotifications];
     }
     
-    
     return new;
 }
 
 -(void)dealloc{
     [self unsubscribeFromNotifications];
 }
-
-
-
-
-
 
 
 -(void)saveFromStorage{
@@ -114,7 +108,7 @@ static NSDGameSharedManager * instance;
     }
     
     self.gameEngineInstance.field = notification.userInfo[kNSDGameItems];
-    self.gameEngineInstance.moves = [notification.userInfo[kNSDMoviesCount] unsignedIntegerValue];
+    self.gameEngineInstance.moves = [notification.userInfo[kNSDMovesCount] unsignedIntegerValue];
     self.gameEngineInstance.score = [notification.userInfo[kNSDUserScore] unsignedIntegerValue];
     self.gameEngineInstance.sharedItemTypesCount = [notification.userInfo[kNSDGameItemsTypeCount] unsignedIntegerValue];
     

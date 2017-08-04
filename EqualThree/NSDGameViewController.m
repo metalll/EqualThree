@@ -59,7 +59,7 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 
 
 -(void) subscribeToNotifacations{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateMoviesCount:) name:NSDDidUpdateMoviesCount object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateMoviesCount:) name:NSDDidUpdateMovesCount object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserScore:) name:NSDGameDidFieldEndDeleting object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserSharedScore:) name:NSDDidUpdadeSharedUserScore object:nil];
     
@@ -102,7 +102,7 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 }
 
 -(void)didUpdateMoviesCount:(NSNotification *)notification{
-    NSUInteger resivedMoviesCount = [notification.userInfo[kNSDMoviesCount] unsignedIntegerValue];
+    NSUInteger resivedMoviesCount = [notification.userInfo[kNSDMovesCount] unsignedIntegerValue];
     
     self.moviesLabel.text  = [NSString stringWithFormat:@"%ld",(long)resivedMoviesCount];
 }

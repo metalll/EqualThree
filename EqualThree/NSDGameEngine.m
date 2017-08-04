@@ -22,7 +22,7 @@ NSString * const NSDGameItemsDidMoveNotification = @"NSDGameItemDidMoveNotificat
 NSString * const NSDGameItemsDidDeleteNotification = @"NSDGameItemDidDeleteNotification";
 NSString * const NSDDidGoToAwaitState = @"NSDEndOfTransitions";
 NSString * const NSDDidUpdateUserScore = @"NSDDidUpdateUserScore";
-NSString * const NSDDidUpdateMoviesCount = @"NSDDidUpdateMoviesCount";
+NSString * const NSDDidUpdateMovesCount = @"NSDDidUpdateMoviesCount";
 NSString * const NSDDidUpdadeSharedUserScore = @"NSDDidUpdadeSharedUserScore";
 
 NSString * const NSDDidFindPermissibleStroke = @"NSDDidFindPermissibleStroke";
@@ -30,7 +30,7 @@ NSString * const NSDDidDetectGameOver = @"NSDDidDetectGameOver";
 NSString * const kNSDGameItemsTypeCount = @"kNSDGameItemsTypeCount";
 
 NSString * const kNSDUserScore = @"kNSDUserScore";
-NSString * const kNSDMoviesCount = @"kNSDUserMoviesCount";
+NSString * const kNSDMovesCount = @"kNSDUserMoviesCount";
 
 NSString * const kNSDGameItems = @"kNSDGameItems";
 NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
@@ -47,7 +47,7 @@ float const NSDRevertAnimationDuration = 0.29f;
 @property NSUInteger itemTypesCount;
 
 @property NSUInteger userScore;
-@property NSUInteger moviesCount;
+@property NSUInteger movesCount;
 
 @property NSDSwap * lastUserSwap;
 @property BOOL canRevertUserAction;
@@ -110,7 +110,7 @@ float const NSDRevertAnimationDuration = 0.29f;
         self.verticalItemsCount = ((NSArray *)sharedInstance.field.firstObject).count;
         self.itemTypesCount = sharedInstance.sharedItemTypesCount;
         self.userScore = sharedInstance.score;
-        self.moviesCount = sharedInstance.moves;
+        self.movesCount = sharedInstance.moves;
         [self restoreGameField];
         
     }
@@ -128,7 +128,7 @@ float const NSDRevertAnimationDuration = 0.29f;
         self.verticalItemsCount = verticalItemsCount;
         self.itemTypesCount = itemTypesCount;
         self.userScore = 0;
-        self.moviesCount = 0;
+        self.movesCount = 0;
         [self configureGameField];
         [self fillGaps];
     }
@@ -274,7 +274,7 @@ float const NSDRevertAnimationDuration = 0.29f;
         
         if(self.canRevertUserAction){
             
-            self.moviesCount++;
+            self.movesCount++;
             
             self.canRevertUserAction = NO;
             
@@ -736,7 +736,12 @@ float const NSDRevertAnimationDuration = 0.29f;
 
 -(void) notifyAboutDidDetectGameOver{
     
-    NSNotification * notification = [NSNotification notificationWithName:NSDDidDetectGameOver object:nil];
+    NSNotification * notification = [NSNotification notificationWithName:NSDDidDetectGameOver
+                                                                  object:nil
+                                                                userInfo:@{
+                                                                        kNSDUserScore : @(self.userScore),
+                                                                        kNSDMovesCount: @(self.movesCount)
+                                                                    }];
     
     [[NSNotificationCenter defaultCenter] postNotification:notification];
     
@@ -762,9 +767,9 @@ float const NSDRevertAnimationDuration = 0.29f;
 }
 
 -(void) notifyAboutDidUpdateMoviesCount{
-    NSNotification *notification = [NSNotification notificationWithName:NSDDidUpdateMoviesCount
+    NSNotification *notification = [NSNotification notificationWithName:NSDDidUpdateMovesCount
                                                                  object:nil
-                                                               userInfo:@{ kNSDMoviesCount : @(self.moviesCount)}];
+                                                               userInfo:@{ kNSDMovesCount : @(self.movesCount)}];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
     
 }
@@ -775,7 +780,7 @@ float const NSDRevertAnimationDuration = 0.29f;
                                                                userInfo:@{
                                                                           kNSDGameItems:[self.gameField copy],
                                                                           kNSDUserScore:@(self.userScore),
-                                                                          kNSDMoviesCount:@(self.moviesCount),
+                                                                          kNSDMovesCount:@(self.movesCount),
                                                                           kNSDGameItemsTypeCount : @(self.itemTypesCount)
                                                                         }];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
