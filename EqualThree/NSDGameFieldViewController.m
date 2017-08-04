@@ -4,7 +4,7 @@
 #import "NSDGameItemTransition.h"
 #import "NSDIJStruct.h"
 #import "NSDGameViewController.h"
-
+#import "NSDGameSharedManager.h"
 NSString * const NSDGameDidFieldEndDeletig = @"NSDGameFieldDidFieldEndDeleting";
 NSString * const kNSDCostDeletedItems = @"kNSDCostDeletedItems";
 NSUInteger const NSDCostItem = 10;
@@ -42,6 +42,9 @@ NSUInteger const NSDCostItem = 10;
 - (void)subscribeToNotifications;
 - (void)unsubscribeFromNotifications;
 
+
+
+
 @end
 
 @implementation NSDGameFieldViewController
@@ -50,14 +53,13 @@ NSUInteger const NSDCostItem = 10;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.isUserHelpNeeded = NO;
     self.hint = nil;
     self.isUserRecivedHint = NO;
     
     
     [self.gameItemsView setBackgroundColor:[UIColor clearColor]];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QUEUE_SERIAL);
         [self subscribeToNotifications];
         
@@ -66,23 +68,18 @@ NSUInteger const NSDCostItem = 10;
         
     });
     
-    
-    
-    
-    
-    
-    
-    
-    
 }
 
 
 
 -(void)viewDidLayoutSubviews{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
+  
+    dispatch_async(dispatch_get_main_queue(),^{
         if(self.gameEngine==nil){
-            [self configureGame];
+            if(self.isNewGame)
+                [self configureGame];
+            else
+                [self restoreLastSavedGame];
         }
     });
 }
@@ -93,12 +90,40 @@ NSUInteger const NSDCostItem = 10;
 
 #pragma mark - Private Methods
 
+- (void)restoreLastSavedGame {
+    
+    NSDGameSharedInstance * instance = [[NSDGameSharedManager sharedInstance] lastSavedGame];
+    
+    self.horizontalItemsCount = instance.field.count;
+    self.verticalItemsCount = ((NSMutableArray *)instance.field.firstObject).count;
+    self.itemTypesCount = NSDGameItemTypesCount;
+    
+    self.itemSize = CGSizeMake(self.gameItemsView.frame.size.width / (CGFloat) self.horizontalItemsCount,
+                               self.gameItemsView.frame.size.height / (CGFloat) self.verticalItemsCount);
+    
+    
+    
+    self.gameField = [NSMutableArray arrayWithCapacity:self.horizontalItemsCount];
+    
+    for (NSUInteger i = 0; i < self.horizontalItemsCount; i++) {
+        NSMutableArray *column = [NSMutableArray arrayWithCapacity:self.verticalItemsCount];
+        for (NSUInteger j = 0; j < self.verticalItemsCount; j++) {
+            [column addObject:[NSNull null]];
+        }
+        [self.gameField addObject:column];
+    }
+    
+    self.gameEngine = [[NSDGameEngine alloc] initWithSharedInstance:instance];
+    
+    
+}
+
 - (void)configureGame {
     
     
     
-    self.horizontalItemsCount = 10;
-    self.verticalItemsCount = 10;
+    self.horizontalItemsCount = 8;
+    self.verticalItemsCount = 8;
     self.itemTypesCount = NSDGameItemTypesCount;
     
     self.itemSize = CGSizeMake(self.gameItemsView.frame.size.width / (CGFloat) self.horizontalItemsCount,

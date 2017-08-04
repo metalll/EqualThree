@@ -45,7 +45,8 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
                        andSecondButtonText:@"Exit"
                        andFirstButtonBlock:^{
                        } andSecondButtonBlock:^{
-                           [self.navigationController popViewControllerAnimated:YES];
+                           NSLog(@"nav %@", self.navigationController);
+                           [self.navigationController popToRootViewControllerAnimated:YES];
                        } andParentViewController:self];
     
     
@@ -61,6 +62,7 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 -(void) subscribeToNotifacations{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateMoviesCount:) name:NSDDidUpdateMoviesCount object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserScore:) name:NSDGameDidFieldEndDeletig object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserSharedScore:) name:NSDDidUpdadeSharedUserScore object:nil];
     
     
     
@@ -83,6 +85,18 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
     
     
     self.scoreLabel.text = [NSString stringWithFormat:@"%ld",(long)resivedScore+currentScore];
+    
+    
+    
+}
+
+-(void)didUpdateUserSharedScore:(NSNotification *)notification{
+    NSUInteger resivedScore  = [notification.userInfo[kNSDUserScore] unsignedIntegerValue];
+  
+    
+    
+    
+    self.scoreLabel.text = [NSString stringWithFormat:@"%ld",(long)resivedScore];
     
     
     
@@ -117,6 +131,24 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+
+    
+
+    
+    if([segue.identifier isEqualToString:@"InitGameField"]){
+    
+        if(self.isNewGame){
+        
+            ((NSDGameFieldViewController *)segue.destinationViewController).isNewGame = YES;
+            
+        }
+        
+    }
+    
+    
+}
 
 
 @end

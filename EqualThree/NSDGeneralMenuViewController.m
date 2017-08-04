@@ -11,7 +11,7 @@
 #import "UIColor+NSDColor.h"
 #include "NSDGameViewController.h"
 #import "NSDAlertView.h"
-
+#import "NSDGameSharedManager.h"
 
 
 @interface NSDGeneralMenuViewController ()
@@ -21,7 +21,11 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *resumeButton;
 
+@property BOOL isNewGame ;
+
 @end
+
+
 
 
 NSString * const kIsHasSavedGame = @"NSDIsHasSavedGame";
@@ -38,38 +42,31 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
     self.navigationItem.title = @"Menu";
     self.navigationController.navigationBar.translucent = NO;
 
+    
+    [[NSDGameSharedManager sharedInstance] hasSavedGameWithCompletion:^(BOOL isHasSavedGame) {
+        
+        [self.resumeButton setEnabled:isHasSavedGame];
+        
+    }];
+    
     UINavigationBar *bar = [self.navigationController navigationBar];
     [bar setBarTintColor:[UIColor navigationBackgroundColor]];
     [bar setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Noteworthy-Bold" size:20.0f],
                                   NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [bar setTintColor:[UIColor whiteColor]];
 
-   
     
     
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{
-                                                              kIsHasSavedGame:@NO}];
-    
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:kIsHasSavedGame] isEqual:@NO]){
-        [self.resumeButton setEnabled:NO];
-        [self.resumeButton setAlpha:0.5f];
-    }else{
-        [self.resumeButton setEnabled:YES];
-        [self.resumeButton setAlpha:1.0f];
-        
-    }
     
 }
 
 -(void)viewDidAppear:(BOOL)animated{
 
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:kIsHasSavedGame] isEqual:@NO]){
+    if([[NSDGameSharedManager sharedInstance] lastSavedGame]==nil){
         [self.resumeButton setEnabled:NO];
-        [self.resumeButton setAlpha:0.5f];
     }
     else {
         [self.resumeButton setEnabled:YES];
-        [self.resumeButton setAlpha:1.0f];
     }
     
     [super viewDidAppear:animated];
@@ -82,29 +79,40 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
 
 - (IBAction)didTapNewGameButtonWithSender:(id)sender {
     
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:kIsHasSavedGame] isEqual:@YES]){
+    if([[NSDGameSharedManager sharedInstance] lastSavedGame]!=nil){
         
         [NSDAlertView showAlertWithMessageText:@"Do you really want to start a new game?\nAll progress will be lost."
                           andFirstButtonText:@"Yes"
                          andSecondButtonText:@"No"
                          andFirstButtonBlock:^{
-                             [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:kIsHasSavedGame];
                              
                              //todo refactor to seque;
-                             
-                             NSDGameViewController * target = [self.storyboard instantiateViewControllerWithIdentifier:@"NSDGameViewController"];
-                             
-                             [self.navigationController pushViewController:target animated:YES];
+                             self.isNewGame = YES;
+                             [self performSegueWithIdentifier:@"ShowGameViewController" sender:self];
                              
                          } andSecondButtonBlock:^{
                          } andParentViewController:self];
     }
     else {
-        NSDGameViewController * target = [self.storyboard instantiateViewControllerWithIdentifier:@"NSDGameViewController"];
-        [self.navigationController pushViewController:target animated:YES];
+        self.isNewGame = YES;
+        [self performSegueWithIdentifier:@"ShowGameViewController" sender:self];
+        
     }
     
     
+    
+    
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+
+    if([segue.identifier isEqualToString:@"ShowGameViewController"]){
+            ((NSDGameViewController *)segue.destinationViewController).isNewGame = self.isNewGame;
+        
+    }
+    
+    [super prepareForSegue:segue sender:sender];
     
     
 }

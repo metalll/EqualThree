@@ -22,8 +22,8 @@
         
         NSString *documentsDirectory = [paths objectAtIndex:0];
         
-        NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:name];
-        if (![[NSFileManager defaultManager] fileExistsAtPath: plistPath])
+        NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:[name stringByAppendingString:@".plist"]];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath])
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(completion) completion(nil);
@@ -77,14 +77,8 @@
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
         
-        NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:name];
-        if (![[NSFileManager defaultManager] fileExistsAtPath: plistPath])
-        {
-            NSArray * tempNameArr = [name componentsSeparatedByString:@"."];
-            
-            NSString *bundle = [[NSBundle mainBundle] pathForResource:tempNameArr[0] ofType:tempNameArr[1]];
-            [[NSFileManager defaultManager] copyItemAtPath:bundle toPath:plistPath error:&error];
-        }
+        NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:[name stringByAppendingString:@".plist"]];
+        
         
         [storedObject writeToFile:plistPath atomically: YES];
         

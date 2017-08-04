@@ -46,13 +46,21 @@ static NSDGameSharedManager * instance;
     return self.gameEngineInstance;
 }
 
+-(void)hasSavedGameWithCompletion:(void(^)(BOOL isHasSavedGame))completion{
+   [self loadFromStorageWithCompletion:^(NSDGameSharedInstance * retVal) {
+       if(completion){
+           completion(retVal!=NULL);
+           self.gameEngineInstance = retVal;
+       }
+   }];
+}
+
 +(instancetype)new{
     
     NSDGameSharedManager * new = [super new];
 
     if(new){
         [new subscribeToNotifications];
-        [new loadFromStorageWithCompletion:nil];
     }
     
     
@@ -70,7 +78,7 @@ static NSDGameSharedManager * instance;
 
 
 -(void)saveFromStorage{
-    [NSDPlistController savePlistWithName:kNSDfName andStoredObject:self.gameEngineInstance andCompletion:nil];
+    [NSDPlistController savePlistWithName:kNSDfName andStoredObject:[self.gameEngineInstance dic] andCompletion:nil];
 }
 
 -(void)loadFromStorageWithCompletion:(void(^)(NSDGameSharedInstance *))completion{

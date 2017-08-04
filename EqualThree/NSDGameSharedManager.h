@@ -17,7 +17,7 @@ extern NSString * const kNSDfName;
 +(instancetype) sharedInstance;
 
 -(NSDGameSharedInstance *)lastSavedGame;
-
+-(void)hasSavedGameWithCompletion:(void(^)(BOOL isHasSavedGame))completion;
 
 
 

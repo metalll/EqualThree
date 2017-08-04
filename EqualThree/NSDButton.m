@@ -34,4 +34,17 @@
     
 }
 
+-(void)setEnabled:(BOOL)enabled{
+    [super setEnabled:enabled];
+    
+    if(enabled){
+        self.alpha = 1.0f;
+    }
+    
+    else{
+        self.alpha = 0.5f;
+    }
+
+}
+
 @end

@@ -14,7 +14,7 @@
         <!--Navigation Controller-->
         <scene sceneID="lyG-oz-yzF">
             <objects>
-                <navigationController definesPresentationContext="YES" modalPresentationStyle="overCurrentContext" id="LsK-I8-NNx" sceneMemberID="viewController">
+                <navigationController modalPresentationStyle="currentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LsK-I8-NNx" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="07Q-hw-uUA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -30,7 +30,7 @@
         <!--General Menu View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="GeneralMenuViewController" definesPresentationContext="YES" modalPresentationStyle="currentContext" id="BYZ-38-t0r" customClass="NSDGeneralMenuViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GeneralMenuViewController" modalPresentationStyle="currentContext" id="BYZ-38-t0r" customClass="NSDGeneralMenuViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -50,7 +50,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="kL7-p2-Yap" kind="show" action="showDetailViewController:sender:" id="CZ8-pS-16F"/>
+                                    <segue destination="kL7-p2-Yap" kind="show" id="gO9-JT-a1v"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KRG-4U-KcS" customClass="NSDButton">
@@ -105,7 +105,7 @@
         <!--Game View Controller-->
         <scene sceneID="BzN-DY-DgT">
             <objects>
-                <viewController storyboardIdentifier="NSDGameViewController" extendedLayoutIncludesOpaqueBars="YES" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" hidesBottomBarWhenPushed="YES" id="kL7-p2-Yap" customClass="NSDGameViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NSDGameViewController" extendedLayoutIncludesOpaqueBars="YES" modalTransitionStyle="crossDissolve" modalPresentationStyle="currentContext" hidesBottomBarWhenPushed="YES" id="kL7-p2-Yap" customClass="NSDGameViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ckF-iJ-hgb"/>
                         <viewControllerLayoutGuide type="bottom" id="sVH-4S-6KH"/>
@@ -191,7 +191,7 @@
                             <containerView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tpx-8a-nAg">
                                 <rect key="frame" x="8" y="149" width="359" height="450"/>
                                 <connections>
-                                    <segue destination="XhA-bX-skV" kind="embed" id="9HJ-R3-X99"/>
+                                    <segue destination="XhA-bX-skV" kind="embed" identifier="InitGameField" id="9HJ-R3-X99"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -271,7 +271,7 @@
         <!--Game Field View Controller-->
         <scene sceneID="iDd-g9-Ebg">
             <objects>
-                <viewController modalPresentationStyle="overCurrentContext" id="XhA-bX-skV" customClass="NSDGameFieldViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NSDGameFieldViewController" modalPresentationStyle="overCurrentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="XhA-bX-skV" customClass="NSDGameFieldViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MiT-VS-GuZ"/>
                         <viewControllerLayoutGuide type="bottom" id="ARM-gk-eBN"/>

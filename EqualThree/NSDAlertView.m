@@ -73,6 +73,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    self.alertView.layer.cornerRadius = 20.0f;
+    self.alertView.layer.masksToBounds = YES;
+    
     self.view.backgroundColor = [UIColor clearColor];
     self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     //self.modalPresentationStyle = UIModalPresentationFormSheet;

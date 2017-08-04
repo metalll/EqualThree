@@ -16,7 +16,7 @@ extern NSUInteger const NSDCostItem;
 
 @interface NSDGameFieldViewController : UIViewController
 
-
+@property BOOL isNewGame;
 
 
 @end
