@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 
 
-extern NSString * const NSDGameDidFieldEndDeletig;
+extern NSString * const NSDGameDidFieldEndDeleting;
 extern NSString * const kNSDCostDeletedItems;
 extern NSUInteger const NSDCostItem;
+
 extern float const NSDDeleteAnimationDuration;
+
 @interface NSDGameFieldViewController : UIViewController
 
 @property BOOL isNewGame;

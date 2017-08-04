@@ -9,7 +9,8 @@
 #import "NSDGameSharedManager.h"
 #import "NSDGameEngine.h"
 #import "NSDPlistController.h"
-NSString * const kNSDfName = @"NSDGameSharedSession";
+
+NSString * const kNSDFileName = @"NSDGameSharedSession";
 
 
 @interface NSDGameSharedManager ()
@@ -18,6 +19,8 @@ NSString * const kNSDfName = @"NSDGameSharedSession";
 
 - (void)subscribeToNotifications;
 - (void)unsubscribeFromNotifications;
+
+-(void)proccessGoToAwaitStateNotification:(NSNotification *)notification;
 
 
 @end
@@ -78,11 +81,11 @@ static NSDGameSharedManager * instance;
 
 
 -(void)saveFromStorage{
-    [NSDPlistController savePlistWithName:kNSDfName andStoredObject:[self.gameEngineInstance dic] andCompletion:nil];
+    [NSDPlistController savePlistWithName:kNSDFileName andStoredObject:[self.gameEngineInstance dic] andCompletion:nil];
 }
 
 -(void)loadFromStorageWithCompletion:(void(^)(NSDGameSharedInstance *))completion{
-    [NSDPlistController loadPlistWithName:kNSDfName andLoadedObjectClass:[NSMutableDictionary class] andCompletion:^(id retValObject) {
+    [NSDPlistController loadPlistWithName:kNSDFileName andLoadedObjectClass:[NSMutableDictionary class] andCompletion:^(id retValObject) {
         self.gameEngineInstance = [NSDGameSharedInstance initWithDic:retValObject];
         if(completion)
         completion(self.gameEngineInstance);
@@ -94,7 +97,7 @@ static NSDGameSharedManager * instance;
 #pragma mark - Notifications
 
 -(void)subscribeToNotifications{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(proccessDidEndOfTransitionsNotification:) name:NSDEndOfTransitions object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(proccessGoToAwaitStateNotification:) name:NSDDidGoToAwaitState object: nil];
     
 }
 
@@ -104,7 +107,7 @@ static NSDGameSharedManager * instance;
 }
 
 
--(void)proccessDidEndOfTransitionsNotification:(NSNotification *)notification{
+-(void)proccessGoToAwaitStateNotification:(NSNotification *)notification{
     self.gameEngineInstance.field = notification.userInfo[kNSDGameItems];
     self.gameEngineInstance.moves = [notification.userInfo[kNSDMoviesCount] unsignedIntegerValue];
     self.gameEngineInstance.score = [notification.userInfo[kNSDUserScore] unsignedIntegerValue];

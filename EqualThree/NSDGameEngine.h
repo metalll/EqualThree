@@ -13,7 +13,7 @@
 
 extern NSString * const NSDGameItemsDidMoveNotification;
 extern NSString * const NSDGameItemsDidDeleteNotification;
-extern NSString * const NSDEndOfTransitions;
+extern NSString * const NSDDidGoToAwaitState;
 extern NSString * const NSDDidUpdateUserScore ;
 extern NSString * const NSDDidUpdateMoviesCount ;
 extern NSString * const NSDDidUpdadeSharedUserScore;

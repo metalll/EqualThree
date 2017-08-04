@@ -20,7 +20,7 @@
 
 NSString * const NSDGameItemsDidMoveNotification = @"NSDGameItemDidMoveNotification";
 NSString * const NSDGameItemsDidDeleteNotification = @"NSDGameItemDidDeleteNotification";
-NSString * const NSDEndOfTransitions = @"NSDEndOfTransitions";
+NSString * const NSDDidGoToAwaitState = @"NSDEndOfTransitions";
 NSString * const NSDDidUpdateUserScore = @"NSDDidUpdateUserScore";
 NSString * const NSDDidUpdateMoviesCount = @"NSDDidUpdateMoviesCount";
 NSString * const NSDDidUpdadeSharedUserScore = @"NSDDidUpdadeSharedUserScore";
@@ -770,7 +770,7 @@ float const NSDRevertAnimationDuration = 0.29f;
 }
 
 - (void)notifyAboutkEndOfTransitions{
-    NSNotification *notification = [NSNotification notificationWithName:NSDEndOfTransitions
+    NSNotification *notification = [NSNotification notificationWithName:NSDDidGoToAwaitState
                                                                  object:nil
                                                                userInfo:@{
                                                                           kNSDGameItems:[self.gameField copy],

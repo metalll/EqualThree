@@ -60,7 +60,7 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 
 -(void) subscribeToNotifacations{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateMoviesCount:) name:NSDDidUpdateMoviesCount object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserScore:) name:NSDGameDidFieldEndDeletig object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserScore:) name:NSDGameDidFieldEndDeleting object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserSharedScore:) name:NSDDidUpdadeSharedUserScore object:nil];
     
     

@@ -5,10 +5,13 @@
 #import "NSDIJStruct.h"
 #import "NSDGameViewController.h"
 #import "NSDGameSharedManager.h"
-NSString * const NSDGameDidFieldEndDeletig = @"NSDGameFieldDidFieldEndDeleting";
+
+NSString * const NSDGameDidFieldEndDeleting = @"NSDGameFieldDidFieldEndDeleting";
 NSString * const kNSDCostDeletedItems = @"kNSDCostDeletedItems";
 NSUInteger const NSDCostItem = 10;
+
 float const NSDDeleteAnimationDuration = 0.2f;
+
 
 @interface NSDGameFieldViewController ()
 
@@ -17,12 +20,10 @@ float const NSDDeleteAnimationDuration = 0.2f;
 @property (strong, nonatomic) NSMutableArray *gameField;
 
 
-
-
-
 @property NSArray * hint;
 @property BOOL isUserHelpNeeded;
 @property BOOL isUserRecivedHint;
+
 
 
 @property NSUInteger horizontalItemsCount;
@@ -205,6 +206,51 @@ float const NSDDeleteAnimationDuration = 0.2f;
     return result;
 }
 
+- (NSDIJStruct *) iJPositionItemWithPoint:(CGPoint) point {
+    
+    NSDIJStruct * result = nil ;
+    
+    
+    
+    
+    result =  [[NSDIJStruct alloc] initWithI:floor( (CGFloat) point.x/(CGFloat)self.itemSize.width) andJ: floor( (CGFloat) point.y / (CGFloat)self.itemSize.height)];
+    
+    return result;
+}
+
+
+
+-(void) hintUser{
+    if(self.hint==nil){
+        self.isUserHelpNeeded=YES;
+        return;
+    }
+    
+    if(self.animated){
+        return;
+    }
+    
+    if(self.isUserRecivedHint){
+        return;
+    }
+    
+    self.isUserHelpNeeded = NO;
+    
+    
+    for(NSUInteger i=0;i<self.hint.count;i++){
+        
+        NSDIJStruct * item = self.hint[i];
+        
+        [((NSDGameItemView *)self.gameField[item.i][item.j]) setHighlighted:YES];
+        
+        
+        
+    }
+    
+    self.isUserRecivedHint = YES;
+    
+    
+}
 
 
 -(void)removeUserHint{
@@ -225,6 +271,8 @@ float const NSDDeleteAnimationDuration = 0.2f;
     
 }
 
+
+
 #pragma mark - Gesture Recognizer
 
 
@@ -234,22 +282,6 @@ float const NSDDeleteAnimationDuration = 0.2f;
     
     [view addGestureRecognizer:pan];
     
-}
-
-
-
-
-
-- (NSDIJStruct *) iJPositionItemWithPoint:(CGPoint) point {
-    
-    NSDIJStruct * result = nil ;
-    
-    
-    
-    
-    result =  [[NSDIJStruct alloc] initWithI:floor( (CGFloat) point.x/(CGFloat)self.itemSize.width) andJ: floor( (CGFloat) point.y / (CGFloat)self.itemSize.height)];
-    
-    return result;
 }
 
 
@@ -318,46 +350,13 @@ float const NSDDeleteAnimationDuration = 0.2f;
 }
 
 
--(void) hintUser{
-    if(self.hint==nil){
-        self.isUserHelpNeeded=YES;
-        return;
-    }
-    
-    if(self.animated){
-        return;
-    }
-    
-    if(self.isUserRecivedHint){
-        return;
-    }
-    
-    self.isUserHelpNeeded = NO;
-    
-    
-    for(NSUInteger i=0;i<self.hint.count;i++){
-        
-        NSDIJStruct * item = self.hint[i];
-        
-        [((NSDGameItemView *)self.gameField[item.i][item.j]) setHighlighted:YES];
-        
-        
-        
-    }
-    
-    self.isUserRecivedHint = YES;
-    
-    
-}
-
-
 #pragma mark - Notifications
 
 - (void)subscribeToNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidMoveNotification:) name:NSDGameItemsDidMoveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidDeleteNotification:) name:NSDGameItemsDidDeleteNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processGotoAwaitStateNotification:) name:NSDEndOfTransitions object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processDidFindPotentialMatch:) name:NSDDidFindPermissibleStroke object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processGotoAwaitStateNotification:) name:NSDDidGoToAwaitState object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processFindPermissibleStroke:) name:NSDDidFindPermissibleStroke object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hintUser) name:NSDUserDidTapHintButton object:nil];
     
 }
@@ -369,7 +368,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
 -(void)notifyAboutDidFieldEndDeletingWithScoreCount:(NSUInteger) scoreCount{
     
     
-    NSNotification * notification = [NSNotification notificationWithName:NSDGameDidFieldEndDeletig
+    NSNotification * notification = [NSNotification notificationWithName:NSDGameDidFieldEndDeleting
                                                                   object:nil
                                                                 userInfo:@{
                                                                            kNSDCostDeletedItems : @(scoreCount)
@@ -443,7 +442,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
 }
 
 
--(void)processDidFindPotentialMatch:(NSNotification *) notification{
+-(void)processFindPermissibleStroke:(NSNotification *) notification{
     
     self.hint = notification.userInfo[kNSDGameItems];
     
