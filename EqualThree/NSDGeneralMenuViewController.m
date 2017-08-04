@@ -41,7 +41,7 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
     [super viewDidLoad];
     self.navigationItem.title = @"Menu";
     self.navigationController.navigationBar.translucent = NO;
-    
+    [self.resumeButton setEnabled:NO];
     
     [[NSDGameSharedManager sharedInstance] hasSavedGameWithCompletion:^(BOOL isHasSavedGame) {
         

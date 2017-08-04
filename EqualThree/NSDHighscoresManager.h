@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "NSDScoreRecord.h"
 
+
+
+extern NSString * const NSDHighScoreFileName;
+
 @interface NSDHighscoresManager : NSObject
 
 

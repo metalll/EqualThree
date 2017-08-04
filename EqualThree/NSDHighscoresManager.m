@@ -9,6 +9,7 @@
 #import "NSDHighscoresManager.h"
 #import "NSDScoreRecord.h"
 
+NSString * const NSDHighScoreFileName;
 
 @interface NSDHighscoresManager (){
     NSMutableArray * records;

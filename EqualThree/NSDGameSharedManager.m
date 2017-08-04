@@ -52,7 +52,7 @@ static NSDGameSharedManager * instance;
 -(void)hasSavedGameWithCompletion:(void(^)(BOOL isHasSavedGame))completion{
    [self loadFromStorageWithCompletion:^(NSDGameSharedInstance * retVal) {
        if(completion){
-           completion(retVal!=NULL);
+           completion(retVal!=nil);
            self.gameEngineInstance = retVal;
        }
    }];
@@ -108,6 +108,11 @@ static NSDGameSharedManager * instance;
 
 
 -(void)proccessGoToAwaitStateNotification:(NSNotification *)notification{
+    
+    if(self.gameEngineInstance==nil){
+        self.gameEngineInstance = [NSDGameSharedInstance new];
+    }
+    
     self.gameEngineInstance.field = notification.userInfo[kNSDGameItems];
     self.gameEngineInstance.moves = [notification.userInfo[kNSDMoviesCount] unsignedIntegerValue];
     self.gameEngineInstance.score = [notification.userInfo[kNSDUserScore] unsignedIntegerValue];

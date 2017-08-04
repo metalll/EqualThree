@@ -32,6 +32,7 @@ NSString * const kSharedItemTypesCount = @"kSharedItemTypesCount";
 
 +(instancetype)initWithDic:(NSDictionary *)dic{
     
+    if(dic == nil) return nil;
     
     NSDGameSharedInstance * new = [super new];
     
