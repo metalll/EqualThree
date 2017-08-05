@@ -136,8 +136,8 @@ float const NSDDeleteAnimationDuration = 0.2f;
     
     self.gameEngine = nil;
     
-    self.horizontalItemsCount = 5;
-    self.verticalItemsCount = 5;
+    self.horizontalItemsCount = 4;
+    self.verticalItemsCount = 4;
     self.itemTypesCount = NSDGameItemTypesCount;
     
     self.itemSize = CGSizeMake(self.gameItemsView.frame.size.width / (CGFloat) self.horizontalItemsCount,

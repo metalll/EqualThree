@@ -14,6 +14,8 @@
 #import "NSDGameEngine.h"
 #import "NSDGameFieldViewController.h"
 #import "NSDGameOverViewController.h"
+#import "NSDHighscoresManager.h"
+#import "NSDGameSharedManager.h"
 
 NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 
@@ -118,8 +120,12 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
     NSDGameOverViewController * gameOverVC = [[NSDGameOverViewController alloc] initWithCompletion:^(NSDScoreRecord * record) {
         
         
-        //to do delete last session
+        [[NSDGameSharedManager sharedInstance] deleteGame];
+        [[NSDHighscoresManager sharedManager] addRecordWithRecord:record];
         
+       [self dismissViewControllerAnimated:YES completion:^{
+           [self.navigationController popToRootViewControllerAnimated:YES];
+       }];
         
         
         

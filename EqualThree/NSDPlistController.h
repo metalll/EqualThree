@@ -19,4 +19,6 @@
            andStoredObject : (id) storedObject
             andCompletion : (void (^)(void)) completion;
 
++(void) removeFileWithName:(NSString *)name;
+
 @end

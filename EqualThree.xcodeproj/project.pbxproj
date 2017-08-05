@@ -172,7 +172,6 @@
 				433F9EAE1F2BF03A00A077E2 /* UI */,
 				4367553F1F12686600E1C06E /* Utils */,
 				4367553E1F12685B00E1C06E /* Model */,
-				4367553D1F12684E00E1C06E /* Game Logic */,
 				436755281F12682100E1C06E /* AppDelegate.h */,
 				436755291F12682100E1C06E /* AppDelegate.m */,
 				4367552E1F12682100E1C06E /* Main.storyboard */,
@@ -236,6 +235,7 @@
 				433F9EAA1F2BE1D500A077E2 /* NSDGameItemType.h */,
 				439DD2F21F338F8E00F6F0E7 /* NSDGameSharedInstance.h */,
 				439DD2F31F338F8E00F6F0E7 /* NSDGameSharedInstance.m */,
+				4367553D1F12684E00E1C06E /* Game Logic */,
 			);
 			name = Model;
 			sourceTree = "<group>";

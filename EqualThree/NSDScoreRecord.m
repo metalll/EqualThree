@@ -15,28 +15,37 @@
 #pragma mark - Init
 
 -(instancetype)initWithName:(NSString *)name
-                      score:(NSUInteger)score {
+                      score:(NSNumber *)score {
     
-    return [self initWithUUID: [[NSUUID UUID] UUIDString] name:name score:score];
-
-}
-
--(instancetype)initWithUUID:(NSString *)UUID
-                       name:(NSString *)name
-                      score:(NSUInteger)score{
-  
     self = [super init];
     
     if (self) {
-        self.UUID = UUID;
         self.userName = name;
         self.userScore = score;
     }
-    
     return self;
+
+}
+
+
+
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.userScore forKey:@"userScore"];
+    [encoder encodeObject:self.userName forKey:@"userName"];
     
 }
 
+- (id)initWithCoder:(NSCoder *)decoder {
+    
+    self = [super init];
+    if(self){
+    self.userScore =[decoder decodeObjectForKey:@"userScore"];
+    self.userName = [decoder decodeObjectForKey:@"userName"];
+    }
+    
+    return self;
+}
 
 
 

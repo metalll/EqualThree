@@ -49,6 +49,10 @@
     
     [[NSDHighscoresManager sharedManager] allRecordsWithCompletion:^(NSArray * tArr) {
         rankList=tArr;
+        
+        if(rankList!=nil){
+        }
+        
         [self.tableView reloadData];
         [self.activityIndicator stopAnimating];
         [UITableView animateWithDuration:.2 animations:^{

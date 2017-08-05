@@ -80,8 +80,9 @@
     [self.nameTextField endEditing:YES];
     
     
+    NSNumber * score = @([self.scoreText integerValue]);
     
-    self.completionBlock([[NSDScoreRecord alloc]initWithName:checkingText score:[self.scoreText integerValue]]);
+    self.completionBlock([[NSDScoreRecord alloc]initWithName:checkingText score:score]);
     
 }
 

@@ -8,20 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSDScoreRecord : NSObject
 
-@property NSString * UUID;
+
+
+@interface NSDScoreRecord : NSObject<NSCoding>
+
+
 
 @property NSString * userName;
-@property NSUInteger userScore;
+@property NSNumber * userScore;
 
 #pragma mark - Init
 
--(instancetype)initWithUUID:(NSString *)UUID
-                       name:(NSString *)name
-                      score:(NSUInteger)score;
 
 -(instancetype)initWithName:(NSString *)name
-                      score:(NSUInteger)score;
+                      score:(NSNumber *)score;
+
+
+
+
 
 @end

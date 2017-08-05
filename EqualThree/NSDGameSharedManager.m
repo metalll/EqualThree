@@ -22,7 +22,6 @@ NSString * const kNSDFileName = @"NSDGameSharedSession";
 
 -(void)proccessGoToAwaitStateNotification:(NSNotification *)notification;
 
-
 @end
 
 
@@ -47,6 +46,13 @@ static NSDGameSharedManager * instance;
 
 -(NSDGameSharedInstance *)lastSavedGame{
     return self.gameEngineInstance;
+}
+
+-(void)deleteGame{
+
+    self.gameEngineInstance = nil;
+    [NSDPlistController removeFileWithName:kNSDFileName];
+
 }
 
 -(void)hasSavedGameWithCompletion:(void(^)(BOOL isHasSavedGame))completion{

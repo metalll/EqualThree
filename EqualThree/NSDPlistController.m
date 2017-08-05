@@ -11,7 +11,23 @@
 @implementation NSDPlistController
 
 
-
++(void) removeFileWithName:(NSString *)name{
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *path = [documentsDirectory stringByAppendingPathComponent:[name stringByAppendingString: @".plist"]];
+        
+        NSError *error;
+        if(![[NSFileManager defaultManager] removeItemAtPath:path error:&error])
+        {
+            //TODO: Handle/Log error
+        }
+        
+    });
+    
+}
 
 +(void)loadPlistWithName:(NSString *)name
     andLoadedObjectClass:(Class) loadedObjectClass
@@ -78,6 +94,10 @@
         NSString *documentsDirectory = [paths objectAtIndex:0];
         
         NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:[name stringByAppendingString:@".plist"]];
+        
+        NSLog(@"stored fileName %@",plistPath);
+        
+        NSError * error;
         
         
         [storedObject writeToFile:plistPath atomically: YES];

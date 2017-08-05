@@ -13,14 +13,18 @@
 
 extern NSString * const NSDHighScoreFileName;
 
+extern NSString * const kNSDRecords ;
+extern NSString * const kNSDIsSorted ;
+
 @interface NSDHighscoresManager : NSObject
+
 
 
 +(instancetype) sharedManager;
 
 
 
--(void) addRecordWithRecord:(NSDScoreRecord *) record andCompletion: (void (^) (void))completion;
+-(void) addRecordWithRecord:(NSDScoreRecord *) record;
 -(void) allRecordsWithCompletion:(void (^)(NSArray *))completion;
 
 

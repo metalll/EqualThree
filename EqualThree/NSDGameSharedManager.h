@@ -19,6 +19,7 @@ extern NSString * const kNSDFileName;
 -(NSDGameSharedInstance *)lastSavedGame;
 -(void)hasSavedGameWithCompletion:(void(^)(BOOL isHasSavedGame))completion;
 
+-(void)deleteGame;
 
 
 @end
