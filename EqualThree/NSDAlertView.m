@@ -7,7 +7,7 @@
 //
 
 #import "NSDAlertView.h"
-
+#import "UIColor+NSDColor.h"
 @interface NSDAlertView ()
 
 
@@ -47,6 +47,8 @@
                                          andSecondButtonText:secondButtonText
                                          andFirstButtonBlock:firstButtonBlock
                                         andSecondButtonBlock:secondButtonBlock];
+    [alert.view setBackgroundColor:[UIColor alertBackroundColor]];
+    
     [alert showWithParentViewController:parentVC];
 }
 
@@ -77,7 +79,6 @@
     self.alertView.layer.cornerRadius = 20.0f;
     self.alertView.layer.masksToBounds = YES;
     
-    self.view.backgroundColor = [UIColor clearColor];
     self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     //self.modalPresentationStyle = UIModalPresentationFormSheet;
     

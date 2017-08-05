@@ -33,15 +33,6 @@
    UIImage * resultImage = nil;
     UIImage * resultHighlightedImage = nil;
     switch (type) {
-            
-            
-            
-//            Croissant = 1,
-//            Cupcake,
-//            Danish,
-//            Donut,
-//            Macaroon,
-//            SugarCookie
 
         case Croissant:
             resultImage = [UIImage imageNamed:@"Croissant"];
@@ -73,12 +64,7 @@
             resultHighlightedImage = [UIImage imageNamed:@"SugarCookie-H"];
             
             break;
-        
-            
-            
-            
-            
-            
+
     }
     
     

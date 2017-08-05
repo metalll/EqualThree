@@ -115,13 +115,11 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 -(void) didDetectGameOver:(NSNotification *) notification{
     
     
-    NSDGameOverViewController * gameOverVC = [[NSDGameOverViewController alloc] init];
-    gameOverVC.movesText = [notification.userInfo[kNSDMovesCount] stringValue];
-    gameOverVC.scoreText = [notification.userInfo[kNSDUserScore] stringValue];
-    
-    
-    
-    [self presentViewController:gameOverVC animated:YES completion:^{
+    NSDGameOverViewController * gameOverVC = [[NSDGameOverViewController alloc] initWithCompletion:^(NSDScoreRecord * record) {
+        
+        
+        //to do delete last session
+        
         
         
         
@@ -129,15 +127,21 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
     }];
     
     
+    
+    gameOverVC.movesText = [notification.userInfo[kNSDMovesCount] stringValue];
+    gameOverVC.scoreText = [notification.userInfo[kNSDUserScore] stringValue];
+    
+    
+    
+    
+    [self presentViewController:gameOverVC animated:YES completion:nil];
+    
+    
 
 }
 
 
 -(void)viewWillAppear:(BOOL)animated{
-
-    
-    
-    
 
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];

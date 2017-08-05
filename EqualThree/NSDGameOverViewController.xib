@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NSDGameOverViewController">
             <connections>
-                <outlet property="centerXConstraint" destination="WQx-Yv-Rda" id="IKE-qf-CvT"/>
+                <outlet property="centerYConstraint" destination="WQx-Yv-Rda" id="CgT-z2-iMb"/>
                 <outlet property="errorLabel" destination="OKi-I9-W9c" id="PET-lB-ppq"/>
                 <outlet property="mainView" destination="SgX-A2-UTf" id="QwS-L4-G38"/>
                 <outlet property="movesLabel" destination="nfw-50-HsF" id="rpZ-js-7Uu"/>

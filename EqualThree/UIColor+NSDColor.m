@@ -10,18 +10,10 @@
 
 @implementation UIColor (NSDColor)
 
-#pragma mark NSDToastColors
 
-+(instancetype)toastSimpleColor{
-    return [UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:218.0/255.0 alpha:1.0];
-}
++(instancetype)alertBackroundColor{
 
-+(instancetype)toastAcceptColor{
-    return [UIColor greenColor];
-}
-
-+(instancetype)toastErrorColor{
-    return [UIColor redColor];
+    return [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.5f];
 }
 
 #pragma mark NSDNavColors

@@ -11,11 +11,7 @@
 @interface UIColor (NSDColor)
 
 
-#pragma mark NSDToastColors
-
-+(instancetype) toastAcceptColor;
-+(instancetype) toastErrorColor;
-+(instancetype) toastSimpleColor;
++(instancetype) alertBackroundColor;
 
 #pragma mark NSDNavColors
 

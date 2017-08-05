@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NSDScoreRecord.h"
+
+typedef void(^NSDCompletion)(NSDScoreRecord *);
 
 @interface NSDGameOverViewController : UIViewController<UITextFieldDelegate>
+
+
 
 @property (strong,nonatomic) NSString * movesText;
 @property (strong,nonatomic) NSString * scoreText;
@@ -18,4 +23,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *movesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 
+
+
+
+-(instancetype)initWithCompletion:(NSDCompletion) completion;
 @end
