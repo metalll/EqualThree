@@ -47,7 +47,7 @@
     self.tableView.dataSource = self;
     self.tableView.alpha=0.0f;
     
-    [[NSDHighscoresManager sharedManager] allRecordsWithCompletion:^(NSArray * tArr) {
+    [[NSDHighscoresManager sharedManager] sortedElementsWithCompletion:^(NSArray * tArr) {
         rankList=tArr;
         
         if(rankList!=nil){

@@ -47,24 +47,9 @@
             return ;
         }
         
-        id retValObject = nil;
         
-        if(loadedObjectClass == [NSArray class]){
-            retValObject = [NSArray arrayWithContentsOfFile:plistPath];
-        }
-        
-        if(loadedObjectClass == [NSMutableArray class]){
-            retValObject = [NSMutableArray arrayWithContentsOfFile:plistPath];
-        }
-        
-        if(loadedObjectClass == [NSDictionary class]){
-            retValObject = [NSDictionary dictionaryWithContentsOfFile:plistPath];
-        }
-        
-        if(loadedObjectClass == [NSMutableDictionary class]){
-            retValObject = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
-        }
-        
+        id retValObject =  [NSKeyedUnarchiver unarchiveObjectWithFile:plistPath];
+
         
         
         
@@ -97,10 +82,8 @@
         
         NSLog(@"stored fileName %@",plistPath);
         
-        NSError * error;
+        [NSKeyedArchiver archiveRootObject:storedObject toFile:plistPath ];
         
-        
-        [storedObject writeToFile:plistPath atomically: YES];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if(completion){

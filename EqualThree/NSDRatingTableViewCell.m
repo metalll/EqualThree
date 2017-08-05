@@ -52,7 +52,7 @@
     
     self.numberLabel.text = [[NSString stringWithFormat:@"%li",(unsigned long)(NSUInteger)(number+1)] stringByAppendingString:@"."];
     self.nameLabel.text = record.userName;
-    self.scopeLabel.text = [NSString stringWithFormat:@"%li", (unsigned long)record.userScore];
+    self.scopeLabel.text = [record.userScore stringValue];
 
 }
 

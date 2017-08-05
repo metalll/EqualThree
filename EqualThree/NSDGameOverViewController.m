@@ -80,7 +80,10 @@
     [self.nameTextField endEditing:YES];
     
     
-    NSNumber * score = @([self.scoreText integerValue]);
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    f.numberStyle = NSNumberFormatterDecimalStyle;
+    
+    NSNumber * score = [f numberFromString:self.scoreText];
     
     self.completionBlock([[NSDScoreRecord alloc]initWithName:checkingText score:score]);
     

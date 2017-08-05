@@ -22,7 +22,7 @@ NSString * const kNSDIsSorted = @"kNSDIsSorted";
     NSMutableArray * records;
 }
 
-@property BOOL  isSorted;
+@property BOOL isSorted;
 @property BOOL isLoaded;
 @end
 

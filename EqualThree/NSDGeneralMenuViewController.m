@@ -12,7 +12,7 @@
 #include "NSDGameViewController.h"
 #import "NSDAlertView.h"
 #import "NSDGameSharedManager.h"
-
+#import "NSDHighscoresManager.h"
 
 @interface NSDGeneralMenuViewController ()
 
@@ -48,6 +48,11 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
         [self.resumeButton setEnabled:isHasSavedGame];
         
     }];
+    
+    [[NSDHighscoresManager sharedManager] allRecordsWithCompletion:^(NSArray * r) {
+        
+    }];
+    
     
     UINavigationBar *bar = [self.navigationController navigationBar];
     [bar setBarTintColor:[UIColor navigationBackgroundColor]];

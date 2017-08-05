@@ -26,7 +26,7 @@ extern NSString * const kNSDIsSorted ;
 
 -(void) addRecordWithRecord:(NSDScoreRecord *) record;
 -(void) allRecordsWithCompletion:(void (^)(NSArray *))completion;
-
+-(void)sortedElementsWithCompletion:(void(^)(NSArray * ))completion;
 
 
 
