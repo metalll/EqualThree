@@ -11,6 +11,8 @@
 @interface NSDGameOverViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UILabel *errorLabel;
+@property (weak, nonatomic) IBOutlet UIView *mainView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *centerXConstraint;
 
 @end
 
@@ -25,7 +27,8 @@
     
     
     if(self){
-
+        
+        
     [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self.view setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.5f]];
@@ -57,6 +60,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Listen for keyboard appearances and disappearances
+    self.mainView.layer.cornerRadius = 20.0f;
+    self.mainView.layer.masksToBounds = YES;
     self.nameTextField.delegate = self;
     
 
@@ -104,6 +109,8 @@
     
     
     
+    
+    
     [self.view endEditing:YES];
     [self.nameTextField endEditing:YES];
 
@@ -144,17 +151,38 @@
 }
 
 
+-(void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    self.centerXConstraint.constant = -127.0f;
+    
+    [UIView animateWithDuration:0.2f animations:^{
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+}
+
+
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+    
+    self.centerXConstraint.constant = 0;
+    
+    [UIView animateWithDuration:0.2f animations:^{
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+
+
+}
+
 - (void)keyboardDidShow: (NSNotification *) notif{
     // Do something here
 
     
-    [UIView animateWithDuration:0.12f animations:^{
-        CGRect rect = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y - 150, self.view.frame.size.width, self.view.frame.size.height);
-        
-        self.view.frame = rect;
-    } completion:^(BOOL finished) {
-        
-    }];
+  
     
     
 
@@ -168,15 +196,7 @@
 
 - (void)keyboardDidHide: (NSNotification *) notif{
     
-    [UIView animateWithDuration:0.12f animations:^{
-        CGRect rect = CGRectMake(self.view.frame.origin.x, 0, self.view.frame.size.width, self.view.frame.size.height);
-        
-        self.view.frame = rect;
-    } completion:^(BOOL finished) {
-        
-    }];
-    
-
+  
     
         
    
