@@ -10,6 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NSDGameOverViewController">
             <connections>
+                <outlet property="movesLabel" destination="nfw-50-HsF" id="rpZ-js-7Uu"/>
+                <outlet property="scoreLabel" destination="ins-2N-qrp" id="cJ6-sB-fHs"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -42,18 +44,22 @@
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nfw-50-HsF">
-                            <rect key="frame" x="61" y="175" width="42" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nfw-50-HsF">
+                            <rect key="frame" x="61" y="175" width="42" height="27.5"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="42" id="zzS-cK-4yC"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ins-2N-qrp">
-                            <rect key="frame" x="202" y="175" width="42" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="14889" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ins-2N-qrp">
+                            <rect key="frame" x="192" y="175" width="60" height="27.5"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="60" id="8LW-aX-xNC"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moves" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aIW-IF-iYv">
@@ -81,12 +87,16 @@
                     </subviews>
                     <color key="backgroundColor" red="0.80000001190000003" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="nfw-50-HsF" firstAttribute="leading" secondItem="SgX-A2-UTf" secondAttribute="leading" constant="61" id="1Yh-B9-CPc"/>
+                        <constraint firstItem="ins-2N-qrp" firstAttribute="top" secondItem="wHA-MG-Y3I" secondAttribute="bottom" constant="15" id="7n0-DE-9bN"/>
                         <constraint firstItem="wHA-MG-Y3I" firstAttribute="top" secondItem="VuD-NE-pfs" secondAttribute="bottom" constant="34.5" id="9U6-9S-RyC"/>
                         <constraint firstItem="Cwn-ht-O3U" firstAttribute="centerX" secondItem="SgX-A2-UTf" secondAttribute="centerX" id="Bm0-ov-huO"/>
                         <constraint firstAttribute="bottom" secondItem="hpN-ig-lrN" secondAttribute="bottom" constant="20" id="DSg-MG-SIK"/>
                         <constraint firstItem="aIW-IF-iYv" firstAttribute="top" secondItem="VuD-NE-pfs" secondAttribute="bottom" constant="34.5" id="DvM-cx-IhA"/>
+                        <constraint firstItem="nfw-50-HsF" firstAttribute="top" secondItem="aIW-IF-iYv" secondAttribute="bottom" constant="15" id="Es1-6Q-0Fg"/>
                         <constraint firstItem="Cwn-ht-O3U" firstAttribute="top" secondItem="SgX-A2-UTf" secondAttribute="top" constant="28" id="GGL-Jd-rlK"/>
                         <constraint firstItem="Dxd-95-HhB" firstAttribute="centerX" secondItem="SgX-A2-UTf" secondAttribute="centerX" id="Ldj-6w-E76"/>
+                        <constraint firstAttribute="trailing" secondItem="ins-2N-qrp" secondAttribute="trailing" constant="48" id="Mel-Aa-rj4"/>
                         <constraint firstAttribute="trailing" secondItem="wHA-MG-Y3I" secondAttribute="trailing" constant="52" id="OmY-kx-RVG"/>
                         <constraint firstItem="VuD-NE-pfs" firstAttribute="centerX" secondItem="SgX-A2-UTf" secondAttribute="centerX" id="ggN-Xa-Mud"/>
                         <constraint firstAttribute="height" constant="400" id="jvK-kj-VrG"/>

@@ -116,9 +116,15 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
     
     
     NSDGameOverViewController * gameOverVC = [[NSDGameOverViewController alloc] init];
+    gameOverVC.movesText = [notification.userInfo[kNSDMovesCount] stringValue];
+    gameOverVC.scoreText = [notification.userInfo[kNSDUserScore] stringValue];
+    
     
     
     [self presentViewController:gameOverVC animated:YES completion:^{
+        
+        
+        
         
     }];
     

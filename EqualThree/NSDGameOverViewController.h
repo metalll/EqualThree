@@ -10,4 +10,12 @@
 
 @interface NSDGameOverViewController : UIViewController
 
+@property (strong,nonatomic) NSString * movesText;
+@property (strong,nonatomic) NSString * scoreText;
+
+
+
+@property (weak, nonatomic) IBOutlet UILabel *movesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+
 @end

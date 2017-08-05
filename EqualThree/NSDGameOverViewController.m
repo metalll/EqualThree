@@ -37,11 +37,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Listen for keyboard appearances and disappearances
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidHide:)
+                                                 name:UIKeyboardDidHideNotification
+                                               object:nil];
+    
     
     // Do any additional setup after loading the view from its nib.
 }
 
+
+
+
 -(void)viewWillAppear:(BOOL)animated{
+    self.movesLabel.text = self.movesText;
+    self.scoreLabel.text = self.scoreText;
 
     [super viewWillAppear:animated];
 
@@ -52,6 +68,43 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (void)keyboardDidShow: (NSNotification *) notif{
+    // Do something here
+    
+    [UIView animateWithDuration:0.1f animations:^{
+      
+        
+    
+        CGRect rect = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y - 150, self.view.frame.size.width, self.view.frame.size.height);
+        
+        self.view.frame = rect;
+        
+        
+    }];
+    
+    
+    
+    
+    
+    
+    
+}
+
+- (void)keyboardDidHide: (NSNotification *) notif{
+    [UIView animateWithDuration:0.1f animations:^{
+        
+        
+        
+        CGRect rect = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 150, self.view.frame.size.width, self.view.frame.size.height);
+        
+        self.view.frame = rect;
+        
+        
+    }];
+    
+
+}
 /*
 #pragma mark - Navigation
 
