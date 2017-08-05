@@ -119,7 +119,7 @@
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    self.centerYConstraint.constant = -127.0f;
+    self.centerYConstraint.constant = -134.0f;
     
     [UIView animateWithDuration:0.2f animations:^{
         [self.view layoutIfNeeded];
