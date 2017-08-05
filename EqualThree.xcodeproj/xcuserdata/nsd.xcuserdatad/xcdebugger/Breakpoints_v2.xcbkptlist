@@ -42,12 +42,12 @@
                   moduleName = "EqualThree"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/nsd/EqualThree/EqualThree/NSDGameViewController.m"
-                  timestampString = "523621283.32413"
+                  timestampString = "523625752.523166"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "124"
                   endingLineNumber = "124"
-                  offsetFromSymbolStart = "408">
+                  offsetFromSymbolStart = "460">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -57,7 +57,7 @@
                   moduleName = "EqualThree"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/nsd/EqualThree/EqualThree/NSDGameViewController.m"
-                  timestampString = "523621283.327534"
+                  timestampString = "523625752.525442"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "129"
@@ -74,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EqualThree/NSDGameOverViewController.m"
-            timestampString = "523621186.377779"
+            timestampString = "523625664.810107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
-            landmarkName = "-didTapOkButton:"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "-textField:shouldChangeCharactersInRange:replacementString:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

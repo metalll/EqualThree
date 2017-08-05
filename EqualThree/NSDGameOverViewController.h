@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NSDGameOverViewController : UIViewController
+@interface NSDGameOverViewController : UIViewController<UITextFieldDelegate>
 
 @property (strong,nonatomic) NSString * movesText;
 @property (strong,nonatomic) NSString * scoreText;

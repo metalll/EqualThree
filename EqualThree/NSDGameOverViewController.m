@@ -10,6 +10,7 @@
 
 @interface NSDGameOverViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
+@property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 
 @end
 
@@ -56,7 +57,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Listen for keyboard appearances and disappearances
-    
+    self.nameTextField.delegate = self;
     
 
     
@@ -86,12 +87,62 @@
 }
 
 - (IBAction)didTapOkButton:(id)sender {
+    
+    NSString * checkingText = self.nameTextField.text;
+    
+    if(checkingText==nil|| !(checkingText.length>0)){
+        
+        self.errorLabel.alpha = 1.0f;
+        
+        
+        
+        return;
+        
+    
+    
+    }
+    
+    
+    
     [self.view endEditing:YES];
     [self.nameTextField endEditing:YES];
+
     
     
     
 }
+
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+
+    
+    NSLog(@" r string %@",string);
+    
+    NSInteger replasmentStringSize = 0;
+    
+    if(string.length>0){
+    
+        replasmentStringSize = string.length;
+        
+    }else{
+        replasmentStringSize = -1;
+    }
+    
+    
+    if(textField.text==nil|| !((textField.text.length + replasmentStringSize) >0)){
+    
+        self.errorLabel.alpha = 1.0f;
+    
+    }else{
+    
+        self.errorLabel.alpha = 0.0f;
+    }
+    
+    
+    return YES;
+
+}
+
 
 - (void)keyboardDidShow: (NSNotification *) notif{
     // Do something here

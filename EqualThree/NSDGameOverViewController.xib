@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NSDGameOverViewController">
             <connections>
+                <outlet property="errorLabel" destination="OKi-I9-W9c" id="PET-lB-ppq"/>
                 <outlet property="movesLabel" destination="nfw-50-HsF" id="rpZ-js-7Uu"/>
                 <outlet property="nameTextField" destination="Dxd-95-HhB" id="0g5-HN-72a"/>
                 <outlet property="scoreLabel" destination="ins-2N-qrp" id="cJ6-sB-fHs"/>
@@ -73,7 +74,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your Name" textAlignment="justified" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dxd-95-HhB">
-                            <rect key="frame" x="25" y="265" width="250" height="30"/>
+                            <rect key="frame" x="25" y="255" width="250" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="250" id="xX3-Iz-Vuc"/>
                             </constraints>
@@ -88,10 +89,18 @@
                                 <action selector="didTapOkButton:" destination="-1" eventType="touchUpInside" id="u3G-SR-Jcu"/>
                             </connections>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your name can not be empty" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OKi-I9-W9c">
+                            <rect key="frame" x="25" y="293" width="250" height="22.5"/>
+                            <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="14"/>
+                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" red="0.80000001190000003" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="nfw-50-HsF" firstAttribute="leading" secondItem="SgX-A2-UTf" secondAttribute="leading" constant="61" id="1Yh-B9-CPc"/>
+                        <constraint firstItem="OKi-I9-W9c" firstAttribute="top" secondItem="Dxd-95-HhB" secondAttribute="bottom" constant="8" id="60i-6D-GRK"/>
+                        <constraint firstItem="OKi-I9-W9c" firstAttribute="centerX" secondItem="Dxd-95-HhB" secondAttribute="centerX" id="7i4-lW-VW8"/>
                         <constraint firstItem="ins-2N-qrp" firstAttribute="top" secondItem="wHA-MG-Y3I" secondAttribute="bottom" constant="15" id="7n0-DE-9bN"/>
                         <constraint firstItem="wHA-MG-Y3I" firstAttribute="top" secondItem="VuD-NE-pfs" secondAttribute="bottom" constant="34.5" id="9U6-9S-RyC"/>
                         <constraint firstItem="Cwn-ht-O3U" firstAttribute="centerX" secondItem="SgX-A2-UTf" secondAttribute="centerX" id="Bm0-ov-huO"/>
@@ -105,10 +114,11 @@
                         <constraint firstItem="VuD-NE-pfs" firstAttribute="centerX" secondItem="SgX-A2-UTf" secondAttribute="centerX" id="ggN-Xa-Mud"/>
                         <constraint firstAttribute="height" constant="400" id="jvK-kj-VrG"/>
                         <constraint firstItem="aIW-IF-iYv" firstAttribute="leading" secondItem="SgX-A2-UTf" secondAttribute="leading" constant="52" id="l1l-iD-ef9"/>
-                        <constraint firstItem="Dxd-95-HhB" firstAttribute="centerY" secondItem="SgX-A2-UTf" secondAttribute="centerY" constant="80" id="pMu-H3-usC"/>
+                        <constraint firstItem="Dxd-95-HhB" firstAttribute="centerY" secondItem="SgX-A2-UTf" secondAttribute="centerY" constant="70" id="pMu-H3-usC"/>
                         <constraint firstItem="hpN-ig-lrN" firstAttribute="centerX" secondItem="SgX-A2-UTf" secondAttribute="centerX" id="rdn-rl-alH"/>
                         <constraint firstAttribute="width" constant="300" id="sdR-Eb-eZd"/>
                         <constraint firstItem="VuD-NE-pfs" firstAttribute="top" secondItem="Cwn-ht-O3U" secondAttribute="bottom" constant="10" id="udY-Jz-HF5"/>
+                        <constraint firstItem="OKi-I9-W9c" firstAttribute="width" secondItem="Dxd-95-HhB" secondAttribute="width" id="yHc-vc-e5W"/>
                     </constraints>
                 </view>
             </subviews>
