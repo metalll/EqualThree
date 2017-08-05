@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NSDGameOverViewController">
             <connections>
                 <outlet property="movesLabel" destination="nfw-50-HsF" id="rpZ-js-7Uu"/>
+                <outlet property="nameTextField" destination="Dxd-95-HhB" id="0g5-HN-72a"/>
                 <outlet property="scoreLabel" destination="ins-2N-qrp" id="cJ6-sB-fHs"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -83,6 +84,9 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpN-ig-lrN" customClass="NSDButton">
                             <rect key="frame" x="135" y="350" width="30" height="30"/>
                             <state key="normal" title="Ok"/>
+                            <connections>
+                                <action selector="didTapOkButton:" destination="-1" eventType="touchUpInside" id="u3G-SR-Jcu"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="0.80000001190000003" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>

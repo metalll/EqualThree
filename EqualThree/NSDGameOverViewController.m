@@ -9,6 +9,7 @@
 #import "NSDGameOverViewController.h"
 
 @interface NSDGameOverViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 
 @end
 
@@ -28,32 +29,48 @@
     self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self.view setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.5f]];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardDidShow:)
+                                                     name:UIKeyboardDidShowNotification
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardDidHide:)
+                                                     name:UIKeyboardDidHideNotification
+                                                   object:nil];
+
+        
     }
+    
+    
+
     
     
     return self;
 
 }
 
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Listen for keyboard appearances and disappearances
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidShow:)
-                                                 name:UIKeyboardDidShowNotification
-                                               object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidHide:)
-                                                 name:UIKeyboardDidHideNotification
-                                               object:nil];
     
+
     
     // Do any additional setup after loading the view from its nib.
 }
 
 
 
+
+-(void)dealloc{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+}
 
 -(void)viewWillAppear:(BOOL)animated{
     self.movesLabel.text = self.movesText;
@@ -68,21 +85,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)didTapOkButton:(id)sender {
+    [self.view endEditing:YES];
+    [self.nameTextField endEditing:YES];
+    
+    
+    
+}
 
 - (void)keyboardDidShow: (NSNotification *) notif{
     // Do something here
+
     
-    [UIView animateWithDuration:0.1f animations:^{
-      
-        
-    
+    [UIView animateWithDuration:0.12f animations:^{
         CGRect rect = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y - 150, self.view.frame.size.width, self.view.frame.size.height);
         
         self.view.frame = rect;
-        
+    } completion:^(BOOL finished) {
         
     }];
     
+    
+
     
     
     
@@ -92,16 +116,19 @@
 }
 
 - (void)keyboardDidHide: (NSNotification *) notif{
-    [UIView animateWithDuration:0.1f animations:^{
-        
-        
-        
-        CGRect rect = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 150, self.view.frame.size.width, self.view.frame.size.height);
+    
+    [UIView animateWithDuration:0.12f animations:^{
+        CGRect rect = CGRectMake(self.view.frame.origin.x, 0, self.view.frame.size.width, self.view.frame.size.height);
         
         self.view.frame = rect;
-        
+    } completion:^(BOOL finished) {
         
     }];
+    
+
+    
+        
+   
     
 
 }
