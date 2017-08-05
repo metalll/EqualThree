@@ -63,6 +63,9 @@ static NSDHighscoresManager * manager;
 -(void)addRecordWithRecord:(NSDScoreRecord *)record{
     
     
+    self.isSorted = NO;
+    
+    
     if(self->records==nil){
     
         self->records = [NSMutableArray new];
@@ -79,13 +82,7 @@ static NSDHighscoresManager * manager;
 -(void)sortedElementsWithCompletion:(void(^)(NSArray * ))completion{
     
     
-    if(self.isSorted){
-        
-        completion(self->records);
-        
-    }
-    else{
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+           dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             
             if(self->records==nil){
             
@@ -101,24 +98,25 @@ static NSDHighscoresManager * manager;
                 return;
             }
             
-            [self->records sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+          NSArray * tArray =  [self->records sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
                 
                 NSDScoreRecord * fElem = (NSDScoreRecord *) obj1;
                 NSDScoreRecord * sElem =(NSDScoreRecord *) obj2;
                 
-                if(fElem.userScore < sElem.userScore){
+                if(fElem.userScore > sElem.userScore){
                     
                     return (NSComparisonResult)NSOrderedAscending;
                     
                 }else
                     
-                    if(fElem.userScore > sElem.userScore){
+                    if(fElem.userScore < sElem.userScore){
                         
                         return (NSComparisonResult)NSOrderedDescending;
                     
                     }else{
                         
-                        return (NSComparisonResult)NSOrderedSame;
+                        return (NSComparisonResult)NSOrderedDescending;
+                        
                         
                     }
                 
@@ -131,7 +129,7 @@ static NSDHighscoresManager * manager;
                
                 self.isSorted = YES;
                 if(completion){
-                    completion(self->records);
+                    completion(tArray);
                 }
             });
             
@@ -143,7 +141,7 @@ static NSDHighscoresManager * manager;
         
         
         
-    }
+    
     
     
     
@@ -151,7 +149,6 @@ static NSDHighscoresManager * manager;
 
 -(void)allRecordsWithCompletion:(void (^)(NSArray *))completion{
     
-    self.isSorted = NO;
     
     if(self->records!=nil||self.isLoaded){
         if(completion)
@@ -209,6 +206,9 @@ static NSDHighscoresManager * manager;
 }
 
 -(void)saveChangesToFile{
+    
+    self.isSorted = NO;
+    
     
     NSDictionary * savedDictionary = @{
                                        
