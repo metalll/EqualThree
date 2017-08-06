@@ -237,12 +237,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Kua-he-95Z">
-                                <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
+                                <rect key="frame" x="177" y="323" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="9de-Od-Ycm"/>
                                     <constraint firstAttribute="height" constant="20" id="YPH-zl-uBb"/>
                                 </constraints>
                             </activityIndicatorView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UNp-ah-Stz">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" canCancelContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xcx-H3-lQw">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -252,10 +256,14 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Kua-he-95Z" firstAttribute="centerY" secondItem="dx1-8h-bE5" secondAttribute="centerY" id="6pQ-kp-Exg"/>
+                            <constraint firstItem="mzX-dX-Fht" firstAttribute="top" secondItem="UNp-ah-Stz" secondAttribute="bottom" id="EAQ-yn-FFN"/>
                             <constraint firstItem="xcx-H3-lQw" firstAttribute="leading" secondItem="dx1-8h-bE5" secondAttribute="leading" id="GQc-qo-S40"/>
+                            <constraint firstItem="UNp-ah-Stz" firstAttribute="leading" secondItem="dx1-8h-bE5" secondAttribute="leading" id="Hk1-2S-2xK"/>
                             <constraint firstAttribute="trailing" secondItem="xcx-H3-lQw" secondAttribute="trailing" id="JJv-oB-2Ng"/>
+                            <constraint firstAttribute="trailing" secondItem="UNp-ah-Stz" secondAttribute="trailing" id="MTs-VK-Qsf"/>
                             <constraint firstItem="Kua-he-95Z" firstAttribute="centerX" secondItem="dx1-8h-bE5" secondAttribute="centerX" id="amh-Iv-DHD"/>
                             <constraint firstItem="xcx-H3-lQw" firstAttribute="top" secondItem="g3h-SY-ntu" secondAttribute="bottom" id="dmE-dy-dUs"/>
+                            <constraint firstItem="UNp-ah-Stz" firstAttribute="top" secondItem="g3h-SY-ntu" secondAttribute="bottom" id="ejB-7g-Be9"/>
                             <constraint firstItem="mzX-dX-Fht" firstAttribute="top" secondItem="xcx-H3-lQw" secondAttribute="bottom" id="v5s-hG-IiK"/>
                         </constraints>
                     </view>
