@@ -78,9 +78,8 @@
                            andFirstButtonBlock:^{
                                
                                [self startNewGame];
-                               
-                               
-                           } andSecondButtonBlock:^{
+                           }
+                          andSecondButtonBlock:^{
                            } andParentViewController:self];
     }
     else {
@@ -93,7 +92,6 @@
 -(void)startNewGame{
     
     [self performSegueWithIdentifier:@"NewGameViewController" sender:self];
-    
 }
 
 #pragma mark - Segue

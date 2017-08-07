@@ -11,20 +11,16 @@
 
 typedef void(^NSDCompletion)(NSDScoreRecord *);
 
+extern float const heightTranstionToDisplayKeyboard;
+
 @interface NSDGameOverViewController : UIViewController<UITextFieldDelegate>
-
-
 
 @property (strong,nonatomic) NSString * movesText;
 @property (strong,nonatomic) NSString * scoreText;
 
-
-
 @property (weak, nonatomic) IBOutlet UILabel *movesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 
-
-
-
 -(instancetype)initWithCompletion:(NSDCompletion) completion;
+
 @end

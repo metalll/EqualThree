@@ -9,24 +9,23 @@
 #import "NSDGameOverViewController.h"
 #import "UIColor+NSDColor.h"
 
+float const heightTranstionToDisplayKeyboard = -134.0f;
 
 @interface NSDGameOverViewController ()
+
+
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *centerYConstraint;
 
-
-
 @property (nonatomic,copy) NSDCompletion completionBlock;
-
 
 @end
 
 @implementation NSDGameOverViewController
 
-
-
+#pragma mark - Constructors
 
 -(instancetype)initWithCompletion:(NSDCompletion) completion{
     
@@ -45,10 +44,10 @@
     
 }
 
-
-
+#pragma mark - Life Cycle
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     self.mainView.layer.cornerRadius = 20.0f;
     self.mainView.layer.masksToBounds = YES;
@@ -57,11 +56,11 @@
 
 
 -(void)viewWillAppear:(BOOL)animated{
+    
     [super viewWillAppear:animated];
-   
+    
     self.movesLabel.text = self.movesText;
     self.scoreLabel.text = self.scoreText;
-    
 }
 
 #pragma mark - Actions
@@ -94,22 +93,19 @@
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
-    NSInteger replasmentStringSize = 0;
+    NSInteger replacementStringSize = 0;
     
     if(string.length>0){
         
-        replasmentStringSize = string.length;
-        
+        replacementStringSize = string.length;
     }else{
-    
-        replasmentStringSize = -1;
-    
+        
+        replacementStringSize = -1;
     }
     
-    if(textField.text==nil|| !((textField.text.length + replasmentStringSize) > 0)){
+    if(textField.text == nil || !((textField.text.length + replacementStringSize) > 0)) {
         self.errorLabel.alpha = 1.0f;
     }else{
-        
         self.errorLabel.alpha = 0.0f;
     }
     
@@ -119,14 +115,11 @@
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    self.centerYConstraint.constant = -134.0f;
+    self.centerYConstraint.constant = heightTranstionToDisplayKeyboard;
     
     [UIView animateWithDuration:0.2f animations:^{
         [self.view layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        
     }];
-    
 }
 
 
@@ -136,12 +129,7 @@
     
     [UIView animateWithDuration:0.2f animations:^{
         [self.view layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        
     }];
-    
-    
-    
 }
 
 @end

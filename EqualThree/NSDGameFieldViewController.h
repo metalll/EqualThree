@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-extern NSString * const NSDGameDidFieldEndDeleting;
+extern NSString * const NSDGameFieldDidEndDeletingNotificaation;
 extern NSString * const kNSDCostDeletedItems;
 extern NSUInteger const NSDCostItem;
 

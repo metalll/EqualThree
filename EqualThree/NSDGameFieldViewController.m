@@ -6,7 +6,7 @@
 #import "NSDGameViewController.h"
 #import "NSDGameSharedManager.h"
 
-NSString * const NSDGameDidFieldEndDeleting = @"NSDGameFieldDidFieldEndDeleting";
+NSString * const NSDGameFieldDidEndDeletingNotificaation = @"NSDGameFieldDidFieldEndDeleting";
 NSString * const kNSDCostDeletedItems = @"kNSDCostDeletedItems";
 NSUInteger const NSDCostItem = 10;
 
@@ -368,7 +368,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
 -(void)notifyAboutDidFieldEndDeletingWithScoreCount:(NSUInteger) scoreCount{
     
     
-    NSNotification * notification = [NSNotification notificationWithName:NSDGameDidFieldEndDeleting
+    NSNotification * notification = [NSNotification notificationWithName:NSDGameFieldDidEndDeletingNotificaation
                                                                   object:nil
                                                                 userInfo:@{
                                                                            kNSDCostDeletedItems : @(scoreCount)

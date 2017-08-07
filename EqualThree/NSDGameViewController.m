@@ -27,8 +27,8 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 
 -(void)setNavigationBarHidden:(BOOL)hidden;
 
--(void) subscribeToNotifacations;
--(void) unsubscribeFromNotifacations;
+-(void)subscribeToNotifacations;
+-(void)unsubscribeFromNotifacations;
 
 -(void)notifyAboutUserDidTapHintButton;
 
@@ -103,24 +103,30 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 
 
 -(void)subscribeToNotifacations{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateMovesCount:) name:NSDDidUpdateMovesCount object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserScore:) name:NSDGameDidFieldEndDeleting object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserSharedScore:) name:NSDDidUpdadeSharedUserScore object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDetectGameOver:) name:NSDDidDetectGameOver object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateMovesCount:) name:NSDDidUpdateMovesCount object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserScore:) name:NSDGameFieldDidEndDeletingNotificaation object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserSharedScore:) name:NSDDidUpdadeSharedUserScore object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDetectGameOver:) name:NSDDidDetectGameOver object:nil];
 }
 
 -(void)unsubscribeFromNotifacations{
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
 -(void)notifyAboutUserDidTapHintButton{
+    
     NSNotification * notification = [NSNotification notificationWithName:NSDUserDidTapHintButton object:nil] ;
     [[NSNotificationCenter defaultCenter]postNotification:notification];
 }
 
 -(void)didUpdateUserScore:(NSNotification *)notification{
+    
     NSUInteger resivedScore  = [notification.userInfo[kNSDCostDeletedItems] unsignedIntegerValue];
     NSUInteger currentScore = [self.scoreLabel.text integerValue];
     
@@ -128,13 +134,17 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 }
 
 -(void)didUpdateUserSharedScore:(NSNotification *)notification{
-    NSUInteger resivedScore = [notification.userInfo[kNSDUserScore] unsignedIntegerValue];
-    self.scoreLabel.text = [NSString stringWithFormat:@"%ld",(long)resivedScore];
+    
+    NSUInteger recivedScore = [notification.userInfo[kNSDUserScore] unsignedIntegerValue];
+    
+    self.scoreLabel.text = [NSString stringWithFormat:@"%ld",(long)recivedScore];
 }
 
 -(void)didUpdateMovesCount:(NSNotification *)notification{
+    
     NSUInteger recivedMovesCount = [notification.userInfo[kNSDMovesCount] unsignedIntegerValue];
-    self.movesLabel.text  = [NSString stringWithFormat:@"%ld",(long)recivedMovesCount];
+    
+    self.movesLabel.text = [NSString stringWithFormat:@"%ld",(long)recivedMovesCount];
 }
 
 -(void)didDetectGameOver:(NSNotification *) notification{
@@ -160,7 +170,7 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     if([segue.identifier isEqualToString:@"InitGameField"]){
-        ((NSDGameFieldViewController *)segue.destinationViewController).isNewGame =  self.isNewGame;
+        ((NSDGameFieldViewController *)segue.destinationViewController).isNewGame = self.isNewGame;
     }
 }
 
