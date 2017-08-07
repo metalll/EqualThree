@@ -7,32 +7,25 @@
 //
 
 #import "NSDGeneralMenuViewController.h"
-
 #import "UIColor+NSDColor.h"
-#include "NSDGameViewController.h"
+#import "NSDGameViewController.h"
 #import "NSDAlertView.h"
 #import "NSDGameSharedManager.h"
 #import "NSDHighscoresManager.h"
 
+
+
 @interface NSDGeneralMenuViewController ()
 
+@property (weak, nonatomic) IBOutlet UIView* mainView;
+@property (weak, nonatomic) IBOutlet UIButton* resumeButton;
 
-@property (weak, nonatomic) IBOutlet UIView *mainView;
-
-@property (weak, nonatomic) IBOutlet UIButton *resumeButton;
-
-
+-(void)startNewGame;
 
 @end
 
 
-
-
-NSString * const kIsHasSavedGame = @"NSDIsHasSavedGame";
-NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
-
 @implementation NSDGeneralMenuViewController
-
 
 
 #pragma mark - Life Cycle
@@ -42,27 +35,21 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
     [super viewDidLoad];
     self.navigationItem.title = @"Menu";
     self.navigationController.navigationBar.translucent = NO;
+    
     [self.resumeButton setEnabled:NO];
+    
+    UINavigationBar *bar = [self.navigationController navigationBar];
+    [bar setBarTintColor:[UIColor navigationBackgroundColor]];
+    [bar setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Noteworthy-Bold" size:20.0f],
+                                  NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    [bar setTintColor:[UIColor navigationForegroundColor]];
+    
     
     [[NSDGameSharedManager sharedInstance] hasSavedGameWithCompletion:^(BOOL isHasSavedGame) {
         
         [self.resumeButton setEnabled:isHasSavedGame];
         
     }];
-    
-    [[NSDHighscoresManager sharedManager] allRecordsWithCompletion:^(NSArray * r) {
-        
-    }];
-    
-    
-    UINavigationBar *bar = [self.navigationController navigationBar];
-    [bar setBarTintColor:[UIColor navigationBackgroundColor]];
-    [bar setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Noteworthy-Bold" size:20.0f],
-                                  NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    [bar setTintColor:[UIColor whiteColor]];
-    
-    
-    
     
 }
 
@@ -75,8 +62,6 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
         [self.resumeButton setEnabled:YES];
     }
     
-    self.isNewGame = NO;
-    
     [super viewDidAppear:animated];
     
 }
@@ -85,7 +70,7 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
 
 #pragma mark - Actions
 
-- (IBAction)didTapNewGameButtonWithSender:(id)sender {
+- (IBAction)didTapNewGameButtonWithSender:(id)sender{
     
     if([[NSDGameSharedManager sharedInstance] lastSavedGame]!=nil){
         
@@ -94,41 +79,34 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
                            andSecondButtonText:@"No"
                            andFirstButtonBlock:^{
                                
-                               //todo refactor to seque;
-                               self.isNewGame = YES;
-                               [self performSegueWithIdentifier:@"ShowGameViewController" sender:self];
+                               [self startNewGame];
+                               
                                
                            } andSecondButtonBlock:^{
                            } andParentViewController:self];
     }
     else {
-        self.isNewGame = YES;
-        [self performSegueWithIdentifier:@"ShowGameViewController" sender:self];
-        
+        [self startNewGame];
     }
+}
+
+#pragma mark - Private
+
+-(void)startNewGame{
     
-    
-    
+    [self performSegueWithIdentifier:@"NewGameViewController" sender:self];
     
 }
 
+#pragma mark - Segue
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
-    
-    
-    if([segue.identifier isEqualToString:@"ShowGameViewController"]){
-        ((NSDGameViewController *)segue.destinationViewController).isNewGame = self.isNewGame ;
-        
+    if([segue.identifier isEqualToString:@"NewGameViewController"]){
+        ((NSDGameViewController *)segue.destinationViewController).isNewGame = YES ;
     }
     
     [super prepareForSegue:segue sender:sender];
-    
-    
-    
-    
 }
-
-
 
 @end

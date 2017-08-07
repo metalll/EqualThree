@@ -8,14 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-
-
-extern NSString * const kIsHasSavedGame;
-extern NSString * const kIsFirstLaunch;
-
 @interface NSDGeneralMenuViewController : UIViewController
-
-@property BOOL isNewGame ;
 
 - (IBAction)didTapNewGameButtonWithSender:(id)sender ;
 

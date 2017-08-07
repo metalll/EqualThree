@@ -50,7 +50,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="kL7-p2-Yap" kind="show" identifier="ShowGameViewController" id="gO9-JT-a1v"/>
+                                    <segue destination="kL7-p2-Yap" kind="show" identifier="ResumeGameViewController" id="gO9-JT-a1v"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KRG-4U-KcS" customClass="NSDButton">
@@ -96,6 +96,7 @@
                     <connections>
                         <outlet property="mainView" destination="8bC-Xf-vdC" id="vyW-I3-wDv"/>
                         <outlet property="resumeButton" destination="GNa-qc-v6s" id="xO2-86-NIY"/>
+                        <segue destination="kL7-p2-Yap" kind="show" identifier="NewGameViewController" id="VN4-hG-Sra"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -314,4 +315,7 @@
     <resources>
         <image name="Background" width="320" height="568"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="VN4-hG-Sra"/>
+    </inferredMetricsTieBreakers>
 </document>

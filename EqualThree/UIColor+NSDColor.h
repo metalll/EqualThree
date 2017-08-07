@@ -17,6 +17,8 @@
 
 +(instancetype) navigationBackgroundColor;
 
++(instancetype) navigationForegroundColor;
+
 
 +(instancetype) buttonBackgroundColor;
 
