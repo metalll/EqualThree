@@ -142,7 +142,7 @@ static NSDHighscoresManager *manager;
 
 - (void)sortRecords{
     
-    _records =  (NSMutableArray *)[[_records copy] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+    _records =  [[NSMutableArray alloc] initWithArray: [[_records copy] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
         
         NSDScoreRecord *fElem = (NSDScoreRecord *) obj1;
         NSDScoreRecord *sElem =(NSDScoreRecord *) obj2;
@@ -155,7 +155,7 @@ static NSDHighscoresManager *manager;
             }else {
                 return (NSComparisonResult)NSOrderedDescending;
             }
-    }];
+    }]];
     
     self.isSorted = YES;
 }

@@ -10,8 +10,8 @@ NSString *const NSDGameFieldDidEndDeletingNotification = @"NSDGameFieldDidFieldE
 NSString *const kNSDDeletedItemsCost = @"kNSDCostDeletedItems";
 
 NSUInteger const NSDItemCost = 10;
-NSUInteger const NSDGameFieldWidth = 7;
-NSUInteger const NSDGameFieldHeight = 7;
+NSUInteger const NSDGameFieldWidth = 4;
+NSUInteger const NSDGameFieldHeight = 4;
 
 float const NSDDeleteAnimationDuration = 0.2f;
 
