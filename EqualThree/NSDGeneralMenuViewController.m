@@ -38,6 +38,7 @@ NSString * const kIsFirstLaunch = @"NSDIsFirstLaunch";
 #pragma mark - Life Cycle
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     self.navigationItem.title = @"Menu";
     self.navigationController.navigationBar.translucent = NO;

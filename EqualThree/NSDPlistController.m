@@ -22,7 +22,7 @@
         NSError *error;
         if(![[NSFileManager defaultManager] removeItemAtPath:path error:&error])
         {
-            //TODO: Handle/Log error
+        
         }
         
     });
@@ -67,14 +67,6 @@
 +(void)savePlistWithName:(NSString *)name andStoredObject:(id)storedObject andCompletion:(void (^)(void))completion{
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        if(![storedObject respondsToSelector:@selector(writeToFile:atomically:)]){
-            
-            
-            return ;
-        }
-        
-        
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
         
