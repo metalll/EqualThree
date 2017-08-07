@@ -67,7 +67,6 @@ static NSDGameSharedManager * instance;
 }
 
 
-
 -(void)hasSavedGameWithCompletion:(void(^)(BOOL hasSavedGame))completion{
     [self loadFromStorageWithCompletion:^(NSDGameSharedInstance * retVal) {
         if(completion){
@@ -78,14 +77,13 @@ static NSDGameSharedManager * instance;
 }
 
 
-
 #pragma mark - Storage
 
--(void)saveFromStorage{
+- (void)saveFromStorage{
     [NSDPlistController savePlistWithName:kNSDFileName andStoredObject:[self.gameEngineInstance dic] andCompletion:nil];
 }
 
--(void)loadFromStorageWithCompletion:(void(^)(NSDGameSharedInstance *))completion{
+- (void)loadFromStorageWithCompletion:(void(^)(NSDGameSharedInstance *))completion{
     [NSDPlistController loadPlistWithName:kNSDFileName andLoadedObjectClass:[NSMutableDictionary class] andCompletion:^(id retValObject) {
         self.gameEngineInstance = [NSDGameSharedInstance initWithDic:retValObject];
         if(completion)
@@ -115,8 +113,6 @@ static NSDGameSharedManager * instance;
 
 
 -(void)proccessGoToAwaitStateNotification:(NSNotification *)notification{
-    
-    
     
     NSDGameSharedInstance * tempSharedInstance = [NSDGameSharedInstance new];
     
