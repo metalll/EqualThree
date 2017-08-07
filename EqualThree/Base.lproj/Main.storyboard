@@ -216,7 +216,7 @@
                     </view>
                     <connections>
                         <outlet property="mainView" destination="DnV-Cb-ki1" id="cZq-Rw-q1w"/>
-                        <outlet property="moviesLabel" destination="282-0k-nZz" id="Yog-zJ-b7T"/>
+                        <outlet property="movesLabel" destination="282-0k-nZz" id="9hl-tZ-mAf"/>
                         <outlet property="scoreLabel" destination="3ar-gC-1jX" id="vWi-Wn-1se"/>
                     </connections>
                 </viewController>
