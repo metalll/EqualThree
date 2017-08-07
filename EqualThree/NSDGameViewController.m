@@ -106,7 +106,7 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateMovesCount:) name:NSDDidUpdateMovesCount object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserScore:) name:NSDGameFieldDidEndDeletingNotificaation object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserScore:) name:NSDGameFieldDidEndDeletingNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserSharedScore:) name:NSDDidUpdadeSharedUserScore object:nil];
     
@@ -127,7 +127,7 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 
 -(void)didUpdateUserScore:(NSNotification *)notification{
     
-    NSUInteger resivedScore  = [notification.userInfo[kNSDCostDeletedItems] unsignedIntegerValue];
+    NSUInteger resivedScore  = [notification.userInfo[kNSDDeletedItemsCost] unsignedIntegerValue];
     NSUInteger currentScore = [self.scoreLabel.text integerValue];
     
     self.scoreLabel.text = [NSString stringWithFormat:@"%ld",(long)resivedScore + currentScore];

@@ -6,9 +6,12 @@
 #import "NSDGameViewController.h"
 #import "NSDGameSharedManager.h"
 
-NSString * const NSDGameFieldDidEndDeletingNotificaation = @"NSDGameFieldDidFieldEndDeleting";
-NSString * const kNSDCostDeletedItems = @"kNSDCostDeletedItems";
-NSUInteger const NSDCostItem = 10;
+NSString * const NSDGameFieldDidEndDeletingNotification = @"NSDGameFieldDidFieldEndDeleting";
+NSString * const kNSDDeletedItemsCost = @"kNSDCostDeletedItems";
+
+NSUInteger const NSDItemCost = 10;
+NSUInteger const NSDGameFieldWidth = 7;
+NSUInteger const NSDGameFieldHeight = 7;
 
 float const NSDDeleteAnimationDuration = 0.2f;
 
@@ -19,72 +22,76 @@ float const NSDDeleteAnimationDuration = 0.2f;
 @property (strong, nonatomic) NSDGameEngine *gameEngine;
 @property (strong, nonatomic) NSMutableArray *gameField;
 
-
 @property NSArray * hint;
 @property BOOL isUserHelpNeeded;
 @property BOOL isUserRecivedHint;
-
-
 
 @property NSUInteger horizontalItemsCount;
 @property NSUInteger verticalItemsCount;
 @property NSUInteger itemTypesCount;
 @property CGSize itemSize;
+
 @property (nonatomic)BOOL animated;
 
 @property (strong) dispatch_queue_t animationQueue;
 
 - (void)configureGame;
-- (CGPoint)xyCoordinatesFromI:(NSInteger)i j:(NSInteger)j;
-- (NSDGameItemView*)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type;
-- (NSDGameItemView*)gameItemViewAtI:(NSInteger)i j:(NSInteger)j type:(NSUInteger)type;
+- (void)restoreLastSavedGame;
 
+- (NSDGameItemView*)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type;
+
+- (CGPoint)xyCoordinatesFromIJStruct:(NSDIJStruct *) iJStruct;
+- (NSDGameItemView*)gameItemViewAtIJStruct:(NSDIJStruct *)iJStruct type:(NSUInteger)type;
+- (NSDIJStruct *) iJPositionItemWithPoint:(CGPoint) point;
+
+- (void) hintUser;
+- (void)removeUserHint;
+
+- (void) initGestureRecognizerWithView:(UIView *) view;
 - (void) didRecognizePan:(UIPanGestureRecognizer *) recognizer;
 
 - (void)subscribeToNotifications;
 - (void)unsubscribeFromNotifications;
 
-
-
-
 @end
 
 @implementation NSDGameFieldViewController
 
-#pragma mark - Lifecycle
+#pragma mark - Life Cycle
 
-- (void)viewDidLoad {
+-(void)viewDidLoad{
+    
     [super viewDidLoad];
+    
     self.isUserHelpNeeded = NO;
     self.hint = nil;
     self.isUserRecivedHint = NO;
     
-    
     [self.gameItemsView setBackgroundColor:[UIColor clearColor]];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.animationQueue = dispatch_queue_create("com.unique.name.queue", DISPATCH_QUEUE_SERIAL);
+        
+        self.animationQueue = dispatch_queue_create("com.nsd.game.field.animation.queue", DISPATCH_QUEUE_SERIAL);
         [self subscribeToNotifications];
         
-        
         [self initGestureRecognizerWithView:self.gameItemsView];
-        
     });
-    
 }
 
 
 
 -(void)viewDidAppear:(BOOL)animated{
     
-    
+    [super viewDidAppear:animated];
     
     dispatch_async(dispatch_get_main_queue(),^{
         if(self.isNewGame){
             if(self.gameField.count>0){
+                
                 for(UIView * view in self.gameField){
+                    
                     [view removeFromSuperview];
                 }
-                
             }
             self.gameField = nil;
             [self configureGame];
@@ -93,11 +100,10 @@ float const NSDDeleteAnimationDuration = 0.2f;
             [self restoreLastSavedGame];
         }
     });
-    
-    
 }
 
 - (void)dealloc {
+    
     [self unsubscribeFromNotifications];
 }
 
@@ -133,11 +139,10 @@ float const NSDDeleteAnimationDuration = 0.2f;
 
 - (void)configureGame {
     
-    
     self.gameEngine = nil;
     
-    self.horizontalItemsCount = 8;
-    self.verticalItemsCount = 8;
+    self.horizontalItemsCount = NSDGameFieldWidth;
+    self.verticalItemsCount = NSDGameFieldHeight;
     self.itemTypesCount = NSDGameItemTypesCount;
     
     self.itemSize = CGSizeMake(self.gameItemsView.frame.size.width / (CGFloat) self.horizontalItemsCount,
@@ -156,9 +161,6 @@ float const NSDDeleteAnimationDuration = 0.2f;
     self.gameEngine = [[NSDGameEngine alloc] initWithHorizontalItemsCount:self.horizontalItemsCount
                                                        verticalItemsCount:self.verticalItemsCount
                                                            itemTypesCount:self.itemTypesCount];
-    
-    
-    
 }
 
 - (NSDGameItemView*)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type{
@@ -176,29 +178,30 @@ float const NSDDeleteAnimationDuration = 0.2f;
     
     itemView.translatesAutoresizingMaskIntoConstraints = YES;
     
-    
     [self.gameItemsView addSubview:itemView];
     
     return itemView;
 }
 
+#pragma mark - Coordinate translation
 
-- (CGPoint)xyCoordinatesFromI:(NSInteger)i j:(NSInteger)j {
-    CGPoint result = CGPointMake(i * (CGFloat) self.itemSize.width, j * (CGFloat) self.itemSize.height);
+- (CGPoint)xyCoordinatesFromIJStruct:(NSDIJStruct *) iJStruct {
+    CGPoint result = CGPointMake(iJStruct.i * (CGFloat) self.itemSize.width, iJStruct.j * (CGFloat) self.itemSize.height);
     return result;
 }
 
-- (NSDGameItemView*)gameItemViewAtI:(NSInteger)i j:(NSInteger)j type:(NSUInteger)type{
+- (NSDGameItemView*)gameItemViewAtIJStruct:(NSDIJStruct *)iJStruct type:(NSUInteger)type{
     
     NSDGameItemView *result = nil;
     
-    if ((i >= 0) && (i < self.horizontalItemsCount) && (j >= 0) && (j < self.verticalItemsCount)) {
-        result = self.gameField[i][j];
+    if ((iJStruct.i >= 0) && (iJStruct.i < self.horizontalItemsCount) && (iJStruct.j >= 0) && (iJStruct.j < self.verticalItemsCount)){
+        
+        result = self.gameField[iJStruct.i][iJStruct.j];
     }
     
     if (result == nil || (result == (NSDGameItemView*)[NSNull null])) {
         CGRect frame = CGRectZero;
-        frame.origin = [self xyCoordinatesFromI:i j:j];
+        frame.origin = [self xyCoordinatesFromIJStruct:iJStruct];
         frame.size = self.itemSize;
         result = [self createGameItemViewWithFrame:frame type:type];
     }
@@ -210,46 +213,43 @@ float const NSDDeleteAnimationDuration = 0.2f;
     
     NSDIJStruct * result = nil ;
     
-    
-    
-    
-    result =  [[NSDIJStruct alloc] initWithI:floor( (CGFloat) point.x/(CGFloat)self.itemSize.width) andJ: floor( (CGFloat) point.y / (CGFloat)self.itemSize.height)];
+    result =  [[NSDIJStruct alloc] initWithI:floor((CGFloat) point.x/(CGFloat)self.itemSize.width) andJ: floor( (CGFloat) point.y / (CGFloat)self.itemSize.height)];
     
     return result;
 }
 
 
+#pragma mark - Hint
 
 -(void) hintUser{
-    if(self.hint==nil){
-        self.isUserHelpNeeded=YES;
+    
+    if(self.hint == nil){
+        
+        self.isUserHelpNeeded = YES;
         return;
     }
     
     if(self.animated){
+        
         return;
     }
     
     if(self.isUserRecivedHint){
+        
         return;
     }
     
     self.isUserHelpNeeded = NO;
     
-    
-    for(NSUInteger i=0;i<self.hint.count;i++){
+    for(NSUInteger i = 0; i < self.hint.count; i++){
         
         NSDIJStruct * item = self.hint[i];
         
         [((NSDGameItemView *)self.gameField[item.i][item.j]) setHighlighted:YES];
         
-        
-        
     }
     
     self.isUserRecivedHint = YES;
-    
-    
 }
 
 
@@ -259,16 +259,14 @@ float const NSDDeleteAnimationDuration = 0.2f;
         return;
     }
     
-    for (NSUInteger i=0; i<self.hint.count; i++) {
+    for (NSUInteger i = 0; i < self.hint.count; i++) {
         
         NSDIJStruct * tempIJ = self.hint[i];
         
         [self.gameField[tempIJ.i][tempIJ.j] setHighlighted:NO];
-        
-    };
+    }
     
     self.isUserRecivedHint = NO;
-    
 }
 
 
@@ -281,7 +279,6 @@ float const NSDDeleteAnimationDuration = 0.2f;
     UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didRecognizePan:)];
     
     [view addGestureRecognizer:pan];
-    
 }
 
 
@@ -325,69 +322,71 @@ float const NSDDeleteAnimationDuration = 0.2f;
                 if (deltaX > 0) {
                     if (i < (self.horizontalItemsCount - 1)) {
                         
-                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i+1 andJ:j]]];
-                        
+                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:(i + 1) andJ:j]]];
                     }
                 } else {
                     if (i > 0) {
-                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i-1 andJ:j]]];
+                        
+                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:(i - 1) andJ:j]]];
                     }
                 }
             } else {
                 if (deltaY > 0) {
+                    
                     if (j < (self.verticalItemsCount - 1)) {
-                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i andJ:j+1]]];
+                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i andJ:(j + 1)]]];
                     }
                 } else {
                     if (j > 0) {
-                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i andJ:j-1]]];
+                        
+                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i andJ:(j - 1)]]];
                     }
                 }
             }
         }
     }
-    
 }
 
 
 #pragma mark - Notifications
 
 - (void)subscribeToNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidMoveNotification:) name:NSDGameItemsDidMoveNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidDeleteNotification:) name:NSDGameItemsDidDeleteNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processGotoAwaitStateNotification:) name:NSDDidGoToAwaitState object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processFindPermissibleStroke:) name:NSDDidFindPermissibleStroke object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hintUser) name:NSDUserDidTapHintButton object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidMoveNotification:) name:NSDGameItemsDidMoveNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidDeleteNotification:) name:NSDGameItemsDidDeleteNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processGotoAwaitStateNotification:) name:NSDDidGoToAwaitState object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processDidFindPermissibleStroke:) name:NSDDidFindPermissibleStroke object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hintUser) name:NSDUserDidTapHintButton object:nil];
 }
 
+
 - (void)unsubscribeFromNotifications {
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)notifyAboutDidFieldEndDeletingWithScoreCount:(NSUInteger) scoreCount{
+
+- (void)notifyAboutGameFieldDidEndDeletingWithScoreCount:(NSUInteger) scoreCount{
     
-    
-    NSNotification * notification = [NSNotification notificationWithName:NSDGameFieldDidEndDeletingNotificaation
+    NSNotification * notification = [NSNotification notificationWithName:NSDGameFieldDidEndDeletingNotification
                                                                   object:nil
                                                                 userInfo:@{
-                                                                           kNSDCostDeletedItems : @(scoreCount)
+                                                                           kNSDDeletedItemsCost : @(scoreCount)
                                                                            }];
     
     [[NSNotificationCenter defaultCenter] postNotification:notification];
-    
-    
 }
 
 
-
-
-
 - (void)processItemsDidMoveNotification:(NSNotification *)notification {
+    
     self.animated = YES;
+    
     NSArray *itemTransitions = notification.userInfo[kNSDGameItemTransitions];
-    
-    
     
     dispatch_async(self.animationQueue, ^{
         
@@ -398,10 +397,10 @@ float const NSDDeleteAnimationDuration = 0.2f;
             dispatch_group_enter(animationGroup);
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                NSDGameItemView *gameItemView = [self gameItemViewAtI:itemTransition.from.i j:itemTransition.from.j type:itemTransition.type];
+                NSDGameItemView *gameItemView = [self gameItemViewAtIJStruct:itemTransition.from type:itemTransition.type];
                 CGRect endFrame = CGRectZero;
                 endFrame.size = gameItemView.frame.size;
-                endFrame.origin = [self xyCoordinatesFromI:itemTransition.to.i j:itemTransition.to.j];
+                endFrame.origin = [self xyCoordinatesFromIJStruct:itemTransition.to];
                 
                 [UIView animateWithDuration:itemTransition.animationDuration animations:^{
                     gameItemView.frame = endFrame;
@@ -411,6 +410,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
                 }];
             });
         }
+        
         dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
     });
     
@@ -418,7 +418,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
 
 
 
--(void)processGotoAwaitStateNotification:(NSNotification *)notification{
+- (void)processGotoAwaitStateNotification:(NSNotification *)notification{
     
     dispatch_async(self.animationQueue, ^{
         
@@ -433,24 +433,22 @@ float const NSDDeleteAnimationDuration = 0.2f;
         });
         
         dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
-
+        
     });
-    
-    
-    
-    
 }
 
 
--(void)processFindPermissibleStroke:(NSNotification *) notification{
+- (void)processDidFindPermissibleStroke:(NSNotification *) notification{
     
     self.hint = notification.userInfo[kNSDGameItems];
     
     if(self.isUserHelpNeeded){
+        
         [self hintUser];
     }
     
 }
+
 
 - (void)processItemsDidDeleteNotification:(NSNotification *)notification {
     
@@ -458,12 +456,12 @@ float const NSDDeleteAnimationDuration = 0.2f;
     self.isUserHelpNeeded = NO;
     
     self.animated = YES;
+    
     NSArray *itemsToDelete = notification.userInfo[kNSDGameItems];
     
     dispatch_async(self.animationQueue, ^{
         
         dispatch_group_t animationGroup = dispatch_group_create();
-        
         
         for(NSDIJStruct * tempStruct in itemsToDelete){
             
@@ -472,60 +470,31 @@ float const NSDDeleteAnimationDuration = 0.2f;
                 dispatch_group_enter(animationGroup);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
-                    
-                    
-                    
                     NSUInteger i = tempStruct.i;
                     NSUInteger j = tempStruct.j;
                     
                     [UIView animateWithDuration:NSDDeleteAnimationDuration animations:^{
+                        
                         [self.gameField[i][j] setAlpha:0.0];
                     } completion:^(BOOL finished) {
-                        
                         
                         [self.gameField[i][j] removeFromSuperview];
                         self.gameField[i][j] = [NSNull null];
                         
-                        
-                        
-                        
-                        
                         dispatch_group_leave(animationGroup);
-                        
-                        
-                        
-                        
-                        
-                        
                     }];
-                    
-                    
-                    
                 });
-                
             }
         }
         
-        
-        
         dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self notifyAboutDidFieldEndDeletingWithScoreCount:NSDCostItem*itemsToDelete.count];
             
+            [self notifyAboutGameFieldDidEndDeletingWithScoreCount:(NSDItemCost * itemsToDelete.count)];
         });
-        
-        
-        
-        
-        
-        
     });
 }
-
-
-
-
-
 
 @end
 
