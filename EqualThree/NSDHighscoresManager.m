@@ -12,37 +12,44 @@
 
 
 NSString * const NSDHighScoreFileName = @"NSDHighScore";
-
 NSString * const kNSDRecords = @"kNSDRecords";
-NSString * const kNSDIsSorted = @"kNSDIsSorted";
+NSString * const kNSDSorted = @"kNSDSorted";
 
 
 
 @interface NSDHighscoresManager (){
-    NSMutableArray * records;
+    NSMutableArray * _records;
 }
 
 @property BOOL isSorted;
 @property BOOL isLoaded;
+
+-(void)allRecordsWithCompletion:(void (^)(NSMutableArray *))completion;
+-(void)loadFromFileWithCompletion:(void(^)(NSMutableArray * resultRecords)) completion;
+
+-(void)sortRecords;
+-(void)saveChangesToFile;
+
 @end
 
 @implementation NSDHighscoresManager
 
-
+#pragma mark - Constructors
 
 -(instancetype)init{
     
+    self = [super init];
+    
     if(self){
-        
-        self->records = nil;
-        self->_isSorted = NO;
-        
+    
+        _records = nil;
+        self.isSorted = NO;
     }
     return self;
 }
 
 
-#pragma mark - Sigletone accessor
+#pragma mark - Sigletone
 
 static NSDHighscoresManager * manager;
 +(instancetype) sharedManager{
@@ -56,170 +63,144 @@ static NSDHighscoresManager * manager;
     return manager;
 }
 
-
-
-#pragma mark - Records accessor
+#pragma mark - Public
 
 -(void)addRecordWithRecord:(NSDScoreRecord *)record{
     
-    
     self.isSorted = NO;
     
-    
-    if(self->records==nil){
-    
-        self->records = [NSMutableArray new];
+    NSBlockOperation * completionOperation = [NSBlockOperation blockOperationWithBlock:^{
         
+        if(_records == nil){
+            _records = [NSMutableArray new];
+        }
+        
+        [_records addObject:record];
+        [self saveChangesToFile];
+        
+    }];
+    
+    if(_records==nil && !self.isLoaded){
+        
+        [self allRecordsWithCompletion:^(NSMutableArray * result) {
+            
+            _records = result;
+            [completionOperation start];
+        }];
+        
+    }else{
+        
+        [completionOperation start];
     }
-    
-    [self->records addObject:record];
-    
-    [self saveChangesToFile];
-    
 }
 
-
--(void)sortedElementsWithCompletion:(void(^)(NSArray * ))completion{
+- (void)sortedElementsWithCompletion:(void(^)(NSMutableArray * ))completion{
     
-    
-           dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    NSBlockOperation * completionOperation = [NSBlockOperation blockOperationWithBlock:^{
+        
+        if(!self.isSorted){
             
-            if(self->records==nil){
+            [self sortRecords];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
             
-                dispatch_async(dispatch_get_main_queue(), ^{
-                   
-                    if(completion){
-                    
-                        completion(nil);
-                        
-                    }
-                    
-                });
-                return;
-            }
-            
-          NSArray * tArray =  [self->records sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-                
-                NSDScoreRecord * fElem = (NSDScoreRecord *) obj1;
-                NSDScoreRecord * sElem =(NSDScoreRecord *) obj2;
-                
-                if(fElem.userScore > sElem.userScore){
-                    
-                    return (NSComparisonResult)NSOrderedAscending;
-                    
-                }else
-                    
-                    if(fElem.userScore < sElem.userScore){
-                        
-                        return (NSComparisonResult)NSOrderedDescending;
-                    
-                    }else{
-                        
-                        return (NSComparisonResult)NSOrderedDescending;
-                        
-                        
-                    }
-                
-                
-                
-                
-            }];
-         
-            dispatch_async(dispatch_get_main_queue(), ^{
-               
-                self.isSorted = YES;
-                if(completion){
-                    completion(tArray);
-                }
-            });
-            
-            
-            
-            
+            completion(_records);
         });
-        
-        
-        
-        
+    }];
     
-    
-    
-    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        
+        if(_records==nil && !self.isLoaded){
+            
+            [self loadFromFileWithCompletion:^(NSMutableArray *resultRecords) {
+                
+                [completionOperation start];
+            }];
+            
+        }else{
+            
+            [completionOperation start];
+        }
+    });
 }
 
--(void)allRecordsWithCompletion:(void (^)(NSArray *))completion{
+#pragma mark - Private
+
+-(void)allRecordsWithCompletion:(void (^)(NSMutableArray *))completion{
     
-    
-    if(self->records!=nil||self.isLoaded){
+    if(_records!=nil||self.isLoaded){
         if(completion)
-            completion(self->records);
+            completion(_records);
         return;
     }
     
     [self loadFromFileWithCompletion:^(NSMutableArray *resultRecords) {
         
-        self->records = resultRecords;
+        _records = resultRecords;
         
         if(completion)
-            completion(self->records);
+            completion(_records);
+    }];
+}
+
+-(void)sortRecords{
+    
+    _records =  (NSMutableArray *)[[_records copy] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
         
+        NSDScoreRecord * fElem = (NSDScoreRecord *) obj1;
+        NSDScoreRecord * sElem =(NSDScoreRecord *) obj2;
+        
+        if(fElem.userScore > sElem.userScore){
+            return (NSComparisonResult)NSOrderedAscending;
+        }else
+            if(fElem.userScore < sElem.userScore){
+                return (NSComparisonResult)NSOrderedDescending;
+            }else {
+                return (NSComparisonResult)NSOrderedDescending;
+            }
     }];
     
+    self.isSorted = YES;
     
 }
 
+#pragma mark - Storage
 
 -(void)loadFromFileWithCompletion:(void(^)(NSMutableArray * resultRecords)) completion{
+    
     [NSDPlistController loadPlistWithName:NSDHighScoreFileName andLoadedObjectClass:[NSMutableDictionary class] andCompletion:^(id result) {
-        
         
         self.isLoaded=YES;
         
-        if(result!=nil){
+        if(result != nil){
             
-            self->_isSorted = [result[kNSDIsSorted] isEqual:@"YES"]?YES:NO;
-            self->records = result[kNSDRecords];
+            _isSorted = [result[kNSDSorted] isEqual:@"YES"]?YES:NO;
+            _records = result[kNSDRecords];
         }
-        
         
         if(completion){
             
             if(result){
                 
                 completion(result[kNSDRecords]);
-                
             }else{
                 
                 completion(nil);
             }
-            
         }
-        
     }];
-    
-    
-    
-    
-    
-    
-    
 }
 
 -(void)saveChangesToFile{
     
     self.isSorted = NO;
     
-    
-    NSDictionary * savedDictionary = @{
-                                       
-                                       kNSDRecords : self->records,
-                                       kNSDIsSorted : self.isSorted?@"YES":@"NO"
-                                       };
+    NSDictionary * savedDictionary = @{ kNSDRecords : _records,
+                                        kNSDSorted : @"NO" };
     
     [NSDPlistController savePlistWithName:NSDHighScoreFileName andStoredObject:savedDictionary andCompletion:nil];
     
-    
 }
-
 
 @end

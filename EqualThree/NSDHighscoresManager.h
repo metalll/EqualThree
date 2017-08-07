@@ -9,26 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "NSDScoreRecord.h"
 
-
-
 extern NSString * const NSDHighScoreFileName;
-
 extern NSString * const kNSDRecords ;
-extern NSString * const kNSDIsSorted ;
+extern NSString * const kNSDSorted ;
+
 
 @interface NSDHighscoresManager : NSObject
 
-
-
 +(instancetype) sharedManager;
 
-
-
 -(void) addRecordWithRecord:(NSDScoreRecord *) record;
--(void) allRecordsWithCompletion:(void (^)(NSArray *))completion;
--(void)sortedElementsWithCompletion:(void(^)(NSArray * ))completion;
-
-
-
+-(void) sortedElementsWithCompletion:(void(^)(NSMutableArray * ))completion;
 
 @end

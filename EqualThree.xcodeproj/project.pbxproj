@@ -120,8 +120,9 @@
 		433F9EAE1F2BF03A00A077E2 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				4367553C1F12683400E1C06E /* ViewControllers */,
-				438830AD1F2BD3A50012597B /* Custom */,
+				438830AE1F2BD3BF0012597B /* AlertView */,
+				4346AAFB1F12823C00F1F639 /* CustomViews */,
+				4346AAE01F127DE400F1F639 /* CustomViewCells */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -136,7 +137,7 @@
 			name = CustomViewCells;
 			sourceTree = "<group>";
 		};
-		4346AAFB1F12823C00F1F639 /* CustomView */ = {
+		4346AAFB1F12823C00F1F639 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
 				4346AAFE1F12827C00F1F639 /* NSDGameItemView.h */,
@@ -147,7 +148,7 @@
 				43DDC9421F1CD2FF003E95C4 /* NSDButton.h */,
 				43DDC9431F1CD2FF003E95C4 /* NSDButton.m */,
 			);
-			name = CustomView;
+			name = CustomViews;
 			sourceTree = "<group>";
 		};
 		436755191F12682100E1C06E = {
@@ -169,9 +170,11 @@
 		436755241F12682100E1C06E /* EqualThree */ = {
 			isa = PBXGroup;
 			children = (
+				4367553C1F12683400E1C06E /* ViewControllers */,
+				4367553D1F12684E00E1C06E /* Game Logic */,
+				4367553E1F12685B00E1C06E /* Model */,
 				433F9EAE1F2BF03A00A077E2 /* UI */,
 				4367553F1F12686600E1C06E /* Utils */,
-				4367553E1F12685B00E1C06E /* Model */,
 				436755281F12682100E1C06E /* AppDelegate.h */,
 				436755291F12682100E1C06E /* AppDelegate.m */,
 				4367552E1F12682100E1C06E /* Main.storyboard */,
@@ -235,7 +238,6 @@
 				433F9EAA1F2BE1D500A077E2 /* NSDGameItemType.h */,
 				439DD2F21F338F8E00F6F0E7 /* NSDGameSharedInstance.h */,
 				439DD2F31F338F8E00F6F0E7 /* NSDGameSharedInstance.m */,
-				4367553D1F12684E00E1C06E /* Game Logic */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -265,16 +267,6 @@
 				4344FA121F139351005683A9 /* NSDHttpClient.m */,
 			);
 			name = HTTPClient;
-			sourceTree = "<group>";
-		};
-		438830AD1F2BD3A50012597B /* Custom */ = {
-			isa = PBXGroup;
-			children = (
-				438830AE1F2BD3BF0012597B /* AlertView */,
-				4346AAFB1F12823C00F1F639 /* CustomView */,
-				4346AAE01F127DE400F1F639 /* CustomViewCells */,
-			);
-			name = Custom;
 			sourceTree = "<group>";
 		};
 		438830AE1F2BD3BF0012597B /* AlertView */ = {

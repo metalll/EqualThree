@@ -26,10 +26,7 @@
 }
 
 
-- (BOOL)isEqual:(id)other
-{
-    
-   
+- (BOOL)isEqual:(id)other {
     
     BOOL isEqual = NO;
     
@@ -41,9 +38,7 @@
 }
 
 -(NSUInteger)hash{
-    
     return (self.i*2)+(self.j*5);
-    
 }
 
 @end

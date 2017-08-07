@@ -18,14 +18,14 @@ extern NSString * const kSharedItemTypesCount;
 @interface NSDGameSharedInstance : NSObject
 
 
-@property NSMutableArray * field;
+@property NSMutableArray* field;
 @property NSUInteger moves;
 @property NSUInteger score;
 @property NSUInteger sharedItemTypesCount;
 
 
--(NSDictionary *) dic;
+-(NSDictionary*) dic;
 
-+(instancetype) initWithDic:(NSDictionary *)dic;
++(instancetype) initWithDic:(NSDictionary*)dic;
 
 @end
