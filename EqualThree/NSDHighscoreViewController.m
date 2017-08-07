@@ -9,18 +9,33 @@
 #import "NSDHighscoreViewController.h"
 #import "UIColor+NSDColor.h"
 #import "NSDPlistController.h"
-#import "NSDRatingTableViewCell.h"
-#import "NSDCustomHeaderForTableView.h"
+#import "NSDScoreTableViewCell.h"
+
 #import "NSDScoreRecord.h"
 #import "NSDHighscoresManager.h"
+
+
+@interface NSDPopSegue : UIStoryboardSegue
+
+@end
+
+@implementation NSDPopSegue
+
+-(void)perform{
+    
+    [self.sourceViewController.navigationController popViewControllerAnimated:YES];
+}
+@end
 
 
 @interface NSDHighscoreViewController (){
     NSArray * _highscores;
 }
 
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIView *placeholderView;
 
 @end
 
@@ -52,31 +67,30 @@
         [self.activityIndicator stopAnimating];
         
         if(_highscores!=nil){
-            
-        [self.tableView reloadData];
-        [UITableView animateWithDuration:.2 animations:^{
-            self.tableView.alpha=1.0f;
-        }];
+            [self.tableView reloadData];
+            [UITableView animateWithDuration:.2 animations:^{
+                self.tableView.alpha=1.0f;
+            }];
         }else{
-        
-            //tbd placeholder
-            
+            [UIView animateWithDuration:.2 animations:^{
+                self.placeholderView.alpha=1.0f;
+            }];
         }
     }];
     
-  
+    
 }
 
 #pragma mark - TableView delegate and data source
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSDRatingTableViewCell * tempCell = [tableView dequeueReusableCellWithIdentifier:@"RatingTableViewCell"] ;
+    NSDScoreTableViewCell * tempCell = [tableView dequeueReusableCellWithIdentifier:@"NSDScoreTableViewCell"] ;
     if(!tempCell){
-        [tableView registerNib:[UINib nibWithNibName:@"NSDRatingTableViewCell" bundle:nil] forCellReuseIdentifier:@"RatingTableViewCell"];
-        tempCell = [tableView dequeueReusableCellWithIdentifier:@"RatingTableViewCell"] ;
+        [tableView registerNib:[UINib nibWithNibName:@"NSDScoreTableViewCell" bundle:nil] forCellReuseIdentifier:@"NSDScoreTableViewCell"];
+        tempCell = [tableView dequeueReusableCellWithIdentifier:@"NSDScoreTableViewCell"] ;
     }
     
-    [tempCell setRatingRecordWithRecord:[_highscores objectAtIndex:indexPath.row] andNumber:indexPath.row];
+    [tempCell setScoreRecordWithScoreRecord:[_highscores objectAtIndex:indexPath.row] andNumber:indexPath.row];
     
     return tempCell;
 }
@@ -95,8 +109,6 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     return [[[NSBundle mainBundle] loadNibNamed:@"NSDCustomViewForHeader" owner:self options:nil]firstObject];
-    
-    
 }
 
 @end

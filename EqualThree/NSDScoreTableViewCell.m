@@ -6,26 +6,12 @@
 //  Copyright © 2017 NSD NULL. All rights reserved.
 //
 
-#import "NSDRatingTableViewCell.h"
+#import "NSDScoreTableViewCell.h"
 #import "UIColor+NSDColor.h"
-@implementation NSDRatingTableViewCell
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    
-    
-    
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
+@implementation NSDScoreTableViewCell
 
 
--(void)setRatingRecordWithRecord:(NSDScoreRecord *)record andNumber:(NSUInteger) number{
+-(void)setScoreRecordWithScoreRecord:(NSDScoreRecord *)record andNumber:(NSUInteger) number{
     
     switch (number) {
         case 0:

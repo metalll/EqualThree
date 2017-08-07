@@ -243,9 +243,31 @@
                                     <constraint firstAttribute="height" constant="20" id="YPH-zl-uBb"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UNp-ah-Stz">
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UNp-ah-Stz">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are no entries yet. Play at least one game" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="At7-TQ-Iz6">
+                                        <rect key="frame" x="-0.5" y="213.5" width="375" height="96"/>
+                                        <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="30"/>
+                                        <color key="textColor" red="0.9771653548" green="1" blue="0.95674470810000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pVF-XL-pfF" customClass="NSDButton">
+                                        <rect key="frame" x="128.5" y="319.5" width="117" height="30"/>
+                                        <state key="normal" title="Go to main menu"/>
+                                        <connections>
+                                            <segue destination="BYZ-38-t0r" kind="custom" identifier="" customClass="NSDPopSegue" id="cCh-cK-rOl"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.80000001190000003" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="At7-TQ-Iz6" firstAttribute="width" secondItem="UNp-ah-Stz" secondAttribute="width" id="HUm-j1-R88"/>
+                                    <constraint firstItem="At7-TQ-Iz6" firstAttribute="centerY" secondItem="UNp-ah-Stz" secondAttribute="centerY" constant="-40" id="KHR-KA-Btm"/>
+                                    <constraint firstItem="pVF-XL-pfF" firstAttribute="centerX" secondItem="At7-TQ-Iz6" secondAttribute="centerX" id="heF-kz-tyt"/>
+                                    <constraint firstItem="pVF-XL-pfF" firstAttribute="top" secondItem="At7-TQ-Iz6" secondAttribute="bottom" constant="10" id="wAG-TN-FCl"/>
+                                    <constraint firstItem="At7-TQ-Iz6" firstAttribute="centerX" secondItem="UNp-ah-Stz" secondAttribute="centerX" id="xNy-It-mmP"/>
+                                </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" canCancelContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xcx-H3-lQw">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
@@ -269,12 +291,13 @@
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="Kua-he-95Z" id="rdC-PY-oLJ"/>
+                        <outlet property="placeholderView" destination="UNp-ah-Stz" id="e4f-F1-Yyg"/>
                         <outlet property="tableView" destination="xcx-H3-lQw" id="MBn-k8-nec"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jer-GA-ybT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="340" y="809"/>
+            <point key="canvasLocation" x="278" y="734"/>
         </scene>
         <!--Game Field View Controller-->
         <scene sceneID="iDd-g9-Ebg">
@@ -315,6 +338,7 @@
         <image name="Background" width="320" height="568"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="cCh-cK-rOl"/>
         <segue reference="VN4-hG-Sra"/>
     </inferredMetricsTieBreakers>
 </document>

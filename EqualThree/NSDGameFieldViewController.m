@@ -460,13 +460,6 @@ float const NSDDeleteAnimationDuration = 0.2f;
     self.animated = YES;
     NSArray *itemsToDelete = notification.userInfo[kNSDGameItems];
     
-    
-    
-    
-    
-    
-    
-    
     dispatch_async(self.animationQueue, ^{
         
         dispatch_group_t animationGroup = dispatch_group_create();

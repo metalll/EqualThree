@@ -55,7 +55,7 @@ static NSDGameSharedManager * instance;
 
 }
 
--(void)hasSavedGameWithCompletion:(void(^)(BOOL isHasSavedGame))completion{
+-(void)hasSavedGameWithCompletion:(void(^)(BOOL hasSavedGame))completion{
    [self loadFromStorageWithCompletion:^(NSDGameSharedInstance * retVal) {
        if(completion){
            completion(retVal!=nil);
@@ -65,13 +65,10 @@ static NSDGameSharedManager * instance;
 }
 
 +(instancetype)new{
-    
     NSDGameSharedManager * new = [super new];
-
     if(new){
         [new subscribeToNotifications];
     }
-    
     return new;
 }
 

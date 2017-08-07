@@ -45,10 +45,8 @@
     [bar setTintColor:[UIColor navigationForegroundColor]];
     
     
-    [[NSDGameSharedManager sharedInstance] hasSavedGameWithCompletion:^(BOOL isHasSavedGame) {
-        
-        [self.resumeButton setEnabled:isHasSavedGame];
-        
+    [[NSDGameSharedManager sharedInstance] hasSavedGameWithCompletion:^(BOOL hasSavedGame) {
+        [self.resumeButton setEnabled:hasSavedGame];
     }];
     
 }
