@@ -67,7 +67,7 @@
         
         [self.activityIndicator stopAnimating];
         
-        if(_highscores!=nil){
+        if(_highscores != nil && _highscores.count > 0){
             [self.tableView reloadData];
             [UITableView animateWithDuration:.2 animations:^{
                 self.tableView.alpha=1.0f;
