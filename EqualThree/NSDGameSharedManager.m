@@ -47,7 +47,7 @@ NSString * const kNSDFileName = @"NSDGameSharedSession";
 
 static NSDGameSharedManager * instance;
 +(instancetype)sharedInstance{
-
+    
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -57,7 +57,7 @@ static NSDGameSharedManager * instance;
     
     
     return instance;
-
+    
 }
 
 #pragma mark - Public
@@ -69,12 +69,12 @@ static NSDGameSharedManager * instance;
 
 
 -(void)hasSavedGameWithCompletion:(void(^)(BOOL hasSavedGame))completion{
-   [self loadFromStorageWithCompletion:^(NSDGameSharedInstance * retVal) {
-       if(completion){
-           completion(retVal!=nil);
-           self.gameEngineInstance = retVal;
-       }
-   }];
+    [self loadFromStorageWithCompletion:^(NSDGameSharedInstance * retVal) {
+        if(completion){
+            completion(retVal!=nil);
+            self.gameEngineInstance = retVal;
+        }
+    }];
 }
 
 
@@ -89,7 +89,7 @@ static NSDGameSharedManager * instance;
     [NSDPlistController loadPlistWithName:kNSDFileName andLoadedObjectClass:[NSMutableDictionary class] andCompletion:^(id retValObject) {
         self.gameEngineInstance = [NSDGameSharedInstance initWithDic:retValObject];
         if(completion)
-        completion(self.gameEngineInstance);
+            completion(self.gameEngineInstance);
     }];
 }
 
@@ -116,16 +116,19 @@ static NSDGameSharedManager * instance;
 
 -(void)proccessGoToAwaitStateNotification:(NSNotification *)notification{
     
-    if(self.gameEngineInstance==nil){
-        self.gameEngineInstance = [NSDGameSharedInstance new];
+    
+    
+    NSDGameSharedInstance * tempSharedInstance = [NSDGameSharedInstance new];
+    
+    tempSharedInstance.field = notification.userInfo[kNSDGameItems];
+    tempSharedInstance.moves = [notification.userInfo[kNSDMovesCount] unsignedIntegerValue];
+    tempSharedInstance.score = [notification.userInfo[kNSDUserScore] unsignedIntegerValue];
+    tempSharedInstance.sharedItemTypesCount = [notification.userInfo[kNSDGameItemsTypeCount] unsignedIntegerValue];
+    
+    if(![[self.gameEngineInstance dic] isEqual:[tempSharedInstance dic]]){
+        self.gameEngineInstance = tempSharedInstance;
+        [self saveFromStorage];
     }
-    
-    self.gameEngineInstance.field = notification.userInfo[kNSDGameItems];
-    self.gameEngineInstance.moves = [notification.userInfo[kNSDMovesCount] unsignedIntegerValue];
-    self.gameEngineInstance.score = [notification.userInfo[kNSDUserScore] unsignedIntegerValue];
-    self.gameEngineInstance.sharedItemTypesCount = [notification.userInfo[kNSDGameItemsTypeCount] unsignedIntegerValue];
-    
-    [self saveFromStorage];
 }
 
 @end
