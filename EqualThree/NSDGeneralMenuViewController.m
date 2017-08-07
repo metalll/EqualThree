@@ -17,7 +17,7 @@
 
 @interface NSDGeneralMenuViewController ()
 
-@property (weak, nonatomic) IBOutlet UIView* mainView;
+
 @property (weak, nonatomic) IBOutlet UIButton* resumeButton;
 
 -(void)startNewGame;

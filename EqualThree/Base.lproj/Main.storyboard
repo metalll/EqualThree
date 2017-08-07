@@ -94,7 +94,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="xg6-IO-Zgb"/>
                     <connections>
-                        <outlet property="mainView" destination="8bC-Xf-vdC" id="vyW-I3-wDv"/>
                         <outlet property="resumeButton" destination="GNa-qc-v6s" id="xO2-86-NIY"/>
                         <segue destination="kL7-p2-Yap" kind="show" identifier="NewGameViewController" id="VN4-hG-Sra"/>
                     </connections>
