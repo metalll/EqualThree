@@ -18,9 +18,9 @@
 @interface NSDGeneralMenuViewController ()
 
 
-@property (weak, nonatomic) IBOutlet UIButton* resumeButton;
+@property (weak, nonatomic) IBOutlet UIButton *resumeButton;
 
--(void)startNewGame;
+- (void)startNewGame;
 
 @end
 
@@ -51,7 +51,7 @@
     
 }
 
--(void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated{
     
     if([[NSDGameSharedManager sharedInstance] lastSavedGame]==nil){
         [self.resumeButton setEnabled:NO];
@@ -61,9 +61,7 @@
     }
     
     [super viewDidAppear:animated];
-    
 }
-
 
 
 #pragma mark - Actions
@@ -89,14 +87,14 @@
 
 #pragma mark - Private
 
--(void)startNewGame{
+- (void)startNewGame{
     
     [self performSegueWithIdentifier:@"NewGameViewController" sender:self];
 }
 
 #pragma mark - Segue
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     if([segue.identifier isEqualToString:@"NewGameViewController"]){
         ((NSDGameViewController *)segue.destinationViewController).isNewGame = YES ;

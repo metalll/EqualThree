@@ -8,17 +8,17 @@
 
 #import "NSDGameSharedInstance.h"
 
-NSString * const kField = @"kField";
-NSString * const kMoves = @"kMoves";
-NSString * const kScore = @"kScore";
-NSString * const kSharedItemTypesCount = @"kSharedItemTypesCount";
+NSString *const kField = @"kField";
+NSString *const kMoves = @"kMoves";
+NSString *const kScore = @"kScore";
+NSString *const kSharedItemTypesCount = @"kSharedItemTypesCount";
 
 
 @implementation NSDGameSharedInstance
 
 
 
--(NSDictionary *)dic{
+- (NSDictionary *)dic{
     
     return @{
              kField : self.field,
@@ -27,10 +27,9 @@ NSString * const kSharedItemTypesCount = @"kSharedItemTypesCount";
              kSharedItemTypesCount : @(self.sharedItemTypesCount)
              
              };
-    
 }
 
-+(instancetype)initWithDic:(NSDictionary *)dic{
++ (instancetype)initWithDic:(NSDictionary *)dic{
     
     if(dic == nil) return nil;
     
@@ -40,17 +39,11 @@ NSString * const kSharedItemTypesCount = @"kSharedItemTypesCount";
         
         new.field = dic[kField];
         new.moves = [dic[kMoves] unsignedIntegerValue];
-        new.score = [dic [kScore]unsignedIntegerValue];
-        new.sharedItemTypesCount = [dic[kSharedItemTypesCount]unsignedIntegerValue];
-        
-        
+        new.score = [dic[kScore] unsignedIntegerValue];
+        new.sharedItemTypesCount = [dic[kSharedItemTypesCount] unsignedIntegerValue];
     }
+    
     return new;
-    
-    
 }
-
-
-
 
 @end

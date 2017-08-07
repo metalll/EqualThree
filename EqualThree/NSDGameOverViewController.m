@@ -13,12 +13,10 @@ float const heightTranstionToDisplayKeyboard = -134.0f;
 
 @interface NSDGameOverViewController ()
 
-
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *centerYConstraint;
-
 @property (nonatomic,copy) NSDCompletion completionBlock;
 
 @end
@@ -27,7 +25,7 @@ float const heightTranstionToDisplayKeyboard = -134.0f;
 
 #pragma mark - Constructors
 
--(instancetype)initWithCompletion:(NSDCompletion) completion{
+- (instancetype)initWithCompletion:(NSDCompletion)completion{
     
     self = [super init];
     
@@ -46,7 +44,7 @@ float const heightTranstionToDisplayKeyboard = -134.0f;
 
 #pragma mark - Life Cycle
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
     
     [super viewDidLoad];
     self.mainView.layer.cornerRadius = 20.0f;
@@ -55,7 +53,7 @@ float const heightTranstionToDisplayKeyboard = -134.0f;
 }
 
 
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
     
@@ -65,7 +63,7 @@ float const heightTranstionToDisplayKeyboard = -134.0f;
 
 #pragma mark - Actions
 
-- (IBAction)didTapOkButton:(id)sender {
+- (IBAction)didTapOkButton:(id)sender{
     
     NSString * checkingText = self.nameTextField.text;
     
@@ -82,7 +80,7 @@ float const heightTranstionToDisplayKeyboard = -134.0f;
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     f.numberStyle = NSNumberFormatterDecimalStyle;
     
-    NSNumber * score = [f numberFromString:self.scoreText];
+    NSNumber *score = [f numberFromString:self.scoreText];
     
     self.completionBlock([[NSDScoreRecord alloc]initWithName:checkingText score:score]);
     
@@ -91,7 +89,7 @@ float const heightTranstionToDisplayKeyboard = -134.0f;
 
 #pragma mark - Text Field Delegate
 
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
     NSInteger replacementStringSize = 0;
     
@@ -103,7 +101,7 @@ float const heightTranstionToDisplayKeyboard = -134.0f;
         replacementStringSize = -1;
     }
     
-    if(textField.text == nil || !((textField.text.length + replacementStringSize) > 0)) {
+    if(textField.text == nil || !((textField.text.length + replacementStringSize) > 0)){
         self.errorLabel.alpha = 1.0f;
     }else{
         self.errorLabel.alpha = 0.0f;
@@ -113,7 +111,7 @@ float const heightTranstionToDisplayKeyboard = -134.0f;
 }
 
 
--(void)textFieldDidBeginEditing:(UITextField *)textField{
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
     
     self.centerYConstraint.constant = heightTranstionToDisplayKeyboard;
     
@@ -123,7 +121,7 @@ float const heightTranstionToDisplayKeyboard = -134.0f;
 }
 
 
--(void)textFieldDidEndEditing:(UITextField *)textField{
+- (void)textFieldDidEndEditing:(UITextField *)textField{
     
     self.centerYConstraint.constant = 0;
     

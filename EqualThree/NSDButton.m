@@ -13,7 +13,7 @@
 
 
 
--(void)drawRect:(CGRect)rect{
+- (void)drawRect:(CGRect)rect{
     CALayer * layer  = self.layer;
     layer.cornerRadius = 10.0;
     layer.masksToBounds = YES;
@@ -29,22 +29,20 @@
     self.layer.shadowOpacity = 1.0f;
     self.layer.shadowRadius = 1.0f;
     self.layer.shadowOffset = CGSizeMake(0, 3);
-    
-    
-    
 }
 
--(void)setEnabled:(BOOL)enabled{
+- (void)setEnabled:(BOOL)enabled{
+    
     [super setEnabled:enabled];
     
     if(enabled){
+        
         self.alpha = 1.0f;
     }
-    
     else{
+        
         self.alpha = 0.5f;
     }
-
 }
 
 @end

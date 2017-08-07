@@ -15,9 +15,6 @@ float const defaultAnimationDuration = 0.4f;
 
 #pragma mark - Init
 
-
-
-
 - (instancetype) initWithFrom:(NSDIJStruct *) from
                            to:(NSDIJStruct *) to
                          type:(NSDGameItemType)type{
@@ -29,8 +26,8 @@ float const defaultAnimationDuration = 0.4f;
                            to:(NSDIJStruct *) to
                          type:(NSDGameItemType)type
             animationDuration:(float) animationDuration{
-
-
+    
+    
     self = [super initSwapWithFrom:from to:to];
     
     if(self){
@@ -42,15 +39,13 @@ float const defaultAnimationDuration = 0.4f;
     }
     
     return self;
-
-
 }
 
 #pragma mark - Description
 
 -(NSString *)description{
-
-    NSString * description = [NSString stringWithFormat:@" from : %@ to: %@ type: %ld, animation duration: %f",self.from,self.to,(long)self.type,self.animationDuration ];
+    
+    NSString *description = [NSString stringWithFormat:@" from : %@ to: %@ type: %ld, animation duration: %f",self.from,self.to,(long)self.type,self.animationDuration ];
     
     return description;
 }

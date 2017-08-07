@@ -9,17 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "NSDGameSharedInstance.h"
 
-extern NSString * const kNSDFileName;
+extern NSString *const kNSDFileName;
 
 @interface NSDGameSharedManager : NSObject
 
 
-+(instancetype) sharedInstance;
++ (instancetype) sharedInstance;
 
--(NSDGameSharedInstance *)lastSavedGame;
--(void)hasSavedGameWithCompletion:(void(^)(BOOL hasSavedGame))completion;
+- (NSDGameSharedInstance *)lastSavedGame;
+- (void)hasSavedGameWithCompletion:(void (^)(BOOL hasSavedGame))completion;
 
--(void)deleteGame;
-
+- (void)deleteGame;
 
 @end

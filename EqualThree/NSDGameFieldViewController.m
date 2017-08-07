@@ -6,8 +6,8 @@
 #import "NSDGameViewController.h"
 #import "NSDGameSharedManager.h"
 
-NSString * const NSDGameFieldDidEndDeletingNotification = @"NSDGameFieldDidFieldEndDeleting";
-NSString * const kNSDDeletedItemsCost = @"kNSDCostDeletedItems";
+NSString *const NSDGameFieldDidEndDeletingNotification = @"NSDGameFieldDidFieldEndDeleting";
+NSString *const kNSDDeletedItemsCost = @"kNSDCostDeletedItems";
 
 NSUInteger const NSDItemCost = 10;
 NSUInteger const NSDGameFieldWidth = 7;
@@ -15,14 +15,13 @@ NSUInteger const NSDGameFieldHeight = 7;
 
 float const NSDDeleteAnimationDuration = 0.2f;
 
-
 @interface NSDGameFieldViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *gameItemsView;
 @property (strong, nonatomic) NSDGameEngine *gameEngine;
 @property (strong, nonatomic) NSMutableArray *gameField;
 
-@property NSArray * hint;
+@property NSArray *hint;
 @property BOOL isUserHelpNeeded;
 @property BOOL isUserRecivedHint;
 
@@ -37,19 +36,14 @@ float const NSDDeleteAnimationDuration = 0.2f;
 
 - (void)configureGame;
 - (void)restoreLastSavedGame;
-
-- (NSDGameItemView*)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type;
-
+- (NSDGameItemView *)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type;
 - (CGPoint)xyCoordinatesFromIJStruct:(NSDIJStruct *) iJStruct;
 - (NSDGameItemView*)gameItemViewAtIJStruct:(NSDIJStruct *)iJStruct type:(NSUInteger)type;
 - (NSDIJStruct *) iJPositionItemWithPoint:(CGPoint) point;
-
-- (void) hintUser;
+- (void)hintUser;
 - (void)removeUserHint;
-
-- (void) initGestureRecognizerWithView:(UIView *) view;
-- (void) didRecognizePan:(UIPanGestureRecognizer *) recognizer;
-
+- (void)initGestureRecognizerWithView:(UIView *)view;
+- (void)didRecognizePan:(UIPanGestureRecognizer *)recognizer;
 - (void)subscribeToNotifications;
 - (void)unsubscribeFromNotifications;
 
@@ -59,7 +53,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
 
 #pragma mark - Life Cycle
 
--(void)viewDidLoad{
+- (void)viewDidLoad{
     
     [super viewDidLoad];
     
@@ -80,7 +74,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
 
 
 
--(void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated{
     
     [super viewDidAppear:animated];
     
@@ -102,16 +96,16 @@ float const NSDDeleteAnimationDuration = 0.2f;
     });
 }
 
-- (void)dealloc {
+- (void)dealloc{
     
     [self unsubscribeFromNotifications];
 }
 
 #pragma mark - Private Methods
 
-- (void)restoreLastSavedGame {
+- (void)restoreLastSavedGame{
     
-    NSDGameSharedInstance * instance = [[NSDGameSharedManager sharedInstance] lastSavedGame];
+    NSDGameSharedInstance *instance = [[NSDGameSharedManager sharedInstance] lastSavedGame];
     
     self.horizontalItemsCount = instance.field.count;
     self.verticalItemsCount = ((NSMutableArray *)instance.field.firstObject).count;
@@ -119,8 +113,6 @@ float const NSDDeleteAnimationDuration = 0.2f;
     
     self.itemSize = CGSizeMake(self.gameItemsView.frame.size.width / (CGFloat) self.horizontalItemsCount,
                                self.gameItemsView.frame.size.height / (CGFloat) self.verticalItemsCount);
-    
-    
     
     self.gameField = [NSMutableArray arrayWithCapacity:self.horizontalItemsCount];
     
@@ -131,13 +123,11 @@ float const NSDDeleteAnimationDuration = 0.2f;
         }
         [self.gameField addObject:column];
     }
-    
+
     self.gameEngine = [[NSDGameEngine alloc] initWithSharedInstance:instance];
-    
-    
 }
 
-- (void)configureGame {
+- (void)configureGame{
     
     self.gameEngine = nil;
     
@@ -163,7 +153,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
                                                            itemTypesCount:self.itemTypesCount];
 }
 
-- (NSDGameItemView*)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type{
+- (NSDGameItemView *)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type{
     NSDGameItemView *itemView = [[NSDGameItemView alloc] initWithFrame:frame];
     
     itemView.type = type;
@@ -185,7 +175,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
 
 #pragma mark - Coordinate translation
 
-- (CGPoint)xyCoordinatesFromIJStruct:(NSDIJStruct *) iJStruct {
+- (CGPoint)xyCoordinatesFromIJStruct:(NSDIJStruct *)iJStruct{
     CGPoint result = CGPointMake(iJStruct.i * (CGFloat) self.itemSize.width, iJStruct.j * (CGFloat) self.itemSize.height);
     return result;
 }
@@ -209,11 +199,11 @@ float const NSDDeleteAnimationDuration = 0.2f;
     return result;
 }
 
-- (NSDIJStruct *) iJPositionItemWithPoint:(CGPoint) point {
+- (NSDIJStruct *)iJPositionItemWithPoint:(CGPoint)point{
     
-    NSDIJStruct * result = nil ;
+    NSDIJStruct *result = nil ;
     
-    result =  [[NSDIJStruct alloc] initWithI:floor((CGFloat) point.x/(CGFloat)self.itemSize.width) andJ: floor( (CGFloat) point.y / (CGFloat)self.itemSize.height)];
+    result = [[NSDIJStruct alloc] initWithI:floor((CGFloat) point.x/(CGFloat)self.itemSize.width) andJ: floor( (CGFloat) point.y / (CGFloat)self.itemSize.height)];
     
     return result;
 }
@@ -221,7 +211,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
 
 #pragma mark - Hint
 
--(void) hintUser{
+- (void)hintUser{
     
     if(self.hint == nil){
         
@@ -243,7 +233,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
     
     for(NSUInteger i = 0; i < self.hint.count; i++){
         
-        NSDIJStruct * item = self.hint[i];
+        NSDIJStruct *item = self.hint[i];
         
         [((NSDGameItemView *)self.gameField[item.i][item.j]) setHighlighted:YES];
         
@@ -261,7 +251,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
     
     for (NSUInteger i = 0; i < self.hint.count; i++) {
         
-        NSDIJStruct * tempIJ = self.hint[i];
+        NSDIJStruct *tempIJ = self.hint[i];
         
         [self.gameField[tempIJ.i][tempIJ.j] setHighlighted:NO];
     }
@@ -274,17 +264,19 @@ float const NSDDeleteAnimationDuration = 0.2f;
 #pragma mark - Gesture Recognizer
 
 
-- (void) initGestureRecognizerWithView:(UIView *) view {
+- (void)initGestureRecognizerWithView:(UIView *)view{
     
-    UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didRecognizePan:)];
-    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didRecognizePan:)];
+
     [view addGestureRecognizer:pan];
 }
 
 
-- (void) didRecognizePan:(UISwipeGestureRecognizer *) recognizer{
+- (void)didRecognizePan:(UISwipeGestureRecognizer *)recognizer{
     
-    if(self.animated) return;
+    if(self.animated){
+        return;
+    }
     
     [self removeUserHint];
     
@@ -292,7 +284,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
     static CGPoint currentLocation;
     static BOOL finished;
     
-    switch (recognizer.state) {
+    switch (recognizer.state){
         case UIGestureRecognizerStateBegan:
             startingLocation = [recognizer locationInView:self.gameItemsView];
             currentLocation = startingLocation;
@@ -305,41 +297,41 @@ float const NSDDeleteAnimationDuration = 0.2f;
             return;
     }
     
-    if (!finished ) {
+    if (!finished){
         CGFloat deltaX = currentLocation.x - startingLocation.x;
         CGFloat deltaY = currentLocation.y - startingLocation.y;
         
-        if ((fabs(deltaX) > (self.itemSize.width / 3.4f)) || (fabs(deltaY) > (self.itemSize.height / 3.4f))) {
+        if ((fabs(deltaX) > (self.itemSize.width / 3.4f)) || (fabs(deltaY) > (self.itemSize.height / 3.4f))){
             
             finished = YES;
             
-            NSDIJStruct * ijstruct = [self iJPositionItemWithPoint:startingLocation];
-            NSUInteger i = ijstruct.i;
-            NSUInteger j = ijstruct.j;
+            NSDIJStruct * iJStruct = [self iJPositionItemWithPoint:startingLocation];
             
+            NSUInteger i = iJStruct.i;
+            NSUInteger j = iJStruct.j;
             
-            if (fabs(deltaX) > fabs(deltaY)) {
+            if (fabs(deltaX) > fabs(deltaY)){
                 if (deltaX > 0) {
                     if (i < (self.horizontalItemsCount - 1)) {
                         
-                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:(i + 1) andJ:j]]];
+                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:iJStruct to:[[NSDIJStruct alloc] initWithI:(i + 1) andJ:j]]];
                     }
                 } else {
                     if (i > 0) {
                         
-                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:(i - 1) andJ:j]]];
+                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:iJStruct to:[[NSDIJStruct alloc] initWithI:(i - 1) andJ:j]]];
                     }
                 }
             } else {
                 if (deltaY > 0) {
                     
                     if (j < (self.verticalItemsCount - 1)) {
-                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i andJ:(j + 1)]]];
+                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:iJStruct to:[[NSDIJStruct alloc] initWithI:i andJ:(j + 1)]]];
                     }
                 } else {
                     if (j > 0) {
                         
-                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:ijstruct to:[[NSDIJStruct alloc] initWithI:i andJ:(j - 1)]]];
+                        [self.gameEngine swapItemsWithSwap:[[NSDSwap alloc] initSwapWithFrom:iJStruct to:[[NSDIJStruct alloc] initWithI:i andJ:(j - 1)]]];
                     }
                 }
             }
@@ -350,7 +342,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
 
 #pragma mark - Notifications
 
-- (void)subscribeToNotifications {
+- (void)subscribeToNotifications{
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processItemsDidMoveNotification:) name:NSDGameItemsDidMoveNotification object:nil];
     
@@ -364,15 +356,15 @@ float const NSDDeleteAnimationDuration = 0.2f;
 }
 
 
-- (void)unsubscribeFromNotifications {
+- (void)unsubscribeFromNotifications{
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
-- (void)notifyAboutGameFieldDidEndDeletingWithScoreCount:(NSUInteger) scoreCount{
+- (void)notifyAboutGameFieldDidEndDeletingWithScoreCount:(NSUInteger)scoreCount{
     
-    NSNotification * notification = [NSNotification notificationWithName:NSDGameFieldDidEndDeletingNotification
+    NSNotification *notification = [NSNotification notificationWithName:NSDGameFieldDidEndDeletingNotification
                                                                   object:nil
                                                                 userInfo:@{
                                                                            kNSDDeletedItemsCost : @(scoreCount)
@@ -382,7 +374,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
 }
 
 
-- (void)processItemsDidMoveNotification:(NSNotification *)notification {
+- (void)processItemsDidMoveNotification:(NSNotification *)notification{
     
     self.animated = YES;
     
@@ -438,7 +430,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
 }
 
 
-- (void)processDidFindPermissibleStroke:(NSNotification *) notification{
+- (void)processDidFindPermissibleStroke:(NSNotification *)notification{
     
     self.hint = notification.userInfo[kNSDGameItems];
     
@@ -446,11 +438,10 @@ float const NSDDeleteAnimationDuration = 0.2f;
         
         [self hintUser];
     }
-    
 }
 
 
-- (void)processItemsDidDeleteNotification:(NSNotification *)notification {
+- (void)processItemsDidDeleteNotification:(NSNotification *)notification{
     
     self.hint = nil;
     self.isUserHelpNeeded = NO;
@@ -463,7 +454,7 @@ float const NSDDeleteAnimationDuration = 0.2f;
         
         dispatch_group_t animationGroup = dispatch_group_create();
         
-        for(NSDIJStruct * tempStruct in itemsToDelete){
+        for(NSDIJStruct *tempStruct in itemsToDelete){
             
             if(self.gameField[tempStruct.i][tempStruct.j]!=[NSNull null]){
                 
@@ -497,4 +488,3 @@ float const NSDDeleteAnimationDuration = 0.2f;
 }
 
 @end
-

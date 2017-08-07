@@ -11,48 +11,50 @@
 @implementation UIColor (NSDColor)
 
 
-+(instancetype)alertBackroundColor{
-
++ (instancetype)alertBackroundColor{
+    
     return [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.5f];
 }
 
-
 #pragma mark NSDNavColors
 
-+(instancetype) navigationBackgroundColor{
++ (instancetype)navigationBackgroundColor{
+    
     return [UIColor colorWithRed:204.0/255.0 green:102.0/255.0 blue:255.0/255.0 alpha:1.0];
 }
 
-+(instancetype) navigationForegroundColor{
++ (instancetype)navigationForegroundColor{
+   
     return [UIColor whiteColor];
 }
 
 #pragma mark NSDButtonColors
 
-+(instancetype) buttonBackgroundColor{
++ (instancetype)buttonBackgroundColor{
+    
     return [UIColor redColor];
 }
 
-+(instancetype) buttonTitleFontColor{
++ (instancetype)buttonTitleFontColor{
+
     return [UIColor whiteColor];
 }
 
-#pragma mark NSDCustomColors
+#pragma mark NSDTableViewHighscoresColors
 
-+(instancetype) goldColor{
++ (instancetype)goldColor{
+    
     return [UIColor colorWithRed:255.0/255.0 green:215.0/255.0 blue:0.0/255.0 alpha:1.0];
 }
 
-+(instancetype) silverColor{
++ (instancetype)silverColor{
+    
     return [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
-
 }
 
-+(instancetype) bronzeColor{
++ (instancetype)bronzeColor{
+    
     return [UIColor colorWithRed:205.0/255.0 green:127.0/255.0 blue:50.0/255.0 alpha:1.0];
-
 }
-
-
 
 @end

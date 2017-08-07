@@ -10,25 +10,24 @@
 
 @implementation NSDScoreRecord
 
-
-
 #pragma mark - Init
 
--(instancetype)initWithName:(NSString *)name
-                      score:(NSNumber *)score {
+- (instancetype)initWithName:(NSString *)name
+                       score:(NSNumber *)score {
     
     self = [super init];
     
     if (self) {
         self.userName = name;
         self.userScore = score;
+        
     }
+    
     return self;
-
 }
 
 
-
+#pragma mark - Coding
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeObject:self.userScore forKey:@"userScore"];
@@ -39,15 +38,14 @@
 - (id)initWithCoder:(NSCoder *)decoder {
     
     self = [super init];
+    
     if(self){
-    self.userScore =[decoder decodeObjectForKey:@"userScore"];
-    self.userName = [decoder decodeObjectForKey:@"userName"];
+        
+        self.userScore =[decoder decodeObjectForKey:@"userScore"];
+        self.userName = [decoder decodeObjectForKey:@"userName"];
     }
     
     return self;
 }
-
-
-
 
 @end

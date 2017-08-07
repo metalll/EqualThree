@@ -10,6 +10,6 @@
 
 @interface NSDGeneralMenuViewController : UIViewController
 
-- (IBAction)didTapNewGameButtonWithSender:(id)sender ;
+- (IBAction)didTapNewGameButtonWithSender:(id)sender;
 
 @end

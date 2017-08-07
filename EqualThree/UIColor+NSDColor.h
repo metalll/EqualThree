@@ -10,23 +10,20 @@
 
 @interface UIColor (NSDColor)
 
++ (instancetype)alertBackroundColor;
 
-+(instancetype) alertBackroundColor;
++ (instancetype)navigationBackgroundColor;
 
-#pragma mark NSDNavColors
++ (instancetype)navigationForegroundColor;
 
-+(instancetype) navigationBackgroundColor;
++ (instancetype)buttonBackgroundColor;
 
-+(instancetype) navigationForegroundColor;
++ (instancetype)buttonTitleFontColor;
 
-+(instancetype) buttonBackgroundColor;
++ (instancetype)goldColor;
 
-+(instancetype) buttonTitleFontColor;
++ (instancetype)silverColor;
 
-+(instancetype) goldColor;
-
-+(instancetype) silverColor;
-
-+(instancetype) bronzeColor;
++ (instancetype)bronzeColor;
 
 @end

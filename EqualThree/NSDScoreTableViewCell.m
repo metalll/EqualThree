@@ -11,7 +11,7 @@
 @implementation NSDScoreTableViewCell
 
 
--(void)setScoreRecordWithScoreRecord:(NSDScoreRecord *)record andNumber:(NSUInteger) number{
+- (void)setScoreRecordWithScoreRecord:(NSDScoreRecord *)record andNumber:(NSUInteger) number{
     
     switch (number) {
         case 0:
@@ -39,7 +39,7 @@
     self.numberLabel.text = [[NSString stringWithFormat:@"%li",(unsigned long)(NSUInteger)(number+1)] stringByAppendingString:@"."];
     self.nameLabel.text = record.userName;
     self.scopeLabel.text = [record.userScore stringValue];
-
+    
 }
 
 

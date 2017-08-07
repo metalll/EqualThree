@@ -11,14 +11,13 @@
 @interface NSDPlistController : NSObject
 
 
-+(void)loadPlistWithName:(NSString *)name
-    andLoadedObjectClass:(Class) loadedObjectClass
-           andCompletion:(void (^)(id))completion;
++ (void)loadPlistWithName:(NSString *)name
+            andCompletion:(void (^)(id))completion;
 
-+(void) savePlistWithName : (NSString *)name
++ (void) savePlistWithName : (NSString *)name
            andStoredObject : (id) storedObject
-            andCompletion : (void (^)(void)) completion;
+             andCompletion : (void (^)(void)) completion;
 
-+(void) removeFileWithName:(NSString *)name;
++ (void) removeFileWithName:(NSString *)name;
 
 @end

@@ -15,17 +15,13 @@
 
 
 
-@property NSString * userName;
-@property NSNumber * userScore;
+@property NSString *userName;
+@property NSNumber *userScore;
 
 #pragma mark - Init
 
 
--(instancetype)initWithName:(NSString *)name
+- (instancetype)initWithName:(NSString *)name
                       score:(NSNumber *)score;
-
-
-
-
 
 @end

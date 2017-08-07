@@ -19,9 +19,10 @@
 
 @end
 
+
 @implementation NSDPopSegue
 
--(void)perform{
+- (void)perform{
     
     [self.sourceViewController.navigationController popViewControllerAnimated:YES];
 }
@@ -29,7 +30,7 @@
 
 
 @interface NSDHighscoreViewController (){
-    NSArray * _highscores;
+    NSArray *_highscores;
 }
 
 
@@ -44,7 +45,7 @@
 
 #pragma mark - Life Cycle
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
     
     [super viewDidLoad];
     
@@ -61,7 +62,7 @@
     self.tableView.dataSource = self;
     self.tableView.alpha=0.0f;
     
-    [[NSDHighscoresManager sharedManager] sortedElementsWithCompletion:^(NSArray * tArr) {
+    [[NSDHighscoresManager sharedManager] sortedElementsWithCompletion:^(NSArray *tArr) {
         _highscores = tArr;
         
         [self.activityIndicator stopAnimating];
@@ -83,8 +84,8 @@
 
 #pragma mark - TableView delegate and data source
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSDScoreTableViewCell * tempCell = [tableView dequeueReusableCellWithIdentifier:@"NSDScoreTableViewCell"] ;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSDScoreTableViewCell *tempCell = [tableView dequeueReusableCellWithIdentifier:@"NSDScoreTableViewCell"] ;
     if(!tempCell){
         [tableView registerNib:[UINib nibWithNibName:@"NSDScoreTableViewCell" bundle:nil] forCellReuseIdentifier:@"NSDScoreTableViewCell"];
         tempCell = [tableView dequeueReusableCellWithIdentifier:@"NSDScoreTableViewCell"] ;
@@ -95,19 +96,19 @@
     return tempCell;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return _highscores.count;
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 44;
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     return [[[NSBundle mainBundle] loadNibNamed:@"NSDCustomViewForHeader" owner:self options:nil]firstObject];
 }
 

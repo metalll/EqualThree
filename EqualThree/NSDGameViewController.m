@@ -25,24 +25,24 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 @property (weak, nonatomic) IBOutlet UILabel *movesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 
--(void)setNavigationBarHidden:(BOOL)hidden;
+- (void)setNavigationBarHidden:(BOOL)hidden;
+- (void)subscribeToNotifacations;
+- (void)unsubscribeFromNotifacations;
+- (void)notifyAboutUserDidTapHintButton;
+- (void)didUpdateUserScore:(NSNotification *)notification;
+- (void)didUpdateUserSharedScore:(NSNotification *)notification;
+- (void)didUpdateMovesCount:(NSNotification *)notification;
+- (void)didDetectGameOver:(NSNotification *) notification;
 
--(void)subscribeToNotifacations;
--(void)unsubscribeFromNotifacations;
-
--(void)notifyAboutUserDidTapHintButton;
-
--(void)didUpdateUserScore:(NSNotification *)notification;
--(void)didUpdateUserSharedScore:(NSNotification *)notification;
--(void)didUpdateMovesCount:(NSNotification *)notification;
--(void)didDetectGameOver:(NSNotification *) notification;
 @end
+
 
 @implementation NSDGameViewController
 
 #pragma mark - Life Cycle
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
+    
     [super viewDidLoad];
     [self subscribeToNotifacations];
     
@@ -50,26 +50,26 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
     self.scoreLabel.text = @"0";
 }
 
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
     [self setNavigationBarHidden:YES];
 }
 
--(void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated{
     
     [super viewWillDisappear:animated];
     [self setNavigationBarHidden:NO];
 }
 
--(void)dealloc{
+- (void)dealloc{
+    
     [self unsubscribeFromNotifacations];
 }
 
-
 #pragma mark - Actions
 
-- (IBAction)didTapMenuButton:(id)sender {
+- (IBAction)didTapMenuButton:(id)sender{
     
     [NSDAlertView showAlertWithMessageText:@"Paused"
                         andFirstButtonText:@"Resume"
@@ -78,18 +78,15 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
                        } andSecondButtonBlock:^{
                            [self.navigationController popViewControllerAnimated:YES];
                        } andParentViewController:self];
-    
-    
 }
 
 - (IBAction)didTapHintButton:(id)sender {
     [self notifyAboutUserDidTapHintButton];
 }
 
-
 #pragma mark - Private
 
--(void)setNavigationBarHidden:(BOOL)hidden{
+- (void)setNavigationBarHidden:(BOOL)hidden{
     
     [self.navigationController setNavigationBarHidden:hidden animated:YES];
     
@@ -98,11 +95,9 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
     }
 }
 
-
 #pragma mark - Notifications
 
-
--(void)subscribeToNotifacations{
+- (void)subscribeToNotifacations{
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateMovesCount:) name:NSDDidUpdateMovesCount object:nil];
     
@@ -113,19 +108,19 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDetectGameOver:) name:NSDDidDetectGameOver object:nil];
 }
 
--(void)unsubscribeFromNotifacations{
+- (void)unsubscribeFromNotifacations{
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
--(void)notifyAboutUserDidTapHintButton{
+- (void)notifyAboutUserDidTapHintButton{
     
-    NSNotification * notification = [NSNotification notificationWithName:NSDUserDidTapHintButton object:nil] ;
+    NSNotification *notification = [NSNotification notificationWithName:NSDUserDidTapHintButton object:nil] ;
     [[NSNotificationCenter defaultCenter]postNotification:notification];
 }
 
--(void)didUpdateUserScore:(NSNotification *)notification{
+- (void)didUpdateUserScore:(NSNotification *)notification{
     
     NSUInteger resivedScore  = [notification.userInfo[kNSDDeletedItemsCost] unsignedIntegerValue];
     NSUInteger currentScore = [self.scoreLabel.text integerValue];
@@ -133,23 +128,23 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
     self.scoreLabel.text = [NSString stringWithFormat:@"%ld",(long)resivedScore + currentScore];
 }
 
--(void)didUpdateUserSharedScore:(NSNotification *)notification{
+- (void)didUpdateUserSharedScore:(NSNotification *)notification{
     
     NSUInteger recivedScore = [notification.userInfo[kNSDUserScore] unsignedIntegerValue];
     
     self.scoreLabel.text = [NSString stringWithFormat:@"%ld",(long)recivedScore];
 }
 
--(void)didUpdateMovesCount:(NSNotification *)notification{
+- (void)didUpdateMovesCount:(NSNotification *)notification{
     
     NSUInteger recivedMovesCount = [notification.userInfo[kNSDMovesCount] unsignedIntegerValue];
     
     self.movesLabel.text = [NSString stringWithFormat:@"%ld",(long)recivedMovesCount];
 }
 
--(void)didDetectGameOver:(NSNotification *) notification{
+- (void)didDetectGameOver:(NSNotification *) notification{
     
-    NSDGameOverViewController * gameOverVC = [[NSDGameOverViewController alloc] initWithCompletion:^(NSDScoreRecord * record) {
+    NSDGameOverViewController *gameOverVC = [[NSDGameOverViewController alloc] initWithCompletion:^(NSDScoreRecord * record) {
         
         [[NSDGameSharedManager sharedInstance] deleteGame];
         [[NSDHighscoresManager sharedManager] addRecordWithRecord:record];
@@ -167,7 +162,7 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 
 #pragma mark - Segue
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     if([segue.identifier isEqualToString:@"InitGameField"]){
         ((NSDGameFieldViewController *)segue.destinationViewController).isNewGame = self.isNewGame;

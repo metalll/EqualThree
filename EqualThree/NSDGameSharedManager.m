@@ -10,26 +10,24 @@
 #import "NSDGameEngine.h"
 #import "NSDPlistController.h"
 
-NSString * const kNSDFileName = @"NSDGameSharedSession";
-
+NSString *const kNSDFileName = @"NSDGameSharedSession";
 
 @interface NSDGameSharedManager ()
 
-@property NSDGameSharedInstance * gameEngineInstance;
+@property NSDGameSharedInstance *gameEngineInstance;
 
 - (void)subscribeToNotifications;
 - (void)unsubscribeFromNotifications;
-
--(void)proccessGoToAwaitStateNotification:(NSNotification *)notification;
+- (void)proccessGoToAwaitStateNotification:(NSNotification *)notification;
 
 @end
-
 
 @implementation NSDGameSharedManager
 
 #pragma mark - Contsructors
 
-+(instancetype)new{
++ (instancetype)new{
+    
     NSDGameSharedManager * new = [super new];
     if(new){
         [new subscribeToNotifications];
@@ -39,22 +37,20 @@ NSString * const kNSDFileName = @"NSDGameSharedSession";
 
 #pragma mark - Destructors
 
--(void)dealloc{
+- (void)dealloc{
+    
     [self unsubscribeFromNotifications];
 }
 
 #pragma mark - Singletone
 
 static NSDGameSharedManager * instance;
-+(instancetype)sharedInstance{
-    
++ (instancetype)sharedInstance{
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [NSDGameSharedManager new];
     });
-    
-    
     
     return instance;
     
@@ -62,12 +58,12 @@ static NSDGameSharedManager * instance;
 
 #pragma mark - Public
 
--(NSDGameSharedInstance *)lastSavedGame{
+- (NSDGameSharedInstance *)lastSavedGame{
     return self.gameEngineInstance;
 }
 
 
--(void)hasSavedGameWithCompletion:(void(^)(BOOL hasSavedGame))completion{
+- (void)hasSavedGameWithCompletion:(void (^)(BOOL hasSavedGame))completion{
     [self loadFromStorageWithCompletion:^(NSDGameSharedInstance * retVal) {
         if(completion){
             completion(retVal!=nil);
@@ -80,41 +76,42 @@ static NSDGameSharedManager * instance;
 #pragma mark - Storage
 
 - (void)saveFromStorage{
+    
     [NSDPlistController savePlistWithName:kNSDFileName andStoredObject:[self.gameEngineInstance dic] andCompletion:nil];
 }
 
 - (void)loadFromStorageWithCompletion:(void(^)(NSDGameSharedInstance *))completion{
-    [NSDPlistController loadPlistWithName:kNSDFileName andLoadedObjectClass:[NSMutableDictionary class] andCompletion:^(id retValObject) {
+    [NSDPlistController loadPlistWithName:kNSDFileName andCompletion:^(id retValObject) {
         self.gameEngineInstance = [NSDGameSharedInstance initWithDic:retValObject];
         if(completion)
             completion(self.gameEngineInstance);
     }];
 }
 
--(void)deleteGame{
+- (void)deleteGame{
     
     self.gameEngineInstance = nil;
     [NSDPlistController removeFileWithName:kNSDFileName];
-    
 }
 
 
 #pragma mark - Notifications
 
--(void)subscribeToNotifications{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(proccessGoToAwaitStateNotification:) name:NSDDidGoToAwaitState object: nil];
+- (void)subscribeToNotifications{
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(proccessGoToAwaitStateNotification:) name:NSDDidGoToAwaitState object: nil];
 }
 
 
--(void)unsubscribeFromNotifications{
+- (void)unsubscribeFromNotifications{
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
--(void)proccessGoToAwaitStateNotification:(NSNotification *)notification{
+- (void)proccessGoToAwaitStateNotification:(NSNotification *)notification{
     
-    NSDGameSharedInstance * tempSharedInstance = [NSDGameSharedInstance new];
+    NSDGameSharedInstance *tempSharedInstance = [NSDGameSharedInstance new];
     
     tempSharedInstance.field = notification.userInfo[kNSDGameItems];
     tempSharedInstance.moves = [notification.userInfo[kNSDMovesCount] unsignedIntegerValue];

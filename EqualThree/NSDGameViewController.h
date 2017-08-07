@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 
 
-extern NSString * const NSDUserDidTapHintButton;
+extern NSString *const NSDUserDidTapHintButton;
 
 @interface NSDGameViewController : UIViewController
+
 @property BOOL isNewGame;
+
 @end

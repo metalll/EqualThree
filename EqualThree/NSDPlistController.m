@@ -10,28 +10,9 @@
 
 @implementation NSDPlistController
 
-
-+(void) removeFileWithName:(NSString *)name{
++ (void)loadPlistWithName:(NSString *)name
+            andCompletion:(void (^)(id))completion{
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *path = [documentsDirectory stringByAppendingPathComponent:[name stringByAppendingString: @".plist"]];
-        
-        NSError *error;
-        if(![[NSFileManager defaultManager] removeItemAtPath:path error:&error])
-        {
-        
-        }
-        
-    });
-    
-}
-
-+(void)loadPlistWithName:(NSString *)name
-    andLoadedObjectClass:(Class) loadedObjectClass
-           andCompletion:(void (^)(id))completion{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -49,9 +30,6 @@
         
         
         id retValObject =  [NSKeyedUnarchiver unarchiveObjectWithFile:plistPath];
-
-        
-        
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if(completion){
@@ -64,18 +42,21 @@
     
 }
 
-+(void)savePlistWithName:(NSString *)name andStoredObject:(id)storedObject andCompletion:(void (^)(void))completion{
++ (void)savePlistWithName:(NSString *)name
+          andStoredObject:(id)storedObject
+            andCompletion:(void (^)(void))completion{
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
-        
         NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:[name stringByAppendingString:@".plist"]];
         
+#ifdef DEBUG
         NSLog(@"stored fileName %@",plistPath);
+#endif
         
         [NSKeyedArchiver archiveRootObject:storedObject toFile:plistPath ];
-        
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if(completion){
@@ -84,8 +65,20 @@
         });
         
     });
-    
-    
 }
+
++ (void) removeFileWithName:(NSString *)name{
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *path = [documentsDirectory stringByAppendingPathComponent:[name stringByAppendingString: @".plist"]];
+        NSError *error;
+        
+        [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+    });
+}
+
 
 @end
