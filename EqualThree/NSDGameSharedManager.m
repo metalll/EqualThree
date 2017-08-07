@@ -27,6 +27,23 @@ NSString * const kNSDFileName = @"NSDGameSharedSession";
 
 @implementation NSDGameSharedManager
 
+#pragma mark - Contsructors
+
++(instancetype)new{
+    NSDGameSharedManager * new = [super new];
+    if(new){
+        [new subscribeToNotifications];
+    }
+    return new;
+}
+
+#pragma mark - Destructors
+
+-(void)dealloc{
+    [self unsubscribeFromNotifications];
+}
+
+#pragma mark - Singletone
 
 static NSDGameSharedManager * instance;
 +(instancetype)sharedInstance{
@@ -43,17 +60,13 @@ static NSDGameSharedManager * instance;
 
 }
 
+#pragma mark - Public
 
 -(NSDGameSharedInstance *)lastSavedGame{
     return self.gameEngineInstance;
 }
 
--(void)deleteGame{
 
-    self.gameEngineInstance = nil;
-    [NSDPlistController removeFileWithName:kNSDFileName];
-
-}
 
 -(void)hasSavedGameWithCompletion:(void(^)(BOOL hasSavedGame))completion{
    [self loadFromStorageWithCompletion:^(NSDGameSharedInstance * retVal) {
@@ -64,18 +77,9 @@ static NSDGameSharedManager * instance;
    }];
 }
 
-+(instancetype)new{
-    NSDGameSharedManager * new = [super new];
-    if(new){
-        [new subscribeToNotifications];
-    }
-    return new;
-}
 
--(void)dealloc{
-    [self unsubscribeFromNotifications];
-}
 
+#pragma mark - Storage
 
 -(void)saveFromStorage{
     [NSDPlistController savePlistWithName:kNSDFileName andStoredObject:[self.gameEngineInstance dic] andCompletion:nil];
@@ -89,6 +93,12 @@ static NSDGameSharedManager * instance;
     }];
 }
 
+-(void)deleteGame{
+    
+    self.gameEngineInstance = nil;
+    [NSDPlistController removeFileWithName:kNSDFileName];
+    
+}
 
 
 #pragma mark - Notifications
@@ -117,8 +127,5 @@ static NSDGameSharedManager * instance;
     
     [self saveFromStorage];
 }
-
-
-
 
 @end

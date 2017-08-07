@@ -1,4 +1,4 @@
-    //
+//
 //  NSDGameViewController.m
 //  EqualThree
 //
@@ -21,26 +21,54 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 
 @interface NSDGameViewController ()
 
-
 @property (weak, nonatomic) IBOutlet UIView *mainView;
-@property (weak, nonatomic) IBOutlet UILabel *moviesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *movesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 
+-(void)setNavigationBarHidden:(BOOL)hidden;
+
+-(void) subscribeToNotifacations;
+-(void) unsubscribeFromNotifacations;
+
+-(void)notifyAboutUserDidTapHintButton;
+
+-(void)didUpdateUserScore:(NSNotification *)notification;
+-(void)didUpdateUserSharedScore:(NSNotification *)notification;
+-(void)didUpdateMovesCount:(NSNotification *)notification;
+-(void)didDetectGameOver:(NSNotification *) notification;
 @end
 
 @implementation NSDGameViewController
 
-- (void)viewDidLoad {
+#pragma mark - Life Cycle
 
-    
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self subscribeToNotifacations];
     
-    self.moviesLabel.text = @"0";
+    self.movesLabel.text = @"0";
     self.scoreLabel.text = @"0";
-    
-    
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    [self setNavigationBarHidden:YES];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
+    [self setNavigationBarHidden:NO];
+}
+
+-(void)dealloc{
+    [self unsubscribeFromNotifacations];
+}
+
+
+#pragma mark - Actions
+
 - (IBAction)didTapMenuButton:(id)sender {
     
     [NSDAlertView showAlertWithMessageText:@"Paused"
@@ -55,125 +83,85 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 }
 
 - (IBAction)didTapHintButton:(id)sender {
-    
-    NSNotification * notification = [NSNotification notificationWithName:NSDUserDidTapHintButton object:nil] ;
-    [[NSNotificationCenter defaultCenter]postNotification:notification];
+    [self notifyAboutUserDidTapHintButton];
 }
 
 
--(void) subscribeToNotifacations{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateMoviesCount:) name:NSDDidUpdateMovesCount object:nil];
+#pragma mark - Private
+
+-(void)setNavigationBarHidden:(BOOL)hidden{
+    
+    [self.navigationController setNavigationBarHidden:hidden animated:YES];
+    
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = !hidden;
+    }
+}
+
+
+#pragma mark - Notifications
+
+
+-(void)subscribeToNotifacations{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateMovesCount:) name:NSDDidUpdateMovesCount object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserScore:) name:NSDGameDidFieldEndDeleting object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserSharedScore:) name:NSDDidUpdadeSharedUserScore object:nil];
-    
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDetectGameOver:) name:NSDDidDetectGameOver object:nil];
-    
     
 }
 
--(void) unsubscribeFromNotifacations{
+-(void)unsubscribeFromNotifacations{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
--(void)dealloc{
-    [self unsubscribeFromNotifacations];
+-(void)notifyAboutUserDidTapHintButton{
+    NSNotification * notification = [NSNotification notificationWithName:NSDUserDidTapHintButton object:nil] ;
+    [[NSNotificationCenter defaultCenter]postNotification:notification];
 }
-
 
 -(void)didUpdateUserScore:(NSNotification *)notification{
     NSUInteger resivedScore  = [notification.userInfo[kNSDCostDeletedItems] unsignedIntegerValue];
     NSUInteger currentScore = [self.scoreLabel.text integerValue];
     
-    
-    
-    self.scoreLabel.text = [NSString stringWithFormat:@"%ld",(long)resivedScore+currentScore];
-    
-    
-    
+    self.scoreLabel.text = [NSString stringWithFormat:@"%ld",(long)resivedScore + currentScore];
 }
 
 -(void)didUpdateUserSharedScore:(NSNotification *)notification{
-    NSUInteger resivedScore  = [notification.userInfo[kNSDUserScore] unsignedIntegerValue];
-  
-    
-    
-    
+    NSUInteger resivedScore = [notification.userInfo[kNSDUserScore] unsignedIntegerValue];
     self.scoreLabel.text = [NSString stringWithFormat:@"%ld",(long)resivedScore];
-    
-    
-    
 }
 
--(void)didUpdateMoviesCount:(NSNotification *)notification{
-    NSUInteger resivedMoviesCount = [notification.userInfo[kNSDMovesCount] unsignedIntegerValue];
-    
-    self.moviesLabel.text  = [NSString stringWithFormat:@"%ld",(long)resivedMoviesCount];
+-(void)didUpdateMovesCount:(NSNotification *)notification{
+    NSUInteger recivedMovesCount = [notification.userInfo[kNSDMovesCount] unsignedIntegerValue];
+    self.movesLabel.text  = [NSString stringWithFormat:@"%ld",(long)recivedMovesCount];
 }
 
-
-
--(void) didDetectGameOver:(NSNotification *) notification{
-    
+-(void)didDetectGameOver:(NSNotification *) notification{
     
     NSDGameOverViewController * gameOverVC = [[NSDGameOverViewController alloc] initWithCompletion:^(NSDScoreRecord * record) {
-        
         
         [[NSDGameSharedManager sharedInstance] deleteGame];
         [[NSDHighscoresManager sharedManager] addRecordWithRecord:record];
         
-       [self dismissViewControllerAnimated:YES completion:^{
-           [self.navigationController popToRootViewControllerAnimated:YES];
-       }];
-        
-        
-        
-        
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }];
     }];
-    
-    
     
     gameOverVC.movesText = [notification.userInfo[kNSDMovesCount] stringValue];
     gameOverVC.scoreText = [notification.userInfo[kNSDUserScore] stringValue];
     
-    
-    
-    
     [self presentViewController:gameOverVC animated:YES completion:nil];
-    
-    
-
 }
 
-
--(void)viewWillAppear:(BOOL)animated{
-
-    [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:animated];
-    
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    }
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-
-    }
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
-}
+#pragma mark - Segue
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if([segue.identifier isEqualToString:@"InitGameField"]){
-        
-        ((NSDGameFieldViewController *)segue.destinationViewController).isNewGame =  self.isNewGame;
-
-    }
     
+    if([segue.identifier isEqualToString:@"InitGameField"]){
+        ((NSDGameFieldViewController *)segue.destinationViewController).isNewGame =  self.isNewGame;
+    }
 }
-
 
 @end
