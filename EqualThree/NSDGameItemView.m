@@ -9,7 +9,9 @@
 #import "NSDGameItemView.h"
 #import "NSDGameItemType.h"
 
-@implementation NSDGameItemView
+@implementation NSDGameItemView{
+    CAEmitterLayer *_emitter;
+}
 
 - (void)drawRect:(CGRect)rect{
     
@@ -21,6 +23,24 @@
     layer.borderColor = [[UIColor clearColor] CGColor];
     [self setBackgroundColor:[UIColor clearColor]];
 }
+
+- (void)animateDestroy{
+    
+    _emitter.emitterPosition = CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f);
+    _emitter.emitterSize = CGSizeMake(self.frame.size.width,self.frame.size.height);
+    
+    [self setIsEmitting:YES];
+}
+
+- (void)endAnimateDestroy{
+    
+    [self setIsEmitting:NO];
+}
+
++ (Class) layerClass{
+    return [CAEmitterLayer class];
+}
+
 
 
 - (void)setImagesForType:(NSUInteger)type{
@@ -68,6 +88,44 @@
     
     [self setImage:resultImage];
     [self setHighlightedImage:resultHighlightedImage];
+    
+    [self configureEmitter];
+}
+
+
+- (void)configureEmitter{
+    
+    [self setClipsToBounds:NO];
+    
+    _emitter = (CAEmitterLayer*)self.layer; //2
+    _emitter.emitterPosition = CGPointMake(self.frame.origin.x, self.frame.origin.y);
+    _emitter.emitterSize = CGSizeMake(self.frame.size.width,self.frame.size.height);
+    
+    CAEmitterCell* particles = [CAEmitterCell emitterCell];
+    particles.birthRate = 0;
+    particles.lifetime = 0.15f;
+    
+    particles.contents = (id)[self.image CGImage];
+    [particles setName:@"particles"];
+    particles.zAcceleration = 20.0f;
+    particles.velocity = 196;
+    
+    
+    
+    particles.emissionRange = M_PI;
+    
+    
+    
+    particles.magnificationFilter = kCAFilterTrilinear;
+    particles.minificationFilter = kCAFilterLinear;
+    
+    particles.scale = -0.15;
+    
+    particles.scaleSpeed = 2.0f;
+    particles.spin = 1;
+    particles.spinRange = 20;
+    _emitter.emitterCells = [NSArray arrayWithObject:particles];
+
 }
 
 - (void)setType:(NSUInteger)type{
@@ -76,6 +134,13 @@
         _type = type;
     
     [self setImagesForType:_type];
+}
+
+
+- (void)setIsEmitting:(BOOL)isEmitting{
+    //turn on/off the emitting of particles
+    
+    [_emitter setValue:[NSNumber numberWithInt:isEmitting?6000:0] forKeyPath:@"emitterCells.particles.birthRate"];
 }
 
 @end

@@ -12,4 +12,7 @@
 
 @property (nonatomic) NSUInteger type;
 
+- (void)animateDestroy;
+- (void)endAnimateDestroy;
+
 @end

@@ -221,7 +221,7 @@
                                     <action selector="didTapHintButton:" destination="kL7-p2-Yap" eventType="touchUpInside" id="cig-6S-QZE"/>
                                 </connections>
                             </button>
-                            <containerView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tpx-8a-nAg">
+                            <containerView opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tpx-8a-nAg">
                                 <rect key="frame" x="8" y="105" width="359" height="494"/>
                                 <connections>
                                     <segue destination="XhA-bX-skV" kind="embed" identifier="InitGameField" id="9HJ-R3-X99"/>

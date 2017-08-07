@@ -123,7 +123,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
         }
         [self.gameField addObject:column];
     }
-
+    
     self.gameEngine = [[NSDGameEngine alloc] initWithSharedInstance:instance];
 }
 
@@ -267,7 +267,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
 - (void)initGestureRecognizerWithView:(UIView *)view{
     
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didRecognizePan:)];
-
+    
     [view addGestureRecognizer:pan];
 }
 
@@ -365,10 +365,10 @@ float const NSDDeleteAnimationDuration = 0.16f;
 - (void)notifyAboutGameFieldDidEndDeletingWithScoreCount:(NSUInteger)scoreCount{
     
     NSNotification *notification = [NSNotification notificationWithName:NSDGameFieldDidEndDeletingNotification
-                                                                  object:nil
-                                                                userInfo:@{
-                                                                           kNSDDeletedItemsCost : @(scoreCount)
-                                                                           }];
+                                                                 object:nil
+                                                               userInfo:@{
+                                                                          kNSDDeletedItemsCost : @(scoreCount)
+                                                                          }];
     
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
@@ -464,16 +464,18 @@ float const NSDDeleteAnimationDuration = 0.16f;
                     NSUInteger i = tempStruct.i;
                     NSUInteger j = tempStruct.j;
                     
-                    [UIView animateWithDuration:NSDDeleteAnimationDuration animations:^{
+                    [((NSDGameItemView *)self.gameField[i][j]) animateDestroy] ;
+                    
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(NSDDeleteAnimationDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         
-                        [self.gameField[i][j] setAlpha:0.0];
-                    } completion:^(BOOL finished) {
+                        [((NSDGameItemView *)self.gameField[i][j]) endAnimateDestroy] ;
                         
                         [self.gameField[i][j] removeFromSuperview];
                         self.gameField[i][j] = [NSNull null];
                         
                         dispatch_group_leave(animationGroup);
-                    }];
+                        
+                    });
                 });
             }
         }
