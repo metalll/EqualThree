@@ -14,7 +14,7 @@
 
 
 - (void)drawRect:(CGRect)rect{
-    CALayer * layer  = self.layer;
+    CALayer *layer  = self.layer;
     layer.cornerRadius = 10.0;
     layer.masksToBounds = YES;
     
