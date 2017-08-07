@@ -14,26 +14,26 @@
 - (void)setScoreRecordWithScoreRecord:(NSDScoreRecord *)record andNumber:(NSUInteger) number{
     
     switch (number) {
+        
         case 0:
-            self.numberLabel.textColor = [UIColor goldColor];
-            self.nameLabel.textColor = [UIColor goldColor];
-            self.scopeLabel.textColor =[UIColor goldColor];
+           
+            [self.contentView setBackgroundColor:[UIColor goldColor]];
             break;
+        
         case 1:
-            self.numberLabel.textColor = [UIColor silverColor];
-            self.nameLabel.textColor = [UIColor silverColor];
-            self.scopeLabel.textColor =[UIColor silverColor];
+            
+            [self.contentView setBackgroundColor:[UIColor silverColor]];
             break;
+      
         case 2:
-            self.numberLabel.textColor = [UIColor bronzeColor];
-            self.nameLabel.textColor = [UIColor bronzeColor];
-            self.scopeLabel.textColor =[UIColor bronzeColor];
+            
+            [self.contentView setBackgroundColor:[UIColor bronzeColor]];
             break;
+        
         default:
-            self.numberLabel.textColor = [UIColor blackColor];
-            self.nameLabel.textColor = [UIColor blackColor];
-            self.scopeLabel.textColor =[UIColor blackColor];
-            ;
+            
+            [self.contentView setBackgroundColor:[UIColor tableViewCellDefaultBackroundColor]];
+            break;
     }
     
     self.numberLabel.text = [[NSString stringWithFormat:@"%li",(unsigned long)(NSUInteger)(number+1)] stringByAppendingString:@"."];
@@ -41,8 +41,5 @@
     self.scopeLabel.text = [record.userScore stringValue];
     
 }
-
-
-
 
 @end

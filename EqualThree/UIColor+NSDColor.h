@@ -26,4 +26,6 @@
 
 + (instancetype)bronzeColor;
 
++ (instancetype)tableViewCellDefaultBackroundColor;
+
 @end

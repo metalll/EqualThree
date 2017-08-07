@@ -57,4 +57,9 @@
     return [UIColor colorWithRed:205.0/255.0 green:127.0/255.0 blue:50.0/255.0 alpha:1.0];
 }
 
++ (instancetype)tableViewCellDefaultBackroundColor{
+    
+    return [UIColor colorWithRed:204.0/255.0 green:102.0/255.0 blue:255.0/255.0 alpha:1.0];
+}
+
 @end

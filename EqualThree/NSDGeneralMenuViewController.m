@@ -12,13 +12,19 @@
 #import "NSDAlertView.h"
 #import "NSDGameSharedManager.h"
 #import "NSDHighscoresManager.h"
-
+#import "NSDButton.h"
 
 
 @interface NSDGeneralMenuViewController ()
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *treeLabelYConstraint;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *equalLabelYConstraint;
 
 @property (weak, nonatomic) IBOutlet UIButton *resumeButton;
+
+@property (weak, nonatomic) IBOutlet NSDButton *btn;
+
+@property (weak, nonatomic) IBOutlet NSDButton *highscoreButton;
 
 - (void)startNewGame;
 
@@ -33,16 +39,23 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    self.navigationItem.title = @"Menu";
-    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBarHidden  = YES;
+    
+    self.equalLabelYConstraint.constant = -120;
+    self.treeLabelYConstraint.constant = -120;
+    
+    [UIView animateWithDuration:0.6f animations:^{
+        [self.view layoutIfNeeded];
+    }];
+    
+    
     
     [self.resumeButton setEnabled:NO];
     
-    UINavigationBar *bar = [self.navigationController navigationBar];
-    [bar setBarTintColor:[UIColor navigationBackgroundColor]];
-    [bar setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Noteworthy-Bold" size:20.0f],
-                                  NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    [bar setTintColor:[UIColor navigationForegroundColor]];
+    
+    
+    
+    
     
     
     [[NSDGameSharedManager sharedInstance] hasSavedGameWithCompletion:^(BOOL hasSavedGame) {
@@ -53,6 +66,8 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     
+    
+    
     if([[NSDGameSharedManager sharedInstance] lastSavedGame]==nil){
         [self.resumeButton setEnabled:NO];
     }
@@ -61,6 +76,16 @@
     }
     
     [super viewDidAppear:animated];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden  = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden  = NO;
 }
 
 

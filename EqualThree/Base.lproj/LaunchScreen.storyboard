@@ -4,8 +4,8 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,23 +21,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EqualThree" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ek-ct-xBr">
-                                <rect key="frame" x="119.5" y="317.5" width="136" height="32.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
-                                <nil key="textColor"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="CYn-CZ-8xh">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Equal" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rhx-DH-fcg">
+                                <rect key="frame" x="0.0" y="290" width="187.5" height="88"/>
+                                <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="53"/>
+                                <color key="textColor" red="0.80000001190000003" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <color key="shadowColor" red="0.9771653548" green="1" blue="0.95674470810000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <size key="shadowOffset" width="3" height="3"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Three" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7N9-vM-7Ht">
+                                <rect key="frame" x="187.5" y="289.5" width="187.5" height="89.5"/>
+                                <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="54"/>
+                                <color key="textColor" red="0.9771653548" green="1" blue="0.95674470810000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" red="0.80000001190000003" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <size key="shadowOffset" width="4" height="3"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="3ek-ct-xBr" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="abs-PJ-qUe"/>
-                            <constraint firstItem="3ek-ct-xBr" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="dUw-7b-Doo"/>
+                            <constraint firstItem="7N9-vM-7Ht" firstAttribute="centerY" secondItem="CYn-CZ-8xh" secondAttribute="centerY" id="7fx-lp-Hzk"/>
+                            <constraint firstItem="Rhx-DH-fcg" firstAttribute="width" secondItem="CYn-CZ-8xh" secondAttribute="width" multiplier="0.5" id="Bwc-E5-sCq"/>
+                            <constraint firstAttribute="bottom" secondItem="CYn-CZ-8xh" secondAttribute="bottom" id="D9i-82-Fx1"/>
+                            <constraint firstItem="CYn-CZ-8xh" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="FNe-SZ-dc3"/>
+                            <constraint firstAttribute="trailing" secondItem="7N9-vM-7Ht" secondAttribute="trailing" id="KFA-Qh-ovG"/>
+                            <constraint firstItem="Rhx-DH-fcg" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" multiplier="0.5" id="MkL-3B-zu7"/>
+                            <constraint firstItem="7N9-vM-7Ht" firstAttribute="width" secondItem="CYn-CZ-8xh" secondAttribute="width" multiplier="0.5" id="Pgr-jV-km6"/>
+                            <constraint firstItem="CYn-CZ-8xh" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="bow-BN-FvZ"/>
+                            <constraint firstItem="Rhx-DH-fcg" firstAttribute="centerY" secondItem="CYn-CZ-8xh" secondAttribute="centerY" id="kcZ-yE-wfk"/>
+                            <constraint firstAttribute="trailing" secondItem="CYn-CZ-8xh" secondAttribute="trailing" id="nen-nH-jN6"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="52" y="374.66266866566718"/>
+            <point key="canvasLocation" x="-183.19999999999999" y="373.76311844077964"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Background" width="320" height="568"/>
+    </resources>
 </document>

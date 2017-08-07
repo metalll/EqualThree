@@ -189,10 +189,8 @@ static NSDHighscoresManager *manager;
 
 - (void)saveChangesToFile{
     
-    self.isSorted = NO;
-    
     NSDictionary *savedDictionary = @{ kNSDRecords : _records,
-                                       kNSDSorted : @"NO" };
+                                       kNSDSorted  : self.isSorted? @"YES" : @"NO" };
     
     [NSDPlistController savePlistWithName:NSDHighScoreFileName andStoredObject:savedDictionary andCompletion:nil];
 }

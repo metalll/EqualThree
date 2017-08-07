@@ -28,7 +28,7 @@ NSString *const kNSDGameItems = @"kNSDGameItems";
 NSString *const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 NSUInteger const NSDGameItemScoreCost = 10;
 
-float const NSDRevertAnimationDuration = 0.29f;
+float const NSDRevertAnimationDuration = 0.15f;
 
 @interface NSDGameEngine ()
 
