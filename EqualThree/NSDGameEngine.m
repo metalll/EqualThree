@@ -571,7 +571,6 @@ float const NSDRevertAnimationDuration = 0.15f;
 }
 
 
-
 - (NSArray *)configurePatternsWithArray:(NSMutableArray * )arrayPatterns
                                 andType:(NSUInteger)type{
     
@@ -605,9 +604,11 @@ float const NSDRevertAnimationDuration = 0.15f;
             }
         }
     }
+    
 #ifdef DEBUG
     NSLog(@"array after configure %@",arrayPatterns.description);
 #endif
+    
     return arrayPatterns;
 }
 
@@ -680,7 +681,6 @@ float const NSDRevertAnimationDuration = 0.15f;
     id tmp = self.gameField[self.lastUserSwap.from.i][self.lastUserSwap.from.j];
     self.gameField[self.lastUserSwap.from.i][self.lastUserSwap.from.j] = self.gameField[self.lastUserSwap.to.i][self.lastUserSwap.to.j];
     self.gameField[self.lastUserSwap.to.i][self.lastUserSwap.to.j] = tmp;
-    
     
     self.canRevertUserAction = NO;
     
