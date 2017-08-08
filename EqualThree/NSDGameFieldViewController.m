@@ -6,8 +6,8 @@
 #import "NSDGameViewController.h"
 #import "NSDGameSharedManager.h"
 
-NSString *const NSDGameFieldDidEndDeletingNotification = @"NSDGameFieldDidFieldEndDeleting";
-NSString *const kNSDDeletedItemsCost = @"kNSDCostDeletedItems";
+NSString * const NSDGameFieldDidEndDeletingNotification = @"NSDGameFieldDidFieldEndDeleting";
+NSString * const kNSDDeletedItemsCost = @"kNSDCostDeletedItems";
 
 NSUInteger const NSDItemCost = 10;
 NSUInteger const NSDGameFieldWidth = 7;
@@ -464,18 +464,13 @@ float const NSDDeleteAnimationDuration = 0.16f;
                     NSUInteger i = tempStruct.i;
                     NSUInteger j = tempStruct.j;
                     
-                    [((NSDGameItemView *)self.gameField[i][j]) animateDestroy] ;
-                    
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(NSDDeleteAnimationDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        
-                        [((NSDGameItemView *)self.gameField[i][j]) endAnimateDestroy] ;
+                    [((NSDGameItemView *)self.gameField[i][j]) animateDestroyWithDuration:NSDDeleteAnimationDuration completion:^{
                         
                         [self.gameField[i][j] removeFromSuperview];
                         self.gameField[i][j] = [NSNull null];
                         
                         dispatch_group_leave(animationGroup);
-                        
-                    });
+                    }];
                 });
             }
         }

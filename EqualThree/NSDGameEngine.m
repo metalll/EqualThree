@@ -13,19 +13,19 @@
 #define X [NSNull null]
 #define ANY @"*"
 
-NSString *const NSDGameItemsDidMoveNotification = @"NSDGameItemDidMoveNotification";
-NSString *const NSDGameItemsDidDeleteNotification = @"NSDGameItemDidDeleteNotification";
-NSString *const NSDDidGoToAwaitState = @"NSDEndOfTransitions";
-NSString *const NSDDidUpdateUserScore = @"NSDDidUpdateUserScore";
-NSString *const NSDDidUpdateMovesCount = @"NSDDidUpdateMoviesCount";
-NSString *const NSDDidUpdadeSharedUserScore = @"NSDDidUpdadeSharedUserScore";
-NSString *const NSDDidFindPermissibleStroke = @"NSDDidFindPermissibleStroke";
-NSString *const NSDDidDetectGameOver = @"NSDDidDetectGameOver";
-NSString *const kNSDGameItemsTypeCount = @"kNSDGameItemsTypeCount";
-NSString *const kNSDUserScore = @"kNSDUserScore";
-NSString *const kNSDMovesCount = @"kNSDUserMoviesCount";
-NSString *const kNSDGameItems = @"kNSDGameItems";
-NSString *const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
+NSString * const NSDGameItemsDidMoveNotification = @"NSDGameItemDidMoveNotification";
+NSString * const NSDGameItemsDidDeleteNotification = @"NSDGameItemDidDeleteNotification";
+NSString * const NSDDidGoToAwaitState = @"NSDEndOfTransitions";
+NSString * const NSDDidUpdateUserScore = @"NSDDidUpdateUserScore";
+NSString * const NSDDidUpdateMovesCount = @"NSDDidUpdateMoviesCount";
+NSString * const NSDDidUpdadeSharedUserScore = @"NSDDidUpdadeSharedUserScore";
+NSString * const NSDDidFindPermissibleStroke = @"NSDDidFindPermissibleStroke";
+NSString * const NSDDidDetectGameOver = @"NSDDidDetectGameOver";
+NSString * const kNSDGameItemsTypeCount = @"kNSDGameItemsTypeCount";
+NSString * const kNSDUserScore = @"kNSDUserScore";
+NSString * const kNSDMovesCount = @"kNSDUserMoviesCount";
+NSString * const kNSDGameItems = @"kNSDGameItems";
+NSString * const kNSDGameItemTransitions = @"kNSDGameItemTransitions";
 NSUInteger const NSDGameItemScoreCost = 10;
 
 float const NSDRevertAnimationDuration = 0.15f;

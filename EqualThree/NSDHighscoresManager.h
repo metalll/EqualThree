@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "NSDScoreRecord.h"
 
-extern NSString *const NSDHighScoreFileName;
-extern NSString *const kNSDRecords ;
-extern NSString *const kNSDSorted ;
+extern NSString * const NSDHighScoreFileName;
+extern NSString * const kNSDRecords ;
+extern NSString * const kNSDSorted ;
 
 
 @interface NSDHighscoresManager : NSObject

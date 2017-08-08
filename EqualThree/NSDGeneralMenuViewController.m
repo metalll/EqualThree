@@ -14,8 +14,10 @@
 #import "NSDHighscoresManager.h"
 #import "NSDButton.h"
 
+NSInteger NSDHeightAnimationTrasition = -120;
 
 @interface NSDGeneralMenuViewController ()
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *treeLabelYConstraint;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *equalLabelYConstraint;
@@ -41,22 +43,14 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden  = YES;
     
-    self.equalLabelYConstraint.constant = -120;
-    self.treeLabelYConstraint.constant = -120;
+    self.equalLabelYConstraint.constant = NSDHeightAnimationTrasition;
+    self.treeLabelYConstraint.constant = NSDHeightAnimationTrasition;
     
     [UIView animateWithDuration:0.6f animations:^{
         [self.view layoutIfNeeded];
     }];
     
-    
-    
     [self.resumeButton setEnabled:NO];
-    
-    
-    
-    
-    
-    
     
     [[NSDGameSharedManager sharedInstance] hasSavedGameWithCompletion:^(BOOL hasSavedGame) {
         [self.resumeButton setEnabled:hasSavedGame];
@@ -66,16 +60,16 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     
-    
+      [super viewDidAppear:animated];
     
     if([[NSDGameSharedManager sharedInstance] lastSavedGame]==nil){
+        
         [self.resumeButton setEnabled:NO];
     }
     else {
+        
         [self.resumeButton setEnabled:YES];
     }
-    
-    [super viewDidAppear:animated];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -103,7 +97,7 @@
                                [self startNewGame];
                            }
                           andSecondButtonBlock:^{
-                           } andParentViewController:self];
+                          } andParentViewController:self];
     }
     else {
         [self startNewGame];

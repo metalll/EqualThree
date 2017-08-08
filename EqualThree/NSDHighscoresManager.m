@@ -10,9 +10,9 @@
 #import "NSDScoreRecord.h"
 #import "NSDPlistController.h"
 
-NSString *const NSDHighScoreFileName = @"NSDHighScore";
-NSString *const kNSDRecords = @"kNSDRecords";
-NSString *const kNSDSorted = @"kNSDSorted";
+NSString * const NSDHighScoreFileName = @"NSDHighScore";
+NSString * const kNSDRecords = @"kNSDRecords";
+NSString * const kNSDSorted = @"kNSDSorted";
 
 @interface NSDHighscoresManager (){
     NSMutableArray *_records;

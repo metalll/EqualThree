@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 
 
-extern NSString *const kField;
-extern NSString *const kMoves;
-extern NSString *const kScore;
-extern NSString *const kSharedItemTypesCount;
+extern NSString * const kField;
+extern NSString * const kMoves;
+extern NSString * const kScore;
+extern NSString * const kSharedItemTypesCount;
 
 
 @interface NSDGameSharedInstance : NSObject

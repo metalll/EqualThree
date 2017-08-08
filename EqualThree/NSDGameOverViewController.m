@@ -39,7 +39,6 @@ float const heightTranstionToDisplayKeyboard = -134.0f;
     }
     
     return self;
-    
 }
 
 #pragma mark - Life Cycle
@@ -65,7 +64,7 @@ float const heightTranstionToDisplayKeyboard = -134.0f;
 
 - (IBAction)didTapOkButton:(id)sender{
     
-    NSString * checkingText = self.nameTextField.text;
+    NSString *checkingText = self.nameTextField.text;
     
     if(checkingText==nil|| !(checkingText.length>0)){
         
@@ -83,7 +82,6 @@ float const heightTranstionToDisplayKeyboard = -134.0f;
     NSNumber *score = [f numberFromString:self.scoreText];
     
     self.completionBlock([[NSDScoreRecord alloc]initWithName:checkingText score:score]);
-    
 }
 
 

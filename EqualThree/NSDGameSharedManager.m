@@ -10,7 +10,7 @@
 #import "NSDGameEngine.h"
 #import "NSDPlistController.h"
 
-NSString *const kNSDFileName = @"NSDGameSharedSession";
+NSString * const kNSDFileName = @"NSDGameSharedSession";
 
 @interface NSDGameSharedManager ()
 

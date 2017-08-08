@@ -12,7 +12,6 @@
 @implementation NSDButton
 
 
-
 - (void)drawRect:(CGRect)rect{
     CALayer *layer  = self.layer;
     layer.cornerRadius = 10.0;

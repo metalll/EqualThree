@@ -22,24 +22,25 @@
         NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:[name stringByAppendingString:@".plist"]];
         if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath])
         {
+            
             dispatch_async(dispatch_get_main_queue(), ^{
+                
                 if(completion) completion(nil);
             });
+            
             return ;
         }
-        
         
         id retValObject =  [NSKeyedUnarchiver unarchiveObjectWithFile:plistPath];
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            
             if(completion){
+                
                 completion(retValObject);
             }
         });
-        
     });
-    
-    
 }
 
 + (void)savePlistWithName:(NSString *)name
@@ -56,18 +57,19 @@
         NSLog(@"stored fileName %@",plistPath);
 #endif
         
-        [NSKeyedArchiver archiveRootObject:storedObject toFile:plistPath ];
+        [NSKeyedArchiver archiveRootObject:storedObject toFile:plistPath];
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            
             if(completion){
+                
                 completion();
             }
         });
-        
     });
 }
 
-+ (void) removeFileWithName:(NSString *)name{
++ (void)removeFileWithName:(NSString *)name{
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -79,6 +81,5 @@
         [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
     });
 }
-
 
 @end

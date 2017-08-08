@@ -8,26 +8,13 @@
 
 #import "NSDGameSharedInstance.h"
 
-NSString *const kField = @"kField";
-NSString *const kMoves = @"kMoves";
-NSString *const kScore = @"kScore";
-NSString *const kSharedItemTypesCount = @"kSharedItemTypesCount";
+NSString * const kField = @"kField";
+NSString * const kMoves = @"kMoves";
+NSString * const kScore = @"kScore";
+NSString * const kSharedItemTypesCount = @"kSharedItemTypesCount";
 
 
 @implementation NSDGameSharedInstance
-
-
-
-- (NSDictionary *)dic{
-    
-    return @{
-             kField : self.field,
-             kMoves : @(self.moves),
-             kScore : @(self.score),
-             kSharedItemTypesCount : @(self.sharedItemTypesCount)
-             
-             };
-}
 
 + (instancetype)initWithDic:(NSDictionary *)dic{
     
@@ -44,6 +31,17 @@ NSString *const kSharedItemTypesCount = @"kSharedItemTypesCount";
     }
     
     return new;
+}
+
+- (NSDictionary *)dic{
+    
+    return @{
+             kField : self.field,
+             kMoves : @(self.moves),
+             kScore : @(self.score),
+             kSharedItemTypesCount : @(self.sharedItemTypesCount)
+             
+             };
 }
 
 @end

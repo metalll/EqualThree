@@ -14,10 +14,10 @@
 + (void)loadPlistWithName:(NSString *)name
             andCompletion:(void (^)(id))completion;
 
-+ (void) savePlistWithName : (NSString *)name
-           andStoredObject : (id) storedObject
-             andCompletion : (void (^)(void)) completion;
++ (void)savePlistWithName:(NSString *)name
+          andStoredObject:(id)storedObject
+            andCompletion:(void (^)(void))completion;
 
-+ (void) removeFileWithName:(NSString *)name;
++ (void)removeFileWithName:(NSString *)name;
 
 @end

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSInteger NSDHeightAnimationTrasition;
+
 @interface NSDGeneralMenuViewController : UIViewController
 
 - (IBAction)didTapNewGameButtonWithSender:(id)sender;

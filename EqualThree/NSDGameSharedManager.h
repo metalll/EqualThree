@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "NSDGameSharedInstance.h"
 
-extern NSString *const kNSDFileName;
+extern NSString * const kNSDFileName;
 
 @interface NSDGameSharedManager : NSObject
 

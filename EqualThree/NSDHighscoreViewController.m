@@ -85,10 +85,12 @@
 #pragma mark - TableView delegate and data source
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSDScoreTableViewCell *tempCell = [tableView dequeueReusableCellWithIdentifier:@"NSDScoreTableViewCell"] ;
+    
+    NSDScoreTableViewCell *tempCell = [tableView dequeueReusableCellWithIdentifier:@"NSDScoreTableViewCell"];
     if(!tempCell){
+        
         [tableView registerNib:[UINib nibWithNibName:@"NSDScoreTableViewCell" bundle:nil] forCellReuseIdentifier:@"NSDScoreTableViewCell"];
-        tempCell = [tableView dequeueReusableCellWithIdentifier:@"NSDScoreTableViewCell"] ;
+        tempCell = [tableView dequeueReusableCellWithIdentifier:@"NSDScoreTableViewCell"];
     }
     
     [tempCell setScoreRecordWithScoreRecord:[_highscores objectAtIndex:indexPath.row] andNumber:indexPath.row];
@@ -97,14 +99,17 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
     return _highscores.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    
     return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
     return 60;
 }
 

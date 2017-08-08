@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 
-extern NSString *const NSDGameFieldDidEndDeletingNotification;
-extern NSString *const kNSDDeletedItemsCost;
+extern NSString * const NSDGameFieldDidEndDeletingNotification;
+extern NSString * const kNSDDeletedItemsCost;
 extern NSUInteger const NSDItemCost;
 extern NSUInteger const NSDGameFieldWidth;
 extern NSUInteger const NSDGameFieldHeight;
