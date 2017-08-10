@@ -19,7 +19,7 @@
     
     for(NSUInteger i = 0; i < arrayPatterns.count;i++){
         
-        for(NSUInteger j = 0;j < ((NSMutableArray *)arrayPatterns[i]).count; j++){
+        for(NSUInteger j = 0; j < ((NSMutableArray *)arrayPatterns[i]).count; j++){
             
             if([[[arrayPatterns objectAtIndex:i] firstObject] isKindOfClass:[NSArray class]]) {
                 
