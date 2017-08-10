@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 extern NSInteger NSDHeightAnimationTrasition;
+extern float splashEffectAnimationDuration;
 
 @interface NSDGeneralMenuViewController : UIViewController
 

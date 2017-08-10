@@ -10,33 +10,18 @@
 #import "UIColor+NSDColor.h"
 #import "NSDPlistController.h"
 #import "NSDScoreTableViewCell.h"
-
 #import "NSDScoreRecord.h"
 #import "NSDHighscoresManager.h"
-
-
-@interface NSDPopSegue : UIStoryboardSegue
-
-@end
-
-
-@implementation NSDPopSegue
-
-- (void)perform{
-    
-    [self.sourceViewController.navigationController popViewControllerAnimated:YES];
-}
-@end
-
 
 @interface NSDHighscoreViewController (){
     NSArray *_highscores;
 }
 
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIView *placeholderView;
+
+- (void)loadTableViewDataSource;
 
 @end
 
@@ -56,11 +41,19 @@
     [bar setBarTintColor:[UIColor navigationBackgroundColor]];
     [bar setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Noteworthy-Bold" size:20.0f],
                                   NSForegroundColorAttributeName : [UIColor navigationForegroundColor]}];
-    [bar setTintColor:[UIColor whiteColor]];
+    [bar setTintColor:[UIColor navigationForegroundColor]];
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.alpha=0.0f;
+    
+    [self loadTableViewDataSource];
+    
+}
+
+#pragma mark - Private
+
+- (void)loadTableViewDataSource{
     
     [[NSDHighscoresManager sharedManager] sortedElementsWithCompletion:^(NSArray *tArr) {
         _highscores = tArr;
@@ -78,9 +71,8 @@
             }];
         }
     }];
-    
-    
 }
+
 
 #pragma mark - TableView delegate and data source
 

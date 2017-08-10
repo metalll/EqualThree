@@ -123,9 +123,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="xg6-IO-Zgb"/>
                     <connections>
-                        <outlet property="btn" destination="KRG-4U-KcS" id="685-Ml-n8U"/>
                         <outlet property="equalLabelYConstraint" destination="fCw-wM-V6i" id="8sx-Y9-MWk"/>
-                        <outlet property="highscoreButton" destination="TRS-ci-E6e" id="2cb-8l-1VH"/>
                         <outlet property="resumeButton" destination="GNa-qc-v6s" id="xO2-86-NIY"/>
                         <outlet property="treeLabelYConstraint" destination="FUU-0o-YF3" id="siW-LE-YFf"/>
                         <segue destination="kL7-p2-Yap" kind="show" identifier="NewGameViewController" id="VN4-hG-Sra"/>

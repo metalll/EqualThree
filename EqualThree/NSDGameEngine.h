@@ -31,7 +31,13 @@ extern float const NSDRevertAnimationDuration;
 
 @interface NSDGameEngine : NSObject
 
-@property (strong) NSMutableArray *gameField;
+@property(readonly) NSUInteger horizontalItemsCount;
+@property(readonly) NSUInteger verticalItemsCount;
+@property(readonly) NSUInteger userScore;
+@property(readonly) NSUInteger movesCount;
+@property(readonly) NSUInteger itemTypesCount;
+
+@property (strong,readonly) NSMutableArray *gameField;
 
 - (instancetype)initWithHorizontalItemsCount:(NSUInteger)horizontalItemsCount
                           verticalItemsCount:(NSUInteger)verticalItemsCount

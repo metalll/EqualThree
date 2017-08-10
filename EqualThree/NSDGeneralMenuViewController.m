@@ -15,6 +15,7 @@
 #import "NSDButton.h"
 
 NSInteger NSDHeightAnimationTrasition = -120;
+float splashEffectAnimationDuration = 0.6f;
 
 @interface NSDGeneralMenuViewController ()
 
@@ -24,12 +25,8 @@ NSInteger NSDHeightAnimationTrasition = -120;
 
 @property (weak, nonatomic) IBOutlet UIButton *resumeButton;
 
-@property (weak, nonatomic) IBOutlet NSDButton *btn;
-
-@property (weak, nonatomic) IBOutlet NSDButton *highscoreButton;
-
 - (void)startNewGame;
-
+- (void)animateSplashEffect;
 @end
 
 
@@ -43,14 +40,9 @@ NSInteger NSDHeightAnimationTrasition = -120;
     [super viewDidLoad];
     self.navigationController.navigationBarHidden  = YES;
     
-    self.equalLabelYConstraint.constant = NSDHeightAnimationTrasition;
-    self.treeLabelYConstraint.constant = NSDHeightAnimationTrasition;
-    
-    [UIView animateWithDuration:0.6f animations:^{
-        [self.view layoutIfNeeded];
-    }];
-    
     [self.resumeButton setEnabled:NO];
+    
+    [self animateSplashEffect];
     
     [[NSDGameSharedManager sharedInstance] hasSavedGameWithCompletion:^(BOOL hasSavedGame) {
         [self.resumeButton setEnabled:hasSavedGame];
@@ -60,7 +52,7 @@ NSInteger NSDHeightAnimationTrasition = -120;
 
 - (void)viewDidAppear:(BOOL)animated{
     
-      [super viewDidAppear:animated];
+    [super viewDidAppear:animated];
     
     if([[NSDGameSharedManager sharedInstance] lastSavedGame]==nil){
         
@@ -109,6 +101,16 @@ NSInteger NSDHeightAnimationTrasition = -120;
 - (void)startNewGame{
     
     [self performSegueWithIdentifier:@"NewGameViewController" sender:self];
+}
+
+- (void)animateSplashEffect{
+    
+    self.equalLabelYConstraint.constant = NSDHeightAnimationTrasition;
+    self.treeLabelYConstraint.constant = NSDHeightAnimationTrasition;
+    
+    [UIView animateWithDuration:splashEffectAnimationDuration animations:^{
+        [self.view layoutIfNeeded];
+    }];
 }
 
 #pragma mark - Segue
