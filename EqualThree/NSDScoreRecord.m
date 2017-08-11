@@ -48,4 +48,26 @@
     return self;
 }
 
+- (BOOL)isEqual:(id)other{
+    
+    NSDScoreRecord * comparedRecord = nil;
+    
+    if([other isKindOfClass:[self class]]){
+        
+        comparedRecord = (NSDScoreRecord *)other;
+    }
+    
+    if (comparedRecord==nil) {
+        return NO;
+    }
+    
+    return [self.userName isEqual:comparedRecord.userName] && [self.userScore isEqual:comparedRecord.userScore];
+    
+}
+
+- (NSUInteger)hash{
+    
+    return [self.userName hash]*[self.userScore hash];
+}
+
 @end
