@@ -10,6 +10,10 @@
 		430F0D4C1F3C7CF90012BD8E /* NSDPopSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 430F0D4B1F3C7CF90012BD8E /* NSDPopSegue.m */; };
 		430F0D4F1F3C7E870012BD8E /* NSDGameEngine+PatternSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 430F0D4E1F3C7E870012BD8E /* NSDGameEngine+PatternSearch.m */; };
 		430F0D521F3C80980012BD8E /* NSDGameEngine+Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 430F0D511F3C80980012BD8E /* NSDGameEngine+Notifications.m */; };
+		433471551F3E2AD100971EA0 /* NSDReplayRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 433471541F3E2AD100971EA0 /* NSDReplayRecorder.m */; };
+		433471581F3E2AFA00971EA0 /* NSDReplayPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 433471571F3E2AFA00971EA0 /* NSDReplayPlayer.m */; };
+		4334715B1F3E2DD300971EA0 /* NSDQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4334715A1F3E2DD300971EA0 /* NSDQueue.m */; };
+		4334715E1F3E2F4E00971EA0 /* NSDReplayStep.m in Sources */ = {isa = PBXBuildFile; fileRef = 4334715D1F3E2F4E00971EA0 /* NSDReplayStep.m */; };
 		433789461F33BAE60014035D /* NSDGameSharedManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 433789451F33BAE60014035D /* NSDGameSharedManager.m */; };
 		4338A9951F3C83C000586A67 /* NSDGameEngine+CheckPermissibleStroke.m in Sources */ = {isa = PBXBuildFile; fileRef = 4338A9941F3C83C000586A67 /* NSDGameEngine+CheckPermissibleStroke.m */; };
 		4346AAE41F127E9000F1F639 /* NSDScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4346AAE21F127E9000F1F639 /* NSDScoreTableViewCell.m */; };
@@ -48,6 +52,15 @@
 		430F0D4E1F3C7E870012BD8E /* NSDGameEngine+PatternSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDGameEngine+PatternSearch.m"; sourceTree = "<group>"; };
 		430F0D501F3C80980012BD8E /* NSDGameEngine+Notifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDGameEngine+Notifications.h"; sourceTree = "<group>"; };
 		430F0D511F3C80980012BD8E /* NSDGameEngine+Notifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDGameEngine+Notifications.m"; sourceTree = "<group>"; };
+		433471531F3E2AD100971EA0 /* NSDReplayRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDReplayRecorder.h; sourceTree = "<group>"; };
+		433471541F3E2AD100971EA0 /* NSDReplayRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDReplayRecorder.m; sourceTree = "<group>"; };
+		433471561F3E2AFA00971EA0 /* NSDReplayPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDReplayPlayer.h; sourceTree = "<group>"; };
+		433471571F3E2AFA00971EA0 /* NSDReplayPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDReplayPlayer.m; sourceTree = "<group>"; };
+		433471591F3E2DD300971EA0 /* NSDQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDQueue.h; sourceTree = "<group>"; };
+		4334715A1F3E2DD300971EA0 /* NSDQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDQueue.m; sourceTree = "<group>"; };
+		4334715C1F3E2F4E00971EA0 /* NSDReplayStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDReplayStep.h; sourceTree = "<group>"; };
+		4334715D1F3E2F4E00971EA0 /* NSDReplayStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDReplayStep.m; sourceTree = "<group>"; };
+		4334715F1F3E326100971EA0 /* EqualThree-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EqualThree-Prefix.pch"; sourceTree = "<group>"; };
 		433789441F33BAE60014035D /* NSDGameSharedManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDGameSharedManager.h; sourceTree = "<group>"; };
 		433789451F33BAE60014035D /* NSDGameSharedManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDGameSharedManager.m; sourceTree = "<group>"; };
 		4338A9931F3C83C000586A67 /* NSDGameEngine+CheckPermissibleStroke.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDGameEngine+CheckPermissibleStroke.h"; sourceTree = "<group>"; };
@@ -114,6 +127,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		433471521F3E2AA200971EA0 /* Replay */ = {
+			isa = PBXGroup;
+			children = (
+				433471531F3E2AD100971EA0 /* NSDReplayRecorder.h */,
+				433471541F3E2AD100971EA0 /* NSDReplayRecorder.m */,
+				433471561F3E2AFA00971EA0 /* NSDReplayPlayer.h */,
+				433471571F3E2AFA00971EA0 /* NSDReplayPlayer.m */,
+			);
+			name = Replay;
+			sourceTree = "<group>";
+		};
 		433F9EAE1F2BF03A00A077E2 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +173,7 @@
 		436755191F12682100E1C06E = {
 			isa = PBXGroup;
 			children = (
+				4334715F1F3E326100971EA0 /* EqualThree-Prefix.pch */,
 				436755241F12682100E1C06E /* EqualThree */,
 				436755231F12682100E1C06E /* Products */,
 			);
@@ -210,6 +235,7 @@
 		4367553D1F12684E00E1C06E /* Game Logic */ = {
 			isa = PBXGroup;
 			children = (
+				433471521F3E2AA200971EA0 /* Replay */,
 				438830AF1F2BD5170012597B /* Game Engine */,
 				438F4A6E1F13B26600C48F7A /* NSDHighscoresManager.h */,
 				438F4A6F1F13B26600C48F7A /* NSDHighscoresManager.m */,
@@ -233,6 +259,8 @@
 				433F9EAA1F2BE1D500A077E2 /* NSDGameItemType.h */,
 				439DD2F21F338F8E00F6F0E7 /* NSDGameSharedInstance.h */,
 				439DD2F31F338F8E00F6F0E7 /* NSDGameSharedInstance.m */,
+				4334715C1F3E2F4E00971EA0 /* NSDReplayStep.h */,
+				4334715D1F3E2F4E00971EA0 /* NSDReplayStep.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -246,6 +274,8 @@
 				4367554F1F1271BE00E1C06E /* UIColor+NSDColor.m */,
 				4346AB011F1285B000F1F639 /* NSDPlistController.h */,
 				4346AB021F1285B000F1F639 /* NSDPlistController.m */,
+				433471591F3E2DD300971EA0 /* NSDQueue.h */,
+				4334715A1F3E2DD300971EA0 /* NSDQueue.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -355,6 +385,7 @@
 				43EB5B431F351DAF00718AE0 /* NSDGameOverViewController.m in Sources */,
 				430F0D521F3C80980012BD8E /* NSDGameEngine+Notifications.m in Sources */,
 				438F4A701F13B26600C48F7A /* NSDHighscoresManager.m in Sources */,
+				433471551F3E2AD100971EA0 /* NSDReplayRecorder.m in Sources */,
 				4346AAE41F127E9000F1F639 /* NSDScoreTableViewCell.m in Sources */,
 				43DDC9441F1CD2FF003E95C4 /* NSDButton.m in Sources */,
 				437D35EA1F268B880017DCC5 /* NSDIJStruct.m in Sources */,
@@ -369,9 +400,12 @@
 				43681F9A1F16ECA70050B3CB /* NSDGameViewController.m in Sources */,
 				436755501F1271BE00E1C06E /* UIColor+NSDColor.m in Sources */,
 				4346AB001F12827C00F1F639 /* NSDGameItemView.m in Sources */,
+				4334715B1F3E2DD300971EA0 /* NSDQueue.m in Sources */,
 				436755421F1268D900E1C06E /* NSDGeneralMenuViewController.m in Sources */,
 				4346AB031F1285B000F1F639 /* NSDPlistController.m in Sources */,
 				43DAB73C1F16DA7D0042537A /* NSDAlertView.m in Sources */,
+				433471581F3E2AFA00971EA0 /* NSDReplayPlayer.m in Sources */,
+				4334715E1F3E2F4E00971EA0 /* NSDReplayStep.m in Sources */,
 				4338A9951F3C83C000586A67 /* NSDGameEngine+CheckPermissibleStroke.m in Sources */,
 				436755271F12682100E1C06E /* main.m in Sources */,
 				438830B31F2BD7130012597B /* NSDSwap.m in Sources */,
@@ -496,6 +530,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 328Q23T368;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/EqualThree-Prefix.pch";
 				INFOPLIST_FILE = EqualThree/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -509,6 +544,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 328Q23T368;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/EqualThree-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				INFOPLIST_FILE = EqualThree/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

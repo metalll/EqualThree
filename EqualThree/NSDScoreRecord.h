@@ -6,16 +6,16 @@
 //  Copyright © 2017 NSD NULL. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 
 @interface NSDScoreRecord : NSObject<NSCoding>
 
 @property NSString *userName;
 @property NSNumber *userScore;
-
+@property NSUInteger replayHash;
 #pragma mark - Init
 
 - (instancetype)initWithName:(NSString *)name
                        score:(NSNumber *)score;
+
 
 @end

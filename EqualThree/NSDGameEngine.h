@@ -6,7 +6,6 @@
 //  Copyright © 2017 NSD NULL. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 
 #import "NSDSwap.h"
 #import "NSDGameSharedInstance.h"

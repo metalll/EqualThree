@@ -6,7 +6,6 @@
 //  Copyright © 2017 NSD NULL. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 
 @interface NSDAlertView : UIViewController
 
