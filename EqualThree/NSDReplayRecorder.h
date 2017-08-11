@@ -6,10 +6,13 @@
 //  Copyright © 2017 NSD NULL. All rights reserved.
 //
 
+#import "NSDReplay.h"
+
 @interface NSDReplayRecorder : NSObject
 
+- (void)configureRecorder;
+- (void)restoreRecorderWithSharedReplayPart:(NSDReplay *)replayPart;
 
 
 
-
-@end
+@end 

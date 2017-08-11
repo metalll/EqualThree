@@ -8,6 +8,12 @@
 
 #import "NSDReplayRecorder.h"
 
+@interface NSDReplayRecorder ()
+
+
+
+@end
+
 @implementation NSDReplayRecorder
 
 @end

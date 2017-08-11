@@ -14,6 +14,7 @@
 		433471581F3E2AFA00971EA0 /* NSDReplayPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 433471571F3E2AFA00971EA0 /* NSDReplayPlayer.m */; };
 		4334715B1F3E2DD300971EA0 /* NSDQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4334715A1F3E2DD300971EA0 /* NSDQueue.m */; };
 		4334715E1F3E2F4E00971EA0 /* NSDReplayStep.m in Sources */ = {isa = PBXBuildFile; fileRef = 4334715D1F3E2F4E00971EA0 /* NSDReplayStep.m */; };
+		433471621F3E3C2C00971EA0 /* NSDReplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 433471611F3E3C2C00971EA0 /* NSDReplay.m */; };
 		433789461F33BAE60014035D /* NSDGameSharedManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 433789451F33BAE60014035D /* NSDGameSharedManager.m */; };
 		4338A9951F3C83C000586A67 /* NSDGameEngine+CheckPermissibleStroke.m in Sources */ = {isa = PBXBuildFile; fileRef = 4338A9941F3C83C000586A67 /* NSDGameEngine+CheckPermissibleStroke.m */; };
 		4346AAE41F127E9000F1F639 /* NSDScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4346AAE21F127E9000F1F639 /* NSDScoreTableViewCell.m */; };
@@ -61,6 +62,8 @@
 		4334715C1F3E2F4E00971EA0 /* NSDReplayStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDReplayStep.h; sourceTree = "<group>"; };
 		4334715D1F3E2F4E00971EA0 /* NSDReplayStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDReplayStep.m; sourceTree = "<group>"; };
 		4334715F1F3E326100971EA0 /* EqualThree-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EqualThree-Prefix.pch"; sourceTree = "<group>"; };
+		433471601F3E3C2C00971EA0 /* NSDReplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDReplay.h; sourceTree = "<group>"; };
+		433471611F3E3C2C00971EA0 /* NSDReplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDReplay.m; sourceTree = "<group>"; };
 		433789441F33BAE60014035D /* NSDGameSharedManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDGameSharedManager.h; sourceTree = "<group>"; };
 		433789451F33BAE60014035D /* NSDGameSharedManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDGameSharedManager.m; sourceTree = "<group>"; };
 		4338A9931F3C83C000586A67 /* NSDGameEngine+CheckPermissibleStroke.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDGameEngine+CheckPermissibleStroke.h"; sourceTree = "<group>"; };
@@ -263,6 +266,8 @@
 				439DD2F31F338F8E00F6F0E7 /* NSDGameSharedInstance.m */,
 				4334715C1F3E2F4E00971EA0 /* NSDReplayStep.h */,
 				4334715D1F3E2F4E00971EA0 /* NSDReplayStep.m */,
+				433471601F3E3C2C00971EA0 /* NSDReplay.h */,
+				433471611F3E3C2C00971EA0 /* NSDReplay.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -387,6 +392,7 @@
 				438F4A701F13B26600C48F7A /* NSDHighscoresManager.m in Sources */,
 				433471551F3E2AD100971EA0 /* NSDReplayRecorder.m in Sources */,
 				4346AAE41F127E9000F1F639 /* NSDScoreTableViewCell.m in Sources */,
+				433471621F3E3C2C00971EA0 /* NSDReplay.m in Sources */,
 				43DDC9441F1CD2FF003E95C4 /* NSDButton.m in Sources */,
 				437D35EA1F268B880017DCC5 /* NSDIJStruct.m in Sources */,
 				433789461F33BAE60014035D /* NSDGameSharedManager.m in Sources */,

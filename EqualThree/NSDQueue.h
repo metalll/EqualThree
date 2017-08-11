@@ -7,13 +7,13 @@
 //
 
 
-@interface NSDQueue : NSObject
+@interface NSDQueue<__covariant ObjectType> : NSObject
 
-- (NSArray *)queue;
+- (NSArray<ObjectType> *)queue;
 
-- (void)enqueueWithObject:(id)object;
-- (id)lastEnqueueObject;
-- (id)dequeue;
-- (id)peek;
+- (void)enqueueWithObject:(ObjectType)object;
+- (ObjectType)lastEnqueueObject;
+- (ObjectType)dequeue;
+- (ObjectType)peek;
 
 @end

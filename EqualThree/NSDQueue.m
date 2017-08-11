@@ -8,10 +8,13 @@
 
 #import "NSDQueue.h"
 
-@implementation NSDQueue{
-    
-    NSMutableArray * _queue;
+@interface NSDQueue<__covariant ObjectType> (){
+     NSMutableArray<ObjectType> * _queue;
 }
+
+@end
+
+@implementation NSDQueue
 
 -(instancetype)init{
     
