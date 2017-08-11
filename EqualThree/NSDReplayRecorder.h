@@ -6,13 +6,18 @@
 //  Copyright © 2017 NSD NULL. All rights reserved.
 //
 
-#import "NSDReplay.h"
+
+
+extern NSString * const lastSharedReplayFileName;
+extern NSString * const sharedReplayPath;
+extern NSUInteger const tempReplayID;
 
 @interface NSDReplayRecorder : NSObject
 
-- (void)configureRecorder;
-- (void)restoreRecorderWithSharedReplayPart:(NSDReplay *)replayPart;
++ (instancetype)sharedInstance;
 
+- (void)configureRecorder;
+- (void)restoreRecorder;
 
 
 @end 

@@ -12,6 +12,7 @@ typedef NS_ENUM(NSUInteger, NSDReplayStepOperationType) {
     Transition = 0,
     Delete,
     Hint,
+    Pause
 };
 
 
