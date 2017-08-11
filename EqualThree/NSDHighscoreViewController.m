@@ -8,83 +8,105 @@
 
 #import "NSDHighscoreViewController.h"
 #import "UIColor+NSDColor.h"
-#import "NSDToastView.h"
 #import "NSDPlistController.h"
-#import "NSDRatingTableViewCell.h"
-#import "NSDCustomHeaderForTableView.h"
+#import "NSDScoreTableViewCell.h"
 #import "NSDScoreRecord.h"
 #import "NSDHighscoresManager.h"
-#define rankListName @"rankList.plist"
 
 @interface NSDHighscoreViewController (){
-    NSArray * rankList;
+    NSArray *_highscores;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIView *placeholderView;
+
+- (void)loadTableViewDataSource;
 
 @end
 
 @implementation  NSDHighscoreViewController
 
 
-#pragma mark - VC life cycle
+#pragma mark - Life Cycle
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
+    
+    [super viewDidLoad];
     
     self.navigationItem.title = @"High Score";
     self.navigationController.navigationBar.translucent = NO;
+    
     UINavigationBar *bar = [self.navigationController navigationBar];
     [bar setBarTintColor:[UIColor navigationBackgroundColor]];
-    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    [bar setTintColor:[UIColor whiteColor]];
-
+    [bar setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Noteworthy-Bold" size:20.0f],
+                                  NSForegroundColorAttributeName : [UIColor navigationForegroundColor]}];
+    [bar setTintColor:[UIColor navigationForegroundColor]];
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.alpha=0.0f;
     
-    [[NSDHighscoresManager sharedManager] allRecordsWithCompletion:^(NSArray * tArr) {
-        rankList=tArr;
-        [self.tableView reloadData];
-        [self.activityIndicator stopAnimating];
-        [UITableView animateWithDuration:.2 animations:^{
-            self.tableView.alpha=1.0f;
-        }];
-    }];
+    [self loadTableViewDataSource];
     
-    [super viewDidLoad];
 }
+
+#pragma mark - Private
+
+- (void)loadTableViewDataSource{
+    
+    [[NSDHighscoresManager sharedManager] sortedElementsWithCompletion:^(NSArray *tArr) {
+        _highscores = tArr;
+        
+        [self.activityIndicator stopAnimating];
+        
+        if(_highscores != nil && _highscores.count > 0){
+            [self.tableView reloadData];
+            [UITableView animateWithDuration:.2 animations:^{
+                self.tableView.alpha=1.0f;
+            }];
+        }else{
+            [UIView animateWithDuration:.2 animations:^{
+                self.placeholderView.alpha=1.0f;
+            }];
+        }
+    }];
+}
+
 
 #pragma mark - TableView delegate and data source
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSDRatingTableViewCell * tempCell = [tableView dequeueReusableCellWithIdentifier:@"RatingTableViewCell"] ;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSDScoreTableViewCell *tempCell = [tableView dequeueReusableCellWithIdentifier:@"NSDScoreTableViewCell"];
     if(!tempCell){
-        [tableView registerNib:[UINib nibWithNibName:@"NSDRatingTableViewCell" bundle:nil] forCellReuseIdentifier:@"RatingTableViewCell"];
-        tempCell = [tableView dequeueReusableCellWithIdentifier:@"RatingTableViewCell"] ;
+        
+        [tableView registerNib:[UINib nibWithNibName:@"NSDScoreTableViewCell" bundle:nil] forCellReuseIdentifier:@"NSDScoreTableViewCell"];
+        tempCell = [tableView dequeueReusableCellWithIdentifier:@"NSDScoreTableViewCell"];
     }
     
-    [tempCell setRatingRecordWithRecord:[rankList objectAtIndex:indexPath.row] andNumber:indexPath.row];
+    [tempCell setScoreRecordWithScoreRecord:[_highscores objectAtIndex:indexPath.row] andNumber:indexPath.row];
     
     return tempCell;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return rankList.count;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return _highscores.count;
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    
     return 1;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 44;
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
+    return 60;
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     return [[[NSBundle mainBundle] loadNibNamed:@"NSDCustomViewForHeader" owner:self options:nil]firstObject];
-    
-    
 }
 
 @end

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NSDHighscoreViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>
+@interface NSDHighscoreViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end

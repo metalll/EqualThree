@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NSDGameItemView : UIView
+@interface NSDGameItemView : UIImageView
 
 @property (nonatomic) NSUInteger type;
 
-
+- (void)animateDestroyWithDuration:(float)duration
+                        completion:(void (^)(void))completion;
 
 @end

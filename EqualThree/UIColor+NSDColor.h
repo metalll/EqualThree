@@ -10,28 +10,22 @@
 
 @interface UIColor (NSDColor)
 
++ (instancetype)alertBackroundColor;
 
-#pragma mark NSDToastColors
++ (instancetype)navigationBackgroundColor;
 
-+(instancetype) toastAcceptColor;
-+(instancetype) toastErrorColor;
-+(instancetype) toastSimpleColor;
++ (instancetype)navigationForegroundColor;
 
-#pragma mark NSDNavColors
++ (instancetype)buttonBackgroundColor;
 
-+(instancetype) navigationBackgroundColor;
++ (instancetype)buttonTitleFontColor;
 
++ (instancetype)goldColor;
 
-+(instancetype) buttonBackgroundColor;
++ (instancetype)silverColor;
 
-+(instancetype) buttonTitleFontColor;
++ (instancetype)bronzeColor;
 
-
-
-+(instancetype) goldColor;
-
-+(instancetype) silverColor;
-
-+(instancetype) bronzeColor;
++ (instancetype)tableViewCellDefaultBackroundColor;
 
 @end

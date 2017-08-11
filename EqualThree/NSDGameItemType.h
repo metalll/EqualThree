@@ -10,18 +10,15 @@
 #define NSDGameItemType_h
 
 
-static NSUInteger const count = 6;
-
+static NSUInteger const NSDGameItemTypesCount = 6;
 
 typedef NS_ENUM(NSUInteger, NSDGameItemType) {
-    Croissant,
-    Cupcake,
+    Cupcake = 1,
     Danish,
     Donut,
     Macaroon,
-    SugarCookie
+    SugarCookie,
+    Croissant
 };
-
-
 
 #endif /* NSDGameItemType_h */

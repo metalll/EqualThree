@@ -8,12 +8,10 @@
 
 #import "NSDSwap.h"
 
-
-
-
 @implementation NSDSwap
 
--(instancetype)initSwapWithFrom:(NSDIJStruct *)from to:(NSDIJStruct *)to{
+-(instancetype)initSwapWithFrom:(NSDIJStruct *)from
+                             to:(NSDIJStruct *)to{
     
     self = [super init];
     
@@ -37,7 +35,7 @@
 
 -(NSString *)description{
     
-    NSString * description = [NSString stringWithFormat:@"from : %@ to: %@ ",self.from,self.to];
+    NSString *description = [NSString stringWithFormat:@"from : %@ to: %@ ",self.from,self.to];
     
     return description;
 }

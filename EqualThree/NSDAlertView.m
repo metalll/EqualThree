@@ -7,6 +7,7 @@
 //
 
 #import "NSDAlertView.h"
+#import "UIColor+NSDColor.h"
 
 @interface NSDAlertView ()
 
@@ -24,40 +25,40 @@
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 @property (weak, nonatomic) IBOutlet UIView *alertView;
 
-
 @end
 
 @implementation NSDAlertView
 
-
-
-
 #pragma mark - Convinience Methods
 
-+ (void)showAlertWithMessageText:(NSString*)messageText
-                 andFirstButtonText:(NSString*)firstButtonText
-                andSecondButtonText:(NSString*)secondButtonText
-                andFirstButtonBlock:(NSDAlertButtonBlock)firstButtonBlock
-               andSecondButtonBlock:(NSDAlertButtonBlock)secondButtonBlock
-                andParentViewController:(UIViewController*) parentVC;
-{
++ (void)showAlertWithMessageText:(NSString *)messageText
+              andFirstButtonText:(NSString *)firstButtonText
+             andSecondButtonText:(NSString *)secondButtonText
+             andFirstButtonBlock:(NSDAlertButtonBlock)firstButtonBlock
+            andSecondButtonBlock:(NSDAlertButtonBlock)secondButtonBlock
+         andParentViewController:(UIViewController *) parentVC{
     
     NSDAlertView *alert = [[NSDAlertView alloc] initWithMessageText:messageText
-                                          andFirstButtonText:firstButtonText
-                                         andSecondButtonText:secondButtonText
-                                         andFirstButtonBlock:firstButtonBlock
-                                        andSecondButtonBlock:secondButtonBlock];
+                                                 andFirstButtonText:firstButtonText
+                                                andSecondButtonText:secondButtonText
+                                                andFirstButtonBlock:firstButtonBlock
+                                               andSecondButtonBlock:secondButtonBlock];
+    
+    [alert.view setBackgroundColor:[UIColor alertBackroundColor]];
+    
     [alert showWithParentViewController:parentVC];
 }
 
 #pragma mark - Constructors
 
-- (instancetype)initWithMessageText:(NSString*)messageText
-                    andFirstButtonText:(NSString*)firstButtonText
-                   andSecondButtonText:(NSString*)secondButtonText
-                   andFirstButtonBlock:(NSDAlertButtonBlock)firstButtonBlock
-                  andSecondButtonBlock:(NSDAlertButtonBlock)secondButtonBlock {
+- (instancetype)initWithMessageText:(NSString *)messageText
+                 andFirstButtonText:(NSString *)firstButtonText
+                andSecondButtonText:(NSString *)secondButtonText
+                andFirstButtonBlock:(NSDAlertButtonBlock)firstButtonBlock
+               andSecondButtonBlock:(NSDAlertButtonBlock)secondButtonBlock {
+    
     self = [super init];
+    
     if (self) {
         self.messageText = messageText;
         self.firstButtonText = firstButtonText;
@@ -65,17 +66,18 @@
         self.firstButtonBlock = firstButtonBlock;
         self.secondButtonBlock = secondButtonBlock;
     }
+    
     return self;
 }
 
-#pragma mark - Lifecicle
+#pragma mark - Life Cycle
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
+    
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor clearColor];
-    self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    //self.modalPresentationStyle = UIModalPresentationFormSheet;
+    self.alertView.layer.cornerRadius = 20.0f;
+    self.alertView.layer.masksToBounds = YES;
     
     self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
@@ -83,36 +85,35 @@
     [self.firstButton setTitle:self.firstButtonText forState:UIControlStateNormal];
     [self.secondButton setTitle:self.secondButtonText forState:UIControlStateNormal];
     
-    UITapGestureRecognizer *singleFingerTap =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(handleSingleTap:)];
+    UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                      action:@selector(handleSingleTap:)];
     [_mainView addGestureRecognizer:singleFingerTap];
 }
 
 #pragma mark - Public Methods
 
 - (void)showWithParentViewController:(UIViewController *)parentVC {
-    [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     
+    [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
-    
-    
-    //[self setModalPresentationStyle:UIModalPresentationCustom];
     [parentVC presentViewController:self animated:YES completion:nil];
 }
 
 #pragma mark - Private Methods
 
-- (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
-{
+- (void)handleSingleTap:(UITapGestureRecognizer *)recognizer{
+    
     CGPoint location = [recognizer locationInView:[recognizer.view superview]];
+    
     if(!CGRectContainsPoint(_alertView.frame, location)){
+        
         [self hide];
     }
 }
 
-- (void)hideWithCompletion:(void (^)(void))completion {
+- (void)hideWithCompletion:(void (^)(void))completion{
+    
     [self dismissViewControllerAnimated:YES completion:completion];
 }
 
@@ -133,7 +134,5 @@
         self.secondButtonBlock();
     }];
 }
-
-
 
 @end

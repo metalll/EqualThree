@@ -13,6 +13,6 @@
 @property NSInteger i;
 @property NSInteger j;
 
-- (instancetype)initWithI:(NSUInteger) i andJ: (NSUInteger) j;
+- (instancetype)initWithI:(NSUInteger)i andJ:(NSUInteger)j;
 
 @end

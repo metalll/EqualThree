@@ -12,20 +12,20 @@
 
 typedef void(^NSDAlertButtonBlock)(void);
 
-+ (void)showAlertWithMessageText:(NSString*)messageText
-              andFirstButtonText:(NSString*)firstButtonText
-             andSecondButtonText:(NSString*)secondButtonText
++ (void)showAlertWithMessageText:(NSString *)messageText
+              andFirstButtonText:(NSString *)firstButtonText
+             andSecondButtonText:(NSString *)secondButtonText
              andFirstButtonBlock:(NSDAlertButtonBlock)firstButtonBlock
             andSecondButtonBlock:(NSDAlertButtonBlock)secondButtonBlock
-         andParentViewController:(UIViewController*) parentVC;
-;
+         andParentViewController:(UIViewController *)parentVC;
 
-- (instancetype)initWithMessageText:(NSString*)messageText
-                 andFirstButtonText:(NSString*)firstButtonText
-                andSecondButtonText:(NSString*)secondButtonText
+
+- (instancetype)initWithMessageText:(NSString *)messageText
+                 andFirstButtonText:(NSString *)firstButtonText
+                andSecondButtonText:(NSString *)secondButtonText
                 andFirstButtonBlock:(NSDAlertButtonBlock)firstButtonBlock
                andSecondButtonBlock:(NSDAlertButtonBlock)secondButtonBlock;
 
-- (void)showWithParentViewController:(UIViewController*) parentVC;
+- (void)showWithParentViewController:(UIViewController *)parentVC;
 
 @end

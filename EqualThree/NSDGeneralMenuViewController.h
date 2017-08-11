@@ -8,13 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-
-
-extern NSString * const kIsHasSavedGame;
-extern NSString * const kIsFirstLaunch;
+extern NSInteger NSDHeightAnimationTrasition;
+extern float splashEffectAnimationDuration;
 
 @interface NSDGeneralMenuViewController : UIViewController
 
-- (IBAction)didTapNewGameButtonWithSender:(id)sender ;
+- (IBAction)didTapNewGameButtonWithSender:(id)sender;
 
 @end
