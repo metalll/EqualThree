@@ -6,9 +6,6 @@
 //  Copyright © 2017 NSD NULL. All rights reserved.
 //
 
-
-
-
 extern NSString * const kField;
 extern NSString * const kMoves;
 extern NSString * const kScore;

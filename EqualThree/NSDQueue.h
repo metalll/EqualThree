@@ -12,7 +12,7 @@
 - (NSArray *)queue;
 
 - (void)enqueueWithObject:(id)object;
-- (void)lastEnqueueObject;
+- (id)lastEnqueueObject;
 - (id)dequeue;
 - (id)peek;
 
