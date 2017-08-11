@@ -233,8 +233,6 @@
 				433F9EAA1F2BE1D500A077E2 /* NSDGameItemType.h */,
 				439DD2F21F338F8E00F6F0E7 /* NSDGameSharedInstance.h */,
 				439DD2F31F338F8E00F6F0E7 /* NSDGameSharedInstance.m */,
-				430F0D4A1F3C7CF90012BD8E /* NSDPopSegue.h */,
-				430F0D4B1F3C7CF90012BD8E /* NSDPopSegue.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -242,6 +240,8 @@
 		4367553F1F12686600E1C06E /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				430F0D4A1F3C7CF90012BD8E /* NSDPopSegue.h */,
+				430F0D4B1F3C7CF90012BD8E /* NSDPopSegue.m */,
 				4367554E1F1271BE00E1C06E /* UIColor+NSDColor.h */,
 				4367554F1F1271BE00E1C06E /* UIColor+NSDColor.m */,
 				4346AB011F1285B000F1F639 /* NSDPlistController.h */,

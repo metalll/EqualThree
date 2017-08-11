@@ -9,6 +9,9 @@
 NSString * const NSDGameFieldDidEndDeletingNotification = @"NSDGameFieldDidFieldEndDeleting";
 NSString * const kNSDDeletedItemsCost = @"kNSDCostDeletedItems";
 
+NSString * const NSDUserHintBrodcastNotification = @"NSDUserHintBrodcastNotification";
+NSString * const NSDUserHintItems = @"NSDUserHintItems";
+
 NSUInteger const NSDItemCost = 10;
 NSUInteger const NSDGameFieldWidth = 7;
 NSUInteger const NSDGameFieldHeight = 7;
@@ -25,6 +28,8 @@ float const NSDDeleteAnimationDuration = 0.16f;
 @property BOOL isUserHelpNeeded;
 @property BOOL isUserRecivedHint;
 
+@property BOOL isUserRecivedHintBrodcasted;
+
 @property NSUInteger horizontalItemsCount;
 @property NSUInteger verticalItemsCount;
 @property NSUInteger itemTypesCount;
@@ -36,6 +41,8 @@ float const NSDDeleteAnimationDuration = 0.16f;
 
 - (void)configureGame;
 - (void)restoreLastSavedGame;
+- (void)playReplay;
+
 - (NSDGameItemView *)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type;
 - (CGPoint)xyCoordinatesFromIJStruct:(NSDIJStruct *) iJStruct;
 - (NSDGameItemView*)gameItemViewAtIJStruct:(NSDIJStruct *)iJStruct type:(NSUInteger)type;
@@ -44,8 +51,17 @@ float const NSDDeleteAnimationDuration = 0.16f;
 - (void)removeUserHint;
 - (void)initGestureRecognizerWithView:(UIView *)view;
 - (void)didRecognizePan:(UIPanGestureRecognizer *)recognizer;
+
 - (void)subscribeToNotifications;
 - (void)unsubscribeFromNotifications;
+
+- (void)notifyAboutGameFieldDidEndDeletingWithScoreCount:(NSUInteger)scoreCount;
+- (void)notifyAboutUserDidReciveHint;
+
+- (void)processItemsDidMoveNotification:(NSNotification *)notification;
+- (void)processGotoAwaitStateNotification:(NSNotification *)notification;
+- (void)processDidFindPermissibleStroke:(NSNotification *)notification;
+- (void)processItemsDidDeleteNotification:(NSNotification *)notification;
 
 @end
 
@@ -60,6 +76,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
     self.isUserHelpNeeded = NO;
     self.hint = nil;
     self.isUserRecivedHint = NO;
+    self.isUserRecivedHintBrodcasted = NO;
     
     [self.gameItemsView setBackgroundColor:[UIColor clearColor]];
     
@@ -171,6 +188,12 @@ float const NSDDeleteAnimationDuration = 0.16f;
     [self.gameItemsView addSubview:itemView];
     
     return itemView;
+}
+
+- (void)playReplay{
+
+    
+
 }
 
 #pragma mark - Coordinate translation
@@ -373,6 +396,11 @@ float const NSDDeleteAnimationDuration = 0.16f;
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
+- (void)notifyAboutUserDidReciveHint{
+
+    self.isUserRecivedHintBrodcasted = YES;
+    
+}
 
 - (void)processItemsDidMoveNotification:(NSNotification *)notification{
     
@@ -478,7 +506,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
         dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            
+            self.isUserRecivedHintBrodcasted = NO;
             [self notifyAboutGameFieldDidEndDeletingWithScoreCount:(NSDItemCost * itemsToDelete.count)];
         });
     });
