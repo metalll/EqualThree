@@ -9,7 +9,6 @@
 NSString * const NSDGameFieldDidEndDeletingNotification = @"NSDGameFieldDidFieldEndDeleting";
 NSString * const kNSDDeletedItemsCost = @"kNSDCostDeletedItems";
 
-NSString * const NSDUserHintBrodcastNotification = @"NSDUserHintBrodcastNotification";
 NSString * const NSDUserHintItems = @"NSDUserHintItems";
 
 NSUInteger const NSDItemCost = 10;
@@ -27,8 +26,6 @@ float const NSDDeleteAnimationDuration = 0.16f;
 @property NSArray *hint;
 @property BOOL isUserHelpNeeded;
 @property BOOL isUserRecivedHint;
-
-@property BOOL isUserRecivedHintBrodcasted;
 
 @property NSUInteger horizontalItemsCount;
 @property NSUInteger verticalItemsCount;
@@ -56,7 +53,6 @@ float const NSDDeleteAnimationDuration = 0.16f;
 - (void)unsubscribeFromNotifications;
 
 - (void)notifyAboutGameFieldDidEndDeletingWithScoreCount:(NSUInteger)scoreCount;
-- (void)notifyAboutUserDidReciveHint;
 
 - (void)processItemsDidMoveNotification:(NSNotification *)notification;
 - (void)processGotoAwaitStateNotification:(NSNotification *)notification;
@@ -76,7 +72,6 @@ float const NSDDeleteAnimationDuration = 0.16f;
     self.isUserHelpNeeded = NO;
     self.hint = nil;
     self.isUserRecivedHint = NO;
-    self.isUserRecivedHintBrodcasted = NO;
     
     [self.gameItemsView setBackgroundColor:[UIColor clearColor]];
     
@@ -396,12 +391,6 @@ float const NSDDeleteAnimationDuration = 0.16f;
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
-- (void)notifyAboutUserDidReciveHint{
-
-    self.isUserRecivedHintBrodcasted = YES;
-    
-}
-
 - (void)processItemsDidMoveNotification:(NSNotification *)notification{
     
     self.animated = YES;
@@ -506,7 +495,6 @@ float const NSDDeleteAnimationDuration = 0.16f;
         dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.isUserRecivedHintBrodcasted = NO;
             [self notifyAboutGameFieldDidEndDeletingWithScoreCount:(NSDItemCost * itemsToDelete.count)];
         });
     });
