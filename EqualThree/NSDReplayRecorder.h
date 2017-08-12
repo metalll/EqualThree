@@ -19,5 +19,8 @@ extern NSUInteger const tempReplayID;
 - (void)configureRecorder;
 - (void)restoreRecorder;
 
+- (void)stopRecording;
 
-@end 
+- (void)saveReplayWithID:(NSUInteger)ID;
+
+@end
