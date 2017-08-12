@@ -6,8 +6,9 @@
 //  Copyright © 2017 NSD NULL. All rights reserved.
 //
 
+extern NSString * const kNSDQueue;
 
-@interface NSDQueue<__covariant ObjectType> : NSObject
+@interface NSDQueue<__covariant ObjectType> : NSObject<NSCoding>
 
 - (NSArray<ObjectType> *)queue;
 

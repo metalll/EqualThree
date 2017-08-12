@@ -8,6 +8,10 @@
 
 #import "NSDScoreRecord.h"
 
+NSString * const kUserName = @"kUserName";
+NSString * const kUserScore = @"kUserScore";
+NSString * const kUserReplayID = @"kUserReplayID";
+
 @implementation NSDScoreRecord
 
 #pragma mark - Init
@@ -30,8 +34,9 @@
 #pragma mark - Coding
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
-    [encoder encodeObject:self.userScore forKey:@"userScore"];
-    [encoder encodeObject:self.userName forKey:@"userName"];
+    [encoder encodeObject:self.userScore forKey:kUserScore];
+    [encoder encodeObject:self.userName forKey:kUserName];
+    [encoder encodeObject:@(self.replayID) forKey:kUserReplayID];
     
 }
 
@@ -41,8 +46,9 @@
     
     if(self){
         
-        self.userScore =[decoder decodeObjectForKey:@"userScore"];
-        self.userName = [decoder decodeObjectForKey:@"userName"];
+        self.userScore = [decoder decodeObjectForKey:kUserScore];
+        self.userName = [decoder decodeObjectForKey:kUserName];
+        self.replayID = [[decoder decodeObjectForKey:kUserReplayID] unsignedIntegerValue];
     }
     
     return self;

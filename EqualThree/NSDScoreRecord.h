@@ -7,11 +7,15 @@
 //
 
 
+extern NSString * const kUserName;
+extern NSString * const kUserScore;
+extern NSString * const kUserReplayID;
+
 @interface NSDScoreRecord : NSObject<NSCoding>
 
 @property NSString *userName;
 @property NSNumber *userScore;
-@property NSUInteger replayHash;
+@property NSUInteger replayID;
 #pragma mark - Init
 
 - (instancetype)initWithName:(NSString *)name

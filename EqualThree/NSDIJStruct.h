@@ -8,7 +8,10 @@
 
 
 
-@interface NSDIJStruct : NSObject
+extern NSString * const kNSDI;
+extern NSString * const kNSDJ;
+
+@interface NSDIJStruct : NSObject<NSCoding>
 
 @property NSInteger i;
 @property NSInteger j;

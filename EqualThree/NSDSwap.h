@@ -8,8 +8,10 @@
 
 #import "NSDIJStruct.h"
 
+extern NSString * const kNSDFrom;
+extern NSString * const kNSDTo;
 
-@interface NSDSwap : NSObject
+@interface NSDSwap : NSObject<NSCoding>
 
 @property NSDIJStruct *from;
 @property NSDIJStruct *to;

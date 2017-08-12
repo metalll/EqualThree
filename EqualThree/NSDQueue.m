@@ -8,15 +8,18 @@
 
 #import "NSDQueue.h"
 
+NSString * const kNSDQueue = @"kNSDQueue";
+
 @interface NSDQueue<__covariant ObjectType> (){
-     NSMutableArray<ObjectType> * _queue;
+    
+    NSMutableArray<ObjectType> *_queue;
 }
 
 @end
 
 @implementation NSDQueue
 
--(instancetype)init{
+- (instancetype)init{
     
     self = [super init];
     
@@ -27,12 +30,12 @@
     return self;
 }
 
--(NSArray *)queue{
+- (NSArray *)queue{
     
     return _queue;
 }
 
--(id)peek{
+- (id)peek{
     
     return [_queue firstObject];
 }
@@ -42,18 +45,38 @@
     return [_queue lastObject];
 }
 
--(void)enqueueWithObject:(id)object{
+- (void)enqueueWithObject:(id)object{
     
     [_queue addObject:object];
 }
 
--(id)dequeue{
+- (id)dequeue{
     
     id dequeueObject = [_queue firstObject];
     
     [_queue removeObjectAtIndex:0];
     
     return dequeueObject;
+}
+
+#pragma mark Coding
+
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    
+    [aCoder encodeObject:_queue forKey:kNSDQueue];
+    
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder{
+    
+    self = [super init];
+    
+    if(self){
+        
+        _queue = [aDecoder decodeObjectForKey:kNSDQueue];
+    }
+    
+    return self;
 }
 
 @end

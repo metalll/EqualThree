@@ -10,7 +10,10 @@
 #import "NSDReplayStep.h"
 #import "NSDQueue.h"
 
-@interface NSDReplay : NSObject
+extern NSString * kNSDReplayStepsQueue;
+extern NSString * kNSDReplayID;
+
+@interface NSDReplay : NSObject<NSCoding>
 
 @property NSUInteger replayID;
 

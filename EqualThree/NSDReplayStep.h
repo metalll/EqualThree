@@ -15,8 +15,10 @@ typedef NS_ENUM(NSUInteger, NSDReplayStepOperationType) {
     Pause
 };
 
+extern NSString * const kNSDReplayStepOperationType;
+extern NSString * const kNSDOperatedItems;
 
-@interface NSDReplayStep : NSObject
+@interface NSDReplayStep : NSObject<NSCoding>
 
 @property NSDReplayStepOperationType operationType;
 @property NSArray * operatedItems;

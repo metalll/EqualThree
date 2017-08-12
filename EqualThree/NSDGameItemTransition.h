@@ -10,6 +10,11 @@
 #import "NSDIJStruct.h"
 #import "NSDGameItemType.h"
 #import "NSDSwap.h"
+
+
+extern NSString * const kNSDType;
+extern NSString * const kNSDAnimationDuration;
+
 extern float const defaultAnimationDuration;
 
 @interface NSDGameItemTransition : NSDSwap
