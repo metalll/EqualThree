@@ -84,11 +84,19 @@
         [tableView registerNib:[UINib nibWithNibName:@"NSDScoreTableViewCell" bundle:nil] forCellReuseIdentifier:@"NSDScoreTableViewCell"];
         tempCell = [tableView dequeueReusableCellWithIdentifier:@"NSDScoreTableViewCell"];
     }
+
+    
     
     [tempCell setScoreRecordWithScoreRecord:[_highscores objectAtIndex:indexPath.row] andNumber:indexPath.row];
     
     return tempCell;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    [self performSegueWithIdentifier:@"ShowReplay" sender:self];
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     

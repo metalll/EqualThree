@@ -16,19 +16,19 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WsQ-3W-LAK">
-                    <rect key="frame" x="202.5" y="0.0" width="142.5" height="667"/>
+                    <rect key="frame" x="211.5" y="0.0" width="153.5" height="667"/>
                     <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="24"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="highlightedColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="№" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c9r-SZ-Sjm">
-                    <rect key="frame" x="0.0" y="0.0" width="32.5" height="667"/>
+                    <rect key="frame" x="0.0" y="0.0" width="53.5" height="667"/>
                     <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="24"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e7g-dx-85B">
-                    <rect key="frame" x="52.5" y="0.0" width="150" height="667"/>
+                    <rect key="frame" x="61.5" y="0.0" width="150" height="667"/>
                     <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="24"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
@@ -41,11 +41,11 @@
                 <constraint firstItem="c9r-SZ-Sjm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="CZg-aN-N8z"/>
                 <constraint firstItem="c9r-SZ-Sjm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="DDm-hJ-Kj6"/>
                 <constraint firstAttribute="bottom" secondItem="e7g-dx-85B" secondAttribute="bottom" id="GcY-PX-Yim"/>
-                <constraint firstItem="WsQ-3W-LAK" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.38" id="PFm-XN-Cp2"/>
+                <constraint firstItem="WsQ-3W-LAK" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.41" id="PFm-XN-Cp2"/>
                 <constraint firstItem="e7g-dx-85B" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.4" id="Z5T-bD-OMd"/>
                 <constraint firstItem="e7g-dx-85B" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="cPf-7Y-0SG"/>
-                <constraint firstItem="e7g-dx-85B" firstAttribute="leading" secondItem="c9r-SZ-Sjm" secondAttribute="trailing" constant="20" id="f3S-Q6-vqa"/>
-                <constraint firstAttribute="trailing" secondItem="WsQ-3W-LAK" secondAttribute="trailing" constant="30" id="nTf-ub-r8o"/>
+                <constraint firstItem="e7g-dx-85B" firstAttribute="leading" secondItem="c9r-SZ-Sjm" secondAttribute="trailing" constant="8" id="f3S-Q6-vqa"/>
+                <constraint firstAttribute="trailing" secondItem="WsQ-3W-LAK" secondAttribute="trailing" constant="10" id="nTf-ub-r8o"/>
                 <constraint firstAttribute="bottom" secondItem="c9r-SZ-Sjm" secondAttribute="bottom" id="oL2-zd-87g"/>
                 <constraint firstAttribute="bottom" secondItem="WsQ-3W-LAK" secondAttribute="bottom" id="qxi-PG-ahQ"/>
             </constraints>

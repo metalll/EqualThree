@@ -17,6 +17,7 @@
 		433471621F3E3C2C00971EA0 /* NSDReplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 433471611F3E3C2C00971EA0 /* NSDReplay.m */; };
 		433789461F33BAE60014035D /* NSDGameSharedManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 433789451F33BAE60014035D /* NSDGameSharedManager.m */; };
 		4338A9951F3C83C000586A67 /* NSDGameEngine+CheckPermissibleStroke.m in Sources */ = {isa = PBXBuildFile; fileRef = 4338A9941F3C83C000586A67 /* NSDGameEngine+CheckPermissibleStroke.m */; };
+		433D0D171F3FDCB4007FDF29 /* NSDReplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 433D0D161F3FDCB4007FDF29 /* NSDReplayViewController.m */; };
 		4346AAE41F127E9000F1F639 /* NSDScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4346AAE21F127E9000F1F639 /* NSDScoreTableViewCell.m */; };
 		4346AAE51F127E9000F1F639 /* NSDScoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4346AAE31F127E9000F1F639 /* NSDScoreTableViewCell.xib */; };
 		4346AB001F12827C00F1F639 /* NSDGameItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4346AAFF1F12827C00F1F639 /* NSDGameItemView.m */; };
@@ -68,6 +69,8 @@
 		433789451F33BAE60014035D /* NSDGameSharedManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDGameSharedManager.m; sourceTree = "<group>"; };
 		4338A9931F3C83C000586A67 /* NSDGameEngine+CheckPermissibleStroke.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDGameEngine+CheckPermissibleStroke.h"; sourceTree = "<group>"; };
 		4338A9941F3C83C000586A67 /* NSDGameEngine+CheckPermissibleStroke.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDGameEngine+CheckPermissibleStroke.m"; sourceTree = "<group>"; };
+		433D0D151F3FDCB4007FDF29 /* NSDReplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDReplayViewController.h; sourceTree = "<group>"; };
+		433D0D161F3FDCB4007FDF29 /* NSDReplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDReplayViewController.m; sourceTree = "<group>"; };
 		433F9EAA1F2BE1D500A077E2 /* NSDGameItemType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSDGameItemType.h; sourceTree = "<group>"; };
 		4346AAE11F127E9000F1F639 /* NSDScoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDScoreTableViewCell.h; sourceTree = "<group>"; };
 		4346AAE21F127E9000F1F639 /* NSDScoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDScoreTableViewCell.m; sourceTree = "<group>"; };
@@ -233,6 +236,8 @@
 				43EB5B401F351DAF00718AE0 /* NSDGameOverViewController.h */,
 				43EB5B411F351DAF00718AE0 /* NSDGameOverViewController.m */,
 				43EB5B421F351DAF00718AE0 /* NSDGameOverViewController.xib */,
+				433D0D151F3FDCB4007FDF29 /* NSDReplayViewController.h */,
+				433D0D161F3FDCB4007FDF29 /* NSDReplayViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -255,12 +260,12 @@
 			children = (
 				438F4A711F13B47700C48F7A /* NSDScoreRecord.h */,
 				438F4A721F13B47700C48F7A /* NSDScoreRecord.m */,
-				43EBEB9D1F20E7DA00EA958B /* NSDGameItemTransition.h */,
 				43EBEB9E1F20E7DA00EA958B /* NSDGameItemTransition.m */,
 				437D35E81F268B880017DCC5 /* NSDIJStruct.h */,
 				437D35E91F268B880017DCC5 /* NSDIJStruct.m */,
 				438830B11F2BD7130012597B /* NSDSwap.h */,
 				438830B21F2BD7130012597B /* NSDSwap.m */,
+				43EBEB9D1F20E7DA00EA958B /* NSDGameItemTransition.h */,
 				433F9EAA1F2BE1D500A077E2 /* NSDGameItemType.h */,
 				439DD2F21F338F8E00F6F0E7 /* NSDGameSharedInstance.h */,
 				439DD2F31F338F8E00F6F0E7 /* NSDGameSharedInstance.m */,
@@ -392,6 +397,7 @@
 				438F4A701F13B26600C48F7A /* NSDHighscoresManager.m in Sources */,
 				433471551F3E2AD100971EA0 /* NSDReplayRecorder.m in Sources */,
 				4346AAE41F127E9000F1F639 /* NSDScoreTableViewCell.m in Sources */,
+				433D0D171F3FDCB4007FDF29 /* NSDReplayViewController.m in Sources */,
 				433471621F3E3C2C00971EA0 /* NSDReplay.m in Sources */,
 				43DDC9441F1CD2FF003E95C4 /* NSDButton.m in Sources */,
 				437D35EA1F268B880017DCC5 /* NSDIJStruct.m in Sources */,

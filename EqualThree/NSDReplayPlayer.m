@@ -10,4 +10,8 @@
 
 @implementation NSDReplayPlayer
 
+-(void)playReplayWithID:(NSUInteger)ID{
+
+}
+
 @end

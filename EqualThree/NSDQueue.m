@@ -64,7 +64,6 @@ NSString * const kNSDQueue = @"kNSDQueue";
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     
     [aCoder encodeObject:_queue forKey:kNSDQueue];
-    
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder{

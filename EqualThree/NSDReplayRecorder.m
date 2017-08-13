@@ -12,8 +12,8 @@
 #import "NSDGameEngine.h"
 #import "NSDGameViewController.h"
 
-NSString * const lastSharedReplayFileName = @"SharedReplay";
-NSString * const sharedReplayPath = @"NSDEqualThreeReplays/";
+NSString * const lastSharedReplayFileName = @"TempReplay";
+NSString * const sharedReplayPath = @"Replay";
 NSUInteger const tempReplayID = 0;
 
 @interface NSDReplayRecorder (){
@@ -60,7 +60,7 @@ static NSDReplayRecorder *instance;
 - (void)configureRecorder{
     
     _operationQueue = dispatch_queue_create("com.nsd.game.replay.recorder.operation.queue", DISPATCH_QUEUE_SERIAL);
-    
+    [self subscribeToNotifications];
     _currentReplay = [NSDReplay new];
     _currentReplay.replayID = tempReplayID;
     _currentReplay.replayOperationsQueue = [[NSDQueue alloc] init];
@@ -80,6 +80,7 @@ static NSDReplayRecorder *instance;
         
         [NSDPlistController loadPlistWithName:lastSharedReplayFileName andCompletion:^(id lastSharedReplay)
          {
+             [self subscribeToNotifications];
              _currentReplay = lastSharedReplay;
              dispatch_group_leave(operationGroup);
              

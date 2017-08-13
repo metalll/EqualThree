@@ -5,6 +5,7 @@
 #import "NSDIJStruct.h"
 #import "NSDGameViewController.h"
 #import "NSDGameSharedManager.h"
+#import "NSDReplayRecorder.h"
 
 NSString * const NSDGameFieldDidEndDeletingNotification = @"NSDGameFieldDidFieldEndDeleting";
 NSString * const kNSDDeletedItemsCost = @"kNSDCostDeletedItems";
@@ -12,8 +13,8 @@ NSString * const kNSDDeletedItemsCost = @"kNSDCostDeletedItems";
 NSString * const NSDUserHintItems = @"NSDUserHintItems";
 
 NSUInteger const NSDItemCost = 10;
-NSUInteger const NSDGameFieldWidth = 7;
-NSUInteger const NSDGameFieldHeight = 7;
+NSUInteger const NSDGameFieldWidth = 4;
+NSUInteger const NSDGameFieldHeight = 4;
 
 float const NSDDeleteAnimationDuration = 0.16f;
 
@@ -119,6 +120,8 @@ float const NSDDeleteAnimationDuration = 0.16f;
     
     NSDGameSharedInstance *instance = [[NSDGameSharedManager sharedInstance] lastSavedGame];
     
+    [[NSDReplayRecorder sharedInstance] restoreRecorder];
+    
     self.horizontalItemsCount = instance.field.count;
     self.verticalItemsCount = ((NSMutableArray *)instance.field.firstObject).count;
     self.itemTypesCount = NSDGameItemTypesCount;
@@ -159,6 +162,8 @@ float const NSDDeleteAnimationDuration = 0.16f;
         }
         [self.gameField addObject:column];
     }
+    
+    [[NSDReplayRecorder sharedInstance] configureRecorder];
     
     self.gameEngine = [[NSDGameEngine alloc] initWithHorizontalItemsCount:self.horizontalItemsCount
                                                        verticalItemsCount:self.verticalItemsCount
