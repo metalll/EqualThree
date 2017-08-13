@@ -32,4 +32,15 @@ NSString * const kNSDOperatedItems = @"kNSDOperatedItems";
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone{
+   
+    NSDReplayStep * copyObj = [NSDReplayStep new];
+    
+    copyObj.operatedItems = [[self operatedItems] copyWithZone:zone];
+    copyObj.operationType = self.operationType;
+    
+    
+    return copyObj;
+}
+
 @end

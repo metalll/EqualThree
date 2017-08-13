@@ -10,6 +10,7 @@
 #import "NSDReplay.h"
 #import "NSDReplayRecorder.h"
 #import "NSDPlistController.h"
+#import "NSDGameEngine.h"
 
 @implementation NSDReplayPlayer{
     NSDReplay *_currentReplay;
@@ -37,6 +38,8 @@ static NSDReplayPlayer * instance;
         
         _currentReplay = replay;
         
+        _replayQueue = dispatch_queue_create("dcdsddfsdfa", DISPATCH_QUEUE_SERIAL);
+        
         [self startReplay];
         
     }];
@@ -48,17 +51,18 @@ static NSDReplayPlayer * instance;
         
         NSDReplayStep * _currentStep = [_currentReplay.replayOperationsQueue dequeue];
         
-        
-        
         switch (_currentStep.operationType) {
                 
             case Transition:
                 
-                
+                [self displayTransition:_currentStep.operatedItems];
                 
                 break;
                 
             case Delete:
+                
+                [self displayDelete:_currentStep.operatedItems];
+                
                 
                 break;
                 
@@ -86,36 +90,52 @@ static NSDReplayPlayer * instance;
     dispatch_resume(_replayQueue);
 }
 
-- (void)displayTransition{
+- (void)displayTransition:(NSArray *)transitionItems{
     
     dispatch_group_t operationGroup = dispatch_group_create();
     
     dispatch_async(_replayQueue, ^{
         dispatch_group_enter(operationGroup);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self notifyAboutItemsMovement:transitionItems];
+        });
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_group_leave(operationGroup);
+        });
+        
+        dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
+    });
+}
+
+- (void)displayHint:(NSArray *)hintItems{
+    
+    dispatch_group_t operationGroup = dispatch_group_create();
+    
+    dispatch_async(_replayQueue, ^{
+        dispatch_group_enter(operationGroup);
+        
         
         
         dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
     });
 }
 
-- (void)displayHint{
+- (void)displayDelete:(NSArray *)deletedItems{
     
     dispatch_group_t operationGroup = dispatch_group_create();
     
     dispatch_async(_replayQueue, ^{
         dispatch_group_enter(operationGroup);
         
-        dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
-    });
-}
-
-- (void)displayDelete{
-    
-    dispatch_group_t operationGroup = dispatch_group_create();
-    
-    dispatch_async(_replayQueue, ^{
-        dispatch_group_enter(operationGroup);
+        dispatch_async(dispatch_get_main_queue(), ^{
+           
+            [self notifyAboutItemsDeletion:deletedItems];
+        });
         
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_group_leave(operationGroup);
+        });
         
         
         
@@ -141,6 +161,23 @@ static NSDReplayPlayer * instance;
     });
 }
 
+- (void)notifyAboutItemsMovement:(NSArray *)itemTransitions{
+    
+    NSNotification *notification = [NSNotification notificationWithName:NSDGameItemsDidMoveNotification
+                                                                 object:nil
+                                                               userInfo:@{kNSDGameItemTransitions : itemTransitions}];
+    
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+}
+
+- (void)notifyAboutItemsDeletion:(NSArray *)items{
+    
+    NSNotification *notification = [NSNotification notificationWithName:NSDGameItemsDidDeleteNotification
+                                                                 object:nil
+                                                               userInfo:@{kNSDGameItems : items}];
+    
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+}
 
 
 @end

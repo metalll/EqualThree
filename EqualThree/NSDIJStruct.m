@@ -15,8 +15,8 @@ NSString * const kNSDJ = @"kNSDJ";
 
 #pragma mark - Init
 
-- (instancetype)initWithI:(NSUInteger)i
-                     andJ:(NSUInteger)j{
+- (instancetype)initWithI:(NSInteger)i
+                     andJ:(NSInteger)j{
     
     self = [super init];
     

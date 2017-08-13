@@ -16,6 +16,6 @@ extern NSString * const kNSDJ;
 @property NSInteger i;
 @property NSInteger j;
 
-- (instancetype)initWithI:(NSUInteger)i andJ:(NSUInteger)j;
+- (instancetype)initWithI:(NSInteger)i andJ:(NSInteger)j;
 
 @end

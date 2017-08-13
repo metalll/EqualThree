@@ -56,7 +56,7 @@ NSString * const kNSDQueue = @"kNSDQueue";
 
 - (id)dequeue{
     
-    id dequeueObject = [_queue firstObject];
+    id dequeueObject = [[_queue firstObject] copy];
     
     [_queue removeObjectAtIndex:0];
     

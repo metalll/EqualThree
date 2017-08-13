@@ -8,15 +8,27 @@
 
 #import "NSDReplayViewController.h"
 #import "NSDReplayPlayer.h"
+#import "NSDGameFieldViewController.h"
 
 @implementation NSDReplayViewController
 
-
 - (void)viewDidLoad{
-
+    
     [super viewDidLoad];
     
-    [[NSDReplayPlayer sharedInstance] playReplayWithID:self.replayID];
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    if([segue.identifier isEqualToString:@"ConfigureGameFieldToPlayReplay"]){
+        
+        NSDGameFieldViewController * gameFieldVC = (NSDGameFieldViewController *)segue.destinationViewController;
+        
+        gameFieldVC.isReplay = YES;
+        gameFieldVC.replayID = self.replayID;
+        
+    }
 }
 
 @end

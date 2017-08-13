@@ -6,6 +6,7 @@
 #import "NSDGameViewController.h"
 #import "NSDGameSharedManager.h"
 #import "NSDReplayRecorder.h"
+#import "NSDReplayPlayer.h"
 
 NSString * const NSDGameFieldDidEndDeletingNotification = @"NSDGameFieldDidFieldEndDeleting";
 NSString * const kNSDDeletedItemsCost = @"kNSDCostDeletedItems";
@@ -92,7 +93,10 @@ float const NSDDeleteAnimationDuration = 0.16f;
     [super viewDidAppear:animated];
     
     dispatch_async(dispatch_get_main_queue(),^{
-        if(self.isNewGame){
+        
+        
+        
+        if(self.isNewGame||self.isReplay){
             if(self.gameField.count>0){
                 
                 for(UIView * view in self.gameField){
@@ -101,9 +105,17 @@ float const NSDDeleteAnimationDuration = 0.16f;
                 }
             }
             self.gameField = nil;
-            [self configureGame];
+            
+            if(self.isNewGame){
+                
+                [self configureGame];
+            }else{
+            
+                [self playReplay];
+            }
         }
         else {
+            
             [self restoreLastSavedGame];
         }
     });
@@ -149,6 +161,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
     self.horizontalItemsCount = NSDGameFieldWidth;
     self.verticalItemsCount = NSDGameFieldHeight;
     self.itemTypesCount = NSDGameItemTypesCount;
+    [[NSDReplayRecorder sharedInstance] configureRecorder];
     
     self.itemSize = CGSizeMake(self.gameItemsView.frame.size.width / (CGFloat) self.horizontalItemsCount,
                                self.gameItemsView.frame.size.height / (CGFloat) self.verticalItemsCount);
@@ -163,7 +176,6 @@ float const NSDDeleteAnimationDuration = 0.16f;
         [self.gameField addObject:column];
     }
     
-    [[NSDReplayRecorder sharedInstance] configureRecorder];
     
     self.gameEngine = [[NSDGameEngine alloc] initWithHorizontalItemsCount:self.horizontalItemsCount
                                                        verticalItemsCount:self.verticalItemsCount
@@ -192,8 +204,28 @@ float const NSDDeleteAnimationDuration = 0.16f;
 
 - (void)playReplay{
 
+    self.gameEngine = nil;
     
-
+    self.horizontalItemsCount = NSDGameFieldWidth;
+    self.verticalItemsCount = NSDGameFieldHeight;
+    self.itemTypesCount = NSDGameItemTypesCount;
+    
+    self.itemSize = CGSizeMake(self.gameItemsView.frame.size.width / (CGFloat) self.horizontalItemsCount,
+                               self.gameItemsView.frame.size.height / (CGFloat) self.verticalItemsCount);
+    
+    self.gameField = [NSMutableArray arrayWithCapacity:self.horizontalItemsCount];
+    
+    for (NSUInteger i = 0; i < self.horizontalItemsCount; i++) {
+        NSMutableArray *column = [NSMutableArray arrayWithCapacity:self.verticalItemsCount];
+        for (NSUInteger j = 0; j < self.verticalItemsCount; j++) {
+            [column addObject:[NSNull null]];
+        }
+        [self.gameField addObject:column];
+    }
+    
+    [[NSDReplayPlayer sharedInstance] playReplayWithID:self.replayID];
+    
+    
 }
 
 #pragma mark - Coordinate translation
@@ -295,9 +327,10 @@ float const NSDDeleteAnimationDuration = 0.16f;
 }
 
 
+
 - (void)didRecognizePan:(UISwipeGestureRecognizer *)recognizer{
     
-    if(self.animated){
+    if(self.animated||self.isReplay){
         return;
     }
     

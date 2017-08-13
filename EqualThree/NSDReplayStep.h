@@ -18,7 +18,7 @@ typedef NS_ENUM(NSUInteger, NSDReplayStepOperationType) {
 extern NSString * const kNSDReplayStepOperationType;
 extern NSString * const kNSDOperatedItems;
 
-@interface NSDReplayStep : NSObject<NSCoding>
+@interface NSDReplayStep : NSObject<NSCoding,NSCopying>
 
 @property NSDReplayStepOperationType operationType;
 @property NSArray * operatedItems;

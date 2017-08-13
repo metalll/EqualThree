@@ -269,6 +269,9 @@
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QES-Da-F4v">
                                 <rect key="frame" x="0.0" y="105" width="375" height="462"/>
+                                <connections>
+                                    <segue destination="XhA-bX-skV" kind="embed" identifier="ConfigureGameFieldToPlayReplay" id="J9h-IZ-q5V"/>
+                                </connections>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -369,11 +372,11 @@
                         <viewControllerLayoutGuide type="bottom" id="ARM-gk-eBN"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="r9P-ya-ORz">
-                        <rect key="frame" x="0.0" y="0.0" width="359" height="494"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="462"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dxr-dV-gCD">
-                                <rect key="frame" x="0.0" y="67.5" width="359" height="359"/>
+                                <rect key="frame" x="0.0" y="43.5" width="375" height="375"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                             </view>
@@ -400,6 +403,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="cCh-cK-rOl"/>
+        <segue reference="J9h-IZ-q5V"/>
         <segue reference="VN4-hG-Sra"/>
     </inferredMetricsTieBreakers>
 </document>

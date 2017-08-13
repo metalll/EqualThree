@@ -60,14 +60,25 @@ static NSDReplayRecorder *instance;
 - (void)configureRecorder{
     
     _operationQueue = dispatch_queue_create("com.nsd.game.replay.recorder.operation.queue", DISPATCH_QUEUE_SERIAL);
-    [self subscribeToNotifications];
-    _currentReplay = [NSDReplay new];
-    _currentReplay.replayID = tempReplayID;
-    _currentReplay.replayOperationsQueue = [[NSDQueue alloc] init];
-    _hint = nil;
-    _isRestoredReplay = NO;
-    _isAddedHint = NO;
-    _isFirstRestoreTransition = NO;
+    dispatch_group_t operationGroup = dispatch_group_create();
+    
+    dispatch_async(_operationQueue, ^{
+        
+        dispatch_group_enter(operationGroup);
+        
+        [self subscribeToNotifications];
+        _currentReplay = [NSDReplay new];
+        _currentReplay.replayID = tempReplayID;
+        _currentReplay.replayOperationsQueue = [[NSDQueue alloc] init];
+        _hint = nil;
+        _isRestoredReplay = NO;
+        _isAddedHint = NO;
+        _isFirstRestoreTransition = NO;
+        
+        dispatch_group_leave(operationGroup);
+        dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
+        
+    });
 }
 
 - (void)restoreRecorder{
@@ -164,6 +175,7 @@ static NSDReplayRecorder *instance;
             replayStep.operatedItems = _hint;
             
             [_currentReplay.replayOperationsQueue enqueueWithObject:replayStep];
+            
         }else{
             _isAddedHint = YES;
         }
@@ -200,8 +212,8 @@ static NSDReplayRecorder *instance;
         
         if(_isFirstRestoreTransition){
             _isFirstRestoreTransition = NO;
-            return;
-        }
+           
+        }else{
         
         NSArray *itemsTransitions = notification.userInfo[kNSDGameItemTransitions];
         
@@ -211,8 +223,10 @@ static NSDReplayRecorder *instance;
         replayStep.operatedItems = itemsTransitions;
         
         [_currentReplay.replayOperationsQueue enqueueWithObject:replayStep];
+        }
         dispatch_group_leave(operationGroup);
         dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
+            
     });
 }
 

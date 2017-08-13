@@ -24,5 +24,7 @@ extern float const NSDDeleteAnimationDuration;
 @interface NSDGameFieldViewController : UIViewController
 
 @property BOOL isNewGame;
+@property BOOL isReplay;
+@property NSUInteger replayID;
 
 @end
