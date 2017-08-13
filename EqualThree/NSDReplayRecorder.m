@@ -104,11 +104,14 @@ static NSDReplayRecorder *instance;
     
     NSString * fileName = [sharedReplayPath stringByAppendingString:[@(ID) stringValue]];
     
+    _currentReplay.replayID = ID;
+    
     [NSDPlistController savePlistWithName:fileName andStoredObject:_currentReplay andCompletion:nil];
 }
 
 
 - (void)stopRecording{
+    
     [self unsubscribeFromNotifications];
 }
 

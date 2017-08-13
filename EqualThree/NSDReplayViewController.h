@@ -8,4 +8,6 @@
 
 @interface NSDReplayViewController : UIViewController
 
+@property NSUInteger replayID;
+
 @end

@@ -16,5 +16,6 @@ extern NSString * const kNSDQueue;
 - (ObjectType)lastEnqueueObject;
 - (ObjectType)dequeue;
 - (ObjectType)peek;
+- (NSUInteger)count;
 
 @end

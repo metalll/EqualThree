@@ -152,7 +152,7 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
         [[NSDHighscoresManager sharedManager] addRecordWithRecord:record];
         
         record.replayID = [record hash];
-        
+        [[NSDReplayRecorder sharedInstance] stopRecording];
         [[NSDReplayRecorder sharedInstance] saveReplayWithID:record.replayID];
         
         

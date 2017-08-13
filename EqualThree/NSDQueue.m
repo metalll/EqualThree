@@ -30,6 +30,10 @@ NSString * const kNSDQueue = @"kNSDQueue";
     return self;
 }
 
+- (NSUInteger)count{
+    return _queue.count;
+}
+
 - (NSArray *)queue{
     
     return _queue;

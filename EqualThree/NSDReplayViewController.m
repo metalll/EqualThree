@@ -7,7 +7,16 @@
 //
 
 #import "NSDReplayViewController.h"
+#import "NSDReplayPlayer.h"
 
 @implementation NSDReplayViewController
+
+
+- (void)viewDidLoad{
+
+    [super viewDidLoad];
+    
+    [[NSDReplayPlayer sharedInstance] playReplayWithID:self.replayID];
+}
 
 @end

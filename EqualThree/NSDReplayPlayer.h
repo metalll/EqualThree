@@ -8,6 +8,8 @@
 
 @interface NSDReplayPlayer : NSObject
 
++ (instancetype)sharedInstance;
+
 - (void)playReplayWithID:(NSUInteger)ID;
 
 @end

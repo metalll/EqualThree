@@ -12,9 +12,11 @@
 #import "NSDScoreTableViewCell.h"
 #import "NSDScoreRecord.h"
 #import "NSDHighscoresManager.h"
+#import "NSDReplayViewController.h"
 
 @interface NSDHighscoreViewController (){
     NSArray *_highscores;
+    NSUInteger _selectedHighscoreReplayID;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -45,7 +47,7 @@
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.alpha=0.0f;
+    self.tableView.alpha = 0.0f;
     
     [self loadTableViewDataSource];
     
@@ -63,11 +65,11 @@
         if(_highscores != nil && _highscores.count > 0){
             [self.tableView reloadData];
             [UITableView animateWithDuration:.2 animations:^{
-                self.tableView.alpha=1.0f;
+                self.tableView.alpha = 1.0f;
             }];
         }else{
             [UIView animateWithDuration:.2 animations:^{
-                self.placeholderView.alpha=1.0f;
+                self.placeholderView.alpha = 1.0f;
             }];
         }
     }];
@@ -84,7 +86,7 @@
         [tableView registerNib:[UINib nibWithNibName:@"NSDScoreTableViewCell" bundle:nil] forCellReuseIdentifier:@"NSDScoreTableViewCell"];
         tempCell = [tableView dequeueReusableCellWithIdentifier:@"NSDScoreTableViewCell"];
     }
-
+    
     
     
     [tempCell setScoreRecordWithScoreRecord:[_highscores objectAtIndex:indexPath.row] andNumber:indexPath.row];
@@ -94,6 +96,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    _selectedHighscoreReplayID = [_highscores[indexPath.row] replayID];
     [self performSegueWithIdentifier:@"ShowReplay" sender:self];
 }
 
@@ -117,4 +120,13 @@
     return [[[NSBundle mainBundle] loadNibNamed:@"NSDCustomViewForHeader" owner:self options:nil]firstObject];
 }
 
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+
+    if([segue.identifier isEqualToString:@"ShowReplay"]){
+        
+        ((NSDReplayViewController *)segue.destinationViewController).replayID = _selectedHighscoreReplayID;
+    }
+}
 @end
