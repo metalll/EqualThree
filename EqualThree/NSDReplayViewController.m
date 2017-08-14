@@ -13,6 +13,10 @@
 
 @interface NSDReplayViewController()
 - (void)didDetectEndPlayingReplay;
+
+@property BOOL isUserAgree;
+
+
 @end
 
 @implementation NSDReplayViewController
@@ -23,6 +27,21 @@
     
     [super viewDidLoad];
     [self subscribeToNotifications];
+    
+    [NSDAlertView showAlertWithMessageText:@"This is not a tested functional.\nContinue?"
+                        andFirstButtonText:@"Yes"
+                       andSecondButtonText:@"No"
+                       andFirstButtonBlock:^{
+                          
+                           self.isUserAgree = YES;
+                           [self performSegueWithIdentifier:@"ConfigureGameFieldToPlayReplay" sender:self];
+                       }
+                      andSecondButtonBlock:^{
+                          [[self navigationController] popViewControllerAnimated:YES];
+                          
+                      } andParentViewController:self];
+
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -34,6 +53,7 @@
 }
 
 -(void)dealloc{
+    
     [self unsubscribeFromNotifications];
 }
 
@@ -48,6 +68,11 @@
         gameFieldVC.isReplay = YES;
         gameFieldVC.replayID = self.replayID;
     }
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
+    
+    return self.isUserAgree;
 }
 
 - (void)subscribeToNotifications{
