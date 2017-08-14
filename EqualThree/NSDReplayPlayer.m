@@ -102,6 +102,7 @@ static NSDReplayPlayer * instance;
 - (void)stopReplay{
     
     [_replayQueue cancelAllOperations];
+    
 }
 
 #pragma mark - Private
@@ -216,7 +217,7 @@ static NSDReplayPlayer * instance;
         dispatch_async(dispatch_get_main_queue(), ^{
             
             NSNotification *notification = [NSNotification notificationWithName:NSDEndPlayReplay
-                                                                         object:nil];
+                                                                         object:self];
             
             [[NSNotificationCenter defaultCenter] postNotification:notification];
             
@@ -229,7 +230,7 @@ static NSDReplayPlayer * instance;
 - (void)notifyAboutUserDidTapHint:(NSArray *)hintItems{
     
     NSNotification *notification = [NSNotification notificationWithName:NSDDidFindPermissibleStroke
-                                                                 object:nil
+                                                                 object:self
                                                                userInfo:@{kNSDGameItems : hintItems}];
     
     [[NSNotificationCenter defaultCenter] postNotification:notification];
@@ -239,7 +240,7 @@ static NSDReplayPlayer * instance;
 - (void)notifyAboutItemsMovement:(NSArray *)itemTransitions{
     
     NSNotification *notification = [NSNotification notificationWithName:NSDGameItemsDidMoveNotification
-                                                                 object:nil
+                                                                 object:self
                                                                userInfo:@{kNSDGameItemTransitions : itemTransitions}];
     
     [[NSNotificationCenter defaultCenter] postNotification:notification];
@@ -248,7 +249,7 @@ static NSDReplayPlayer * instance;
 - (void)notifyAboutItemsDeletion:(NSArray *)items{
     
     NSNotification *notification = [NSNotification notificationWithName:NSDGameItemsDidDeleteNotification
-                                                                 object:nil
+                                                                 object:self
                                                                userInfo:@{kNSDGameItems : items}];
     
     [[NSNotificationCenter defaultCenter] postNotification:notification];
