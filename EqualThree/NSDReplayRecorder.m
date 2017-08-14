@@ -56,25 +56,10 @@ static NSDReplayRecorder *instance;
     return instance;
 }
 
-- (instancetype)init{
-    
-    self = [super init];
-    
-    if(self){
-        
-        
-    }
-    
-    return self;
-}
-
 #pragma mark - Public
 
 - (void)configureRecorder{
-    
-    
-    
-    
+  
     [self subscribeToNotifications];
     _currentReplay = [NSDReplay new];
     _currentReplay.replayID = tempReplayID;
@@ -83,20 +68,14 @@ static NSDReplayRecorder *instance;
     _isRestoredReplay = NO;
     _isAddedHint = NO;
     _isFirstRestoreTransition = NO;
-    
-    
-    
-    
 }
 
 - (void)restoreRecorder{
     
-    [NSDPlistController loadPlistWithName:lastSharedReplayFileName andCompletion:^(id lastSharedReplay)
-     {
+    [NSDPlistController loadPlistWithName:lastSharedReplayFileName andCompletion:^(id lastSharedReplay){
+        
          [self subscribeToNotifications];
          _currentReplay = lastSharedReplay;
-         
-         
      }];
 }
 

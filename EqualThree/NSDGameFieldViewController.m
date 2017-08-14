@@ -24,7 +24,7 @@ NSUInteger const NSDGameFieldHeight = 5;
 float const NSDDeleteAnimationDuration = 0.16f;
 
 @interface NSDGameFieldViewController (){
-    NSString * _UUID;
+    NSString * _replayUUID;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *gameItemsView;
@@ -48,6 +48,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
 - (void)restoreLastSavedGame;
 - (void)playReplay;
 
+- (BOOL)shouldBeApplyRecivedNotification:(NSNotification *)notification;
 - (NSDGameItemView *)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type;
 - (CGPoint)xyCoordinatesFromIJStruct:(NSDIJStruct *) iJStruct;
 - (NSDGameItemView*)gameItemViewAtIJStruct:(NSDIJStruct *)iJStruct type:(NSUInteger)type;
@@ -147,6 +148,12 @@ float const NSDDeleteAnimationDuration = 0.16f;
 
 #pragma mark - Private Methods
 
+- (BOOL)shouldBeApplyRecivedNotification:(NSNotification *)notification{
+    
+    return !(!self.isReplay&&[notification.object isKindOfClass:[NSDReplayPlayer class]])||(_isReplay&&![_replayUUID isEqual: [[NSDReplayPlayer sharedInstance] UUID]]);
+    
+}
+
 - (void)restoreLastSavedGame{
     
     NSDGameSharedInstance *instance = [[NSDGameSharedManager sharedInstance] lastSavedGame];
@@ -181,7 +188,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
     self.verticalItemsCount = NSDGameFieldHeight;
     self.itemTypesCount = NSDGameItemTypesCount;
     
-
+    
     
     self.isUserHelpNeeded = NO;
     self.isUserRecivedHint = NO;
@@ -229,9 +236,9 @@ float const NSDDeleteAnimationDuration = 0.16f;
         [self.gameField addObject:column];
     }
     
-    _UUID = [[NSUUID UUID] UUIDString];
+    _replayUUID = [[NSUUID UUID] UUIDString];
     
-    [[NSDReplayPlayer sharedInstance] playReplayWithID:self.replayID UUID:_UUID];
+    [[NSDReplayPlayer sharedInstance] playReplayWithID:self.replayID UUID:_replayUUID];
     
     
     
@@ -294,6 +301,8 @@ float const NSDDeleteAnimationDuration = 0.16f;
     
     return result;
 }
+
+
 
 
 #pragma mark - Hint
@@ -484,7 +493,8 @@ float const NSDDeleteAnimationDuration = 0.16f;
             dispatch_group_enter(animationGroup);
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                if((!self.isReplay&&[notification.object isKindOfClass:[NSDReplayPlayer class]])||(_isReplay&&![_UUID isEqual: [[NSDReplayPlayer sharedInstance] UUID]]) ){
+                if( ! [self shouldBeApplyRecivedNotification:notification]){
+                    
                     dispatch_group_leave(animationGroup);
                 }else{
                     NSDGameItemView *gameItemView = [self gameItemViewAtIJStruct:itemTransition.from type:itemTransition.type];
@@ -516,7 +526,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            if((!self.isReplay&&[notification.object isKindOfClass:[NSDReplayPlayer class]]) || (_isReplay&&![_UUID isEqual: [[NSDReplayPlayer sharedInstance] UUID]]) ){
+            if( ! [self shouldBeApplyRecivedNotification:notification]){
                 dispatch_group_leave(animationGroup);
                 
                 
@@ -547,7 +557,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
                 
                 self.hint = notification.userInfo[kNSDGameItems];
                 
-                if((!self.isReplay&&[notification.object isKindOfClass:[NSDReplayPlayer class]])||(_isReplay&&![_UUID isEqual: [[NSDReplayPlayer sharedInstance] UUID]]) ){
+                if( ! [self shouldBeApplyRecivedNotification:notification]){
                     
                 }else{
                     
@@ -555,7 +565,8 @@ float const NSDDeleteAnimationDuration = 0.16f;
                 }
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     
-                    if((!self.isReplay&&[notification.object isKindOfClass:[NSDReplayPlayer class]])||(_isReplay&&![_UUID isEqual: [[NSDReplayPlayer sharedInstance] UUID]]) ){
+                    if( ! [self shouldBeApplyRecivedNotification:notification]){
+                        
                     }else{
                         
                         [self removeUserHint];
@@ -599,8 +610,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
                 dispatch_group_enter(animationGroup);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
-                    if(( !self.isReplay && [notification.object isKindOfClass:[NSDReplayPlayer class]])
-                       ||(_isReplay&&![_UUID isEqual:[[NSDReplayPlayer sharedInstance] UUID]])){
+                    if( ! [self shouldBeApplyRecivedNotification:notification]){
                         
                         dispatch_group_leave(animationGroup);
                     }
@@ -642,7 +652,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
         dispatch_group_enter(animationGroup);
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if(!_isReplay || (_isReplay && ![_UUID isEqual: [[NSDReplayPlayer sharedInstance] UUID]])) {
+            if(!_isReplay || (_isReplay && ![_replayUUID isEqual: [[NSDReplayPlayer sharedInstance] UUID]])) {
                 
             }else{
                 [self notifyAboutGameFieldDidEndPlayingReplay];
