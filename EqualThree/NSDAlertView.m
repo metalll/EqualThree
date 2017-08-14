@@ -25,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 @property (weak, nonatomic) IBOutlet UIView *alertView;
 
+@property BOOL isDismissible;
+
 @end
 
 @implementation NSDAlertView
@@ -36,7 +38,8 @@
              andSecondButtonText:(NSString *)secondButtonText
              andFirstButtonBlock:(NSDAlertButtonBlock)firstButtonBlock
             andSecondButtonBlock:(NSDAlertButtonBlock)secondButtonBlock
-         andParentViewController:(UIViewController *) parentVC{
+         andParentViewController:(UIViewController *) parentVC
+                  andDismissible:(BOOL)dismissible{
     
     NSDAlertView *alert = [[NSDAlertView alloc] initWithMessageText:messageText
                                                  andFirstButtonText:firstButtonText
@@ -47,6 +50,21 @@
     [alert.view setBackgroundColor:[UIColor alertBackroundColor]];
     
     [alert showWithParentViewController:parentVC];
+}
+
++ (void)showAlertWithMessageText:(NSString *)messageText
+              andFirstButtonText:(NSString *)firstButtonText
+             andSecondButtonText:(NSString *)secondButtonText
+             andFirstButtonBlock:(NSDAlertButtonBlock)firstButtonBlock
+            andSecondButtonBlock:(NSDAlertButtonBlock)secondButtonBlock
+         andParentViewController:(UIViewController *) parentVC{
+    
+    [self showAlertWithMessageText:messageText
+                andFirstButtonText:firstButtonText
+               andSecondButtonText:secondButtonText
+               andFirstButtonBlock:firstButtonBlock
+              andSecondButtonBlock:secondButtonBlock
+           andParentViewController:parentVC andDismissible:YES];
 }
 
 #pragma mark - Constructors
@@ -85,9 +103,12 @@
     [self.firstButton setTitle:self.firstButtonText forState:UIControlStateNormal];
     [self.secondButton setTitle:self.secondButtonText forState:UIControlStateNormal];
     
+    if(self.isDismissible){
+    
     UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                       action:@selector(handleSingleTap:)];
-    [_mainView addGestureRecognizer:singleFingerTap];
+        [_mainView addGestureRecognizer:singleFingerTap];
+    }
 }
 
 #pragma mark - Public Methods

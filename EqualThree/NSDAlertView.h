@@ -16,6 +16,14 @@ typedef void(^NSDAlertButtonBlock)(void);
              andSecondButtonText:(NSString *)secondButtonText
              andFirstButtonBlock:(NSDAlertButtonBlock)firstButtonBlock
             andSecondButtonBlock:(NSDAlertButtonBlock)secondButtonBlock
+         andParentViewController:(UIViewController *)parentVC
+                  andDismissible:(BOOL)dismissible;
+
++ (void)showAlertWithMessageText:(NSString *)messageText
+              andFirstButtonText:(NSString *)firstButtonText
+             andSecondButtonText:(NSString *)secondButtonText
+             andFirstButtonBlock:(NSDAlertButtonBlock)firstButtonBlock
+            andSecondButtonBlock:(NSDAlertButtonBlock)secondButtonBlock
          andParentViewController:(UIViewController *)parentVC;
 
 

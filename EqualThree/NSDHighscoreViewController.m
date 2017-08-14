@@ -17,6 +17,7 @@
 @interface NSDHighscoreViewController (){
     NSArray *_highscores;
     NSUInteger _selectedHighscoreReplayID;
+    NSString * _selectedUserName;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -95,6 +96,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     _selectedHighscoreReplayID = [_highscores[indexPath.row] replayID];
+    _selectedUserName = [_highscores[indexPath.row] userName];
     [self performSegueWithIdentifier:@"ShowReplay" sender:self];
 }
 
@@ -124,7 +126,10 @@
 
     if([segue.identifier isEqualToString:@"ShowReplay"]){
         
-        ((NSDReplayViewController *)segue.destinationViewController).replayID = _selectedHighscoreReplayID;
+        NSDReplayViewController * replayVC = ((NSDReplayViewController *)segue.destinationViewController);
+        
+        replayVC.replayID = _selectedHighscoreReplayID;
+        replayVC.title = [_selectedUserName stringByAppendingString:@"'s replay"];
     }
 }
 @end

@@ -32,15 +32,16 @@
                         andFirstButtonText:@"Yes"
                        andSecondButtonText:@"No"
                        andFirstButtonBlock:^{
-                          
+                           
                            self.isUserAgree = YES;
                            [self performSegueWithIdentifier:@"ConfigureGameFieldToPlayReplay" sender:self];
                        }
                       andSecondButtonBlock:^{
                           [[self navigationController] popViewControllerAnimated:YES];
                           
-                      } andParentViewController:self];
-
+                      } andParentViewController:self
+                            andDismissible:NO];
+    
     
 }
 
@@ -61,7 +62,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
-    if([segue.identifier isEqualToString:@"ConfigureGameFieldToPlayReplay"]){
+    if([segue.identifier isEqualToString:@"ConfigureGameFieldToPlayReplay"]&&self.isUserAgree){
         
         NSDGameFieldViewController * gameFieldVC = (NSDGameFieldViewController *)segue.destinationViewController;
         
@@ -98,7 +99,7 @@
                        }
                       andSecondButtonBlock:^{
                       } andParentViewController:self];
-
+    
 }
 
 @end
