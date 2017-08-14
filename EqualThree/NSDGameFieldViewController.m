@@ -16,8 +16,8 @@ NSString * const NSDUserHintItems = @"NSDUserHintItems";
 NSString * const NSDGameFieldEndPlayingReplay = @"NSDGameFieldEndPlayingReplay";
 
 NSUInteger const NSDItemCost = 10;
-NSUInteger const NSDGameFieldWidth = 4;
-NSUInteger const NSDGameFieldHeight = 4;
+NSUInteger const NSDGameFieldWidth = 5;
+NSUInteger const NSDGameFieldHeight = 5;
 
 float const NSDDeleteAnimationDuration = 0.16f;
 

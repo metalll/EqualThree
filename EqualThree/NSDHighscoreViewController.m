@@ -87,8 +87,6 @@
         tempCell = [tableView dequeueReusableCellWithIdentifier:@"NSDScoreTableViewCell"];
     }
     
-    
-    
     [tempCell setScoreRecordWithScoreRecord:[_highscores objectAtIndex:indexPath.row] andNumber:indexPath.row];
     
     return tempCell;
