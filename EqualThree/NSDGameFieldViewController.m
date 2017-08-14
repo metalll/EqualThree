@@ -425,7 +425,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hintUser) name:NSDUserDidTapHintButton object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processDidDetectEndPlayingReplay) name:NSDEndPlayReplay object:nil];
-
+    
 }
 
 
@@ -435,7 +435,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
 }
 
 - (void)notifyAboutGameFieldDidEndPlayingReplay{
- 
+    
     NSNotification *notification = [NSNotification notificationWithName:NSDGameFieldEndPlayingReplay
                                                                  object:nil];
     
@@ -490,7 +490,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
 }
 
 - (void)processDidDetectEndPlayingReplay{
-   
+    
     dispatch_async(self.animationQueue, ^{
         
         dispatch_group_t animationGroup = dispatch_group_create();
@@ -601,10 +601,11 @@ float const NSDDeleteAnimationDuration = 0.16f;
         }
         
         dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self notifyAboutGameFieldDidEndDeletingWithScoreCount:(NSDItemCost * itemsToDelete.count)];
-        });
+        if(!self.isReplay){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self notifyAboutGameFieldDidEndDeletingWithScoreCount:(NSDItemCost * itemsToDelete.count)];
+            });
+        }
     });
 }
 
