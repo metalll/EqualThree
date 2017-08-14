@@ -19,6 +19,7 @@
 - (void)didDetectEndPlayingReplay;
 - (void)unsubscribeFromNotifications;
 
+
 @end
 
 @implementation NSDReplayViewController
@@ -70,6 +71,7 @@
         
         gameFieldVC.isReplay = YES;
         gameFieldVC.replayID = self.replayID;
+        gameFieldVC.isNeedAnotherID = self.isNeedAnotherID;
     }
 }
 

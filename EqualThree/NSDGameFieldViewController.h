@@ -27,5 +27,6 @@ extern float const NSDDeleteAnimationDuration;
 @property BOOL isNewGame;
 @property BOOL isReplay;
 @property NSUInteger replayID;
+@property BOOL isNeedAnotherID;
 
 @end

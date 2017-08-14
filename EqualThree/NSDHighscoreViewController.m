@@ -124,10 +124,18 @@
 #pragma mark - Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-
+    
     if([segue.identifier isEqualToString:@"ShowReplay"]){
         
         NSDReplayViewController * replayVC = ((NSDReplayViewController *)segue.destinationViewController);
+        
+        if(_selectedHighscoreReplayID==replayVC.replayID){
+            
+            replayVC.isNeedAnotherID = YES;
+        }else{
+            
+            replayVC.isNeedAnotherID = NO;
+        }
         
         replayVC.replayID = _selectedHighscoreReplayID;
         replayVC.title = [_selectedUserName stringByAppendingString:@"'s replay"];

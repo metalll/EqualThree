@@ -21,6 +21,7 @@ NSString * const NSDEndPlayReplay = @"NSDEndPlayReplay";
     NSOperationQueue *_replayQueue;
     dispatch_queue_t _underlingQueue;
     BOOL _canceled;
+   
 }
 
 - (void)startReplay;
@@ -71,7 +72,7 @@ static NSDReplayPlayer * instance;
 
 #pragma mark - Public
 
-- (void)playReplayWithID:(NSUInteger)ID{
+- (void)playReplayWithID:(NSUInteger)ID UUID:(NSString *)UUID{
     
     NSString * fileName = [sharedReplayPath stringByAppendingString:[@(ID) stringValue]];
     
@@ -81,8 +82,14 @@ static NSDReplayPlayer * instance;
         [_replayQueue setMaxConcurrentOperationCount:1];
         
         
-        _canceled  = NO;
+      
+        
+            
+        self.UUID = UUID;
+        
         _currentReplay = replay;
+        _canceled  = NO;
+       
         
         [self startReplay];
     }];
@@ -104,6 +111,13 @@ static NSDReplayPlayer * instance;
     
     [_replayQueue cancelAllOperations];
     
+}
+
+- (NSUInteger)currentReplayID{
+    
+ 
+    
+    return _currentReplay.replayID;
 }
 
 #pragma mark - Private

@@ -9,5 +9,5 @@
 @interface NSDReplayViewController : UIViewController
 
 @property NSUInteger replayID;
-
+@property BOOL isNeedAnotherID;
 @end
