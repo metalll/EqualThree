@@ -16,8 +16,8 @@ NSString * const NSDUserHintItems = @"NSDUserHintItems";
 NSString * const NSDGameFieldEndPlayingReplay = @"NSDGameFieldEndPlayingReplay";
 
 NSUInteger const NSDItemCost = 10;
-NSUInteger const NSDGameFieldWidth = 7;
-NSUInteger const NSDGameFieldHeight = 7;
+NSUInteger const NSDGameFieldWidth = 5;
+NSUInteger const NSDGameFieldHeight = 5;
 
 
 
@@ -176,12 +176,12 @@ float const NSDDeleteAnimationDuration = 0.16f;
 - (void)configureGame{
     
     self.gameEngine = nil;
-    
+    [[NSDReplayRecorder sharedInstance] configureRecorder];
     self.horizontalItemsCount = NSDGameFieldWidth;
     self.verticalItemsCount = NSDGameFieldHeight;
     self.itemTypesCount = NSDGameItemTypesCount;
     
-    [[NSDReplayRecorder sharedInstance] configureRecorder];
+
     
     self.isUserHelpNeeded = NO;
     self.isUserRecivedHint = NO;

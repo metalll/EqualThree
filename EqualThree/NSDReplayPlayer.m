@@ -81,10 +81,6 @@ static NSDReplayPlayer * instance;
         [_replayQueue setUnderlyingQueue:_underlingQueue];
         [_replayQueue setMaxConcurrentOperationCount:1];
         
-        
-      
-        
-            
         self.UUID = UUID;
         
         _currentReplay = replay;

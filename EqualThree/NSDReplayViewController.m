@@ -71,7 +71,6 @@
         
         gameFieldVC.isReplay = YES;
         gameFieldVC.replayID = self.replayID;
-        gameFieldVC.isNeedAnotherID = self.isNeedAnotherID;
     }
 }
 

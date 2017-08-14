@@ -23,7 +23,7 @@ NSUInteger const tempReplayID = 0;
     BOOL _isAddedHint;
     BOOL _isFirstRestoreTransition;
     
-    dispatch_queue_t _operationQueue;
+    
     NSArray * _hint;
 }
 
@@ -62,7 +62,7 @@ static NSDReplayRecorder *instance;
     
     if(self){
         
-        _operationQueue = dispatch_queue_create("com.nsd.game.replay.recorder.operation.queue", DISPATCH_QUEUE_SERIAL);
+        
     }
     
     return self;
@@ -72,54 +72,32 @@ static NSDReplayRecorder *instance;
 
 - (void)configureRecorder{
     
-    dispatch_group_t operationGroup = dispatch_group_create();
     
-    dispatch_async(_operationQueue, ^{
-        
-        dispatch_group_enter(operationGroup);
-        
-        [self subscribeToNotifications];
-        _currentReplay = [NSDReplay new];
-        _currentReplay.replayID = tempReplayID;
-        _currentReplay.replayOperationsQueue = [[NSDQueue alloc] init];
-        _hint = nil;
-        _isRestoredReplay = NO;
-        _isAddedHint = NO;
-        _isFirstRestoreTransition = NO;
-        
-        dispatch_group_leave(operationGroup);
-        dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
-        
-    });
+    
+    
+    [self subscribeToNotifications];
+    _currentReplay = [NSDReplay new];
+    _currentReplay.replayID = tempReplayID;
+    _currentReplay.replayOperationsQueue = [[NSDQueue alloc] init];
+    _hint = nil;
+    _isRestoredReplay = NO;
+    _isAddedHint = NO;
+    _isFirstRestoreTransition = NO;
+    
+    
+    
+    
 }
 
 - (void)restoreRecorder{
     
-    dispatch_group_t operationGroup = dispatch_group_create();
-    
-    dispatch_async(_operationQueue, ^{
-        
-        dispatch_group_enter(operationGroup);
-        
-        [NSDPlistController loadPlistWithName:lastSharedReplayFileName andCompletion:^(id lastSharedReplay)
-         {
-             [self subscribeToNotifications];
-             _currentReplay = lastSharedReplay;
-             dispatch_group_leave(operationGroup);
-             
-         }];
-        
-        dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            _isRestoredReplay = YES;
-            _isFirstRestoreTransition = YES;
-            
-            _isAddedHint = NO;
-        });
-    });
-    
+    [NSDPlistController loadPlistWithName:lastSharedReplayFileName andCompletion:^(id lastSharedReplay)
+     {
+         [self subscribeToNotifications];
+         _currentReplay = lastSharedReplay;
+         
+         
+     }];
 }
 
 - (void)saveReplayWithID:(NSUInteger)ID{
@@ -166,6 +144,7 @@ static NSDReplayRecorder *instance;
     
 }
 
+
 - (void)unsubscribeFromNotifications{
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -173,117 +152,79 @@ static NSDReplayRecorder *instance;
 
 - (void)processUserDidHint{
     
-    dispatch_group_t operationGroup = dispatch_group_create();
     
-    dispatch_async(_operationQueue, ^{
-        dispatch_group_enter(operationGroup);
+    
+    if(!_isAddedHint){
         
-        if(!_isAddedHint){
-            
-            NSDReplayStep *replayStep = [NSDReplayStep new];
-            
-            replayStep.operationType = Hint;
-            replayStep.operatedItems = _hint;
-            
-            [_currentReplay.replayOperationsQueue enqueueWithObject:replayStep];
-            
-        }else{
-            _isAddedHint = YES;
-        }
+        NSDReplayStep *replayStep = [NSDReplayStep new];
         
-        dispatch_group_leave(operationGroup);
-        dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
-    });
+        replayStep.operationType = Hint;
+        replayStep.operatedItems = _hint;
+        
+        [_currentReplay.replayOperationsQueue enqueueWithObject:replayStep];
+        
+    }else{
+        _isAddedHint = YES;
+    }
+    
 }
 
 - (void)processDidFindPermissibleStroke:(NSNotification *)notification{
+
+    _isAddedHint = NO;
     
-    dispatch_group_t operationGroup = dispatch_group_create();
+    NSArray *permissibleStroke = notification.userInfo[kNSDGameItems];
+    _hint = permissibleStroke;
     
-    dispatch_async(_operationQueue, ^{
-        dispatch_group_enter(operationGroup);
-        
-        _isAddedHint = NO;
-        
-        NSArray *permissibleStroke = notification.userInfo[kNSDGameItems];
-        _hint = permissibleStroke;
-        dispatch_group_leave(operationGroup);
-        dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
-    });
 }
 
 - (void)processItemsDidMoveNotification:(NSNotification *)notification{
     
-    dispatch_group_t operationGroup = dispatch_group_create();
+    _isAddedHint = NO;
     
-    dispatch_async(_operationQueue, ^{
-        dispatch_group_enter(operationGroup);
+    if(_isFirstRestoreTransition){
+        _isFirstRestoreTransition = NO;
         
-        _isAddedHint = NO;
+    }else{
         
-        if(_isFirstRestoreTransition){
-            _isFirstRestoreTransition = NO;
-            
-        }else{
-            
-            NSArray *itemsTransitions = notification.userInfo[kNSDGameItemTransitions];
-            
-            NSDReplayStep *replayStep = [NSDReplayStep new];
-            
-            replayStep.operationType = Transition;
-            replayStep.operatedItems = itemsTransitions;
-            
-            [_currentReplay.replayOperationsQueue enqueueWithObject:replayStep];
-        }
-        dispatch_group_leave(operationGroup);
-        dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
+        NSArray *itemsTransitions = notification.userInfo[kNSDGameItemTransitions];
         
-    });
+        NSDReplayStep *replayStep = [NSDReplayStep new];
+        
+        replayStep.operationType = Transition;
+        replayStep.operatedItems = itemsTransitions;
+        
+        [_currentReplay.replayOperationsQueue enqueueWithObject:replayStep];
+    }
+    
 }
 
 - (void)processItemsDidDeleteNotification:(NSNotification *)notification{
     
-    dispatch_group_t operationGroup = dispatch_group_create();
+    _isAddedHint = NO;
     
-    dispatch_async(_operationQueue, ^{
-        dispatch_group_enter(operationGroup);
-        
-        _isAddedHint = NO;
-        
-        NSArray *itemsToDelete = notification.userInfo[kNSDGameItems];
-        
-        NSDReplayStep *replayStep = [NSDReplayStep new];
-        
-        replayStep.operationType = Delete;
-        replayStep.operatedItems = itemsToDelete;
-        
-        [_currentReplay.replayOperationsQueue enqueueWithObject:replayStep];
-        dispatch_group_leave(operationGroup);
-        dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
-    });
+    NSArray *itemsToDelete = notification.userInfo[kNSDGameItems];
+    
+    NSDReplayStep *replayStep = [NSDReplayStep new];
+    
+    replayStep.operationType = Delete;
+    replayStep.operatedItems = itemsToDelete;
+    
+    [_currentReplay.replayOperationsQueue enqueueWithObject:replayStep];
 }
 
 - (void)processGotoAwaitStateNotification:(NSNotification *)notification{
+
+    NSDReplayStep *replayStep = [NSDReplayStep new];
     
-    dispatch_group_t operationGroup = dispatch_group_create();
+    replayStep.operationType = Pause;
+    replayStep.operatedItems = nil;
     
-    dispatch_async(_operationQueue, ^{
-        dispatch_group_enter(operationGroup);
+    [_currentReplay.replayOperationsQueue enqueueWithObject:replayStep];
+    
+    [self saveChangesWithCompletion:^{
         
-        NSDReplayStep *replayStep = [NSDReplayStep new];
-        
-        replayStep.operationType = Pause;
-        replayStep.operatedItems = nil;
-        
-        [_currentReplay.replayOperationsQueue enqueueWithObject:replayStep];
-        
-        [self saveChangesWithCompletion:^{
-            
-            dispatch_group_leave(operationGroup);
-        }];
-        
-        dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
-    });
+    }];
 }
 
 @end
