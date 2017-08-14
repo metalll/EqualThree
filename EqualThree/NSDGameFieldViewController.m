@@ -24,9 +24,7 @@ NSUInteger const NSDGameFieldHeight = 7;
 float const NSDDeleteAnimationDuration = 0.16f;
 
 @interface NSDGameFieldViewController (){
-    
     NSString * _UUID;
-    
 }
 
 @property (weak, nonatomic) IBOutlet UIView *gameItemsView;
@@ -645,7 +643,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if(!_isReplay || (_isReplay && ![_UUID isEqual: [[NSDReplayPlayer sharedInstance] UUID]])) {
-            
+                
             }else{
                 [self notifyAboutGameFieldDidEndPlayingReplay];
             }
