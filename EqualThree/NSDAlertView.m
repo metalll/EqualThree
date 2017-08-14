@@ -45,7 +45,7 @@
                                                  andFirstButtonText:firstButtonText
                                                 andSecondButtonText:secondButtonText
                                                 andFirstButtonBlock:firstButtonBlock
-                                               andSecondButtonBlock:secondButtonBlock];
+                                               andSecondButtonBlock:secondButtonBlock andDismissible:dismissible];
     
     [alert.view setBackgroundColor:[UIColor alertBackroundColor]];
     
@@ -73,7 +73,8 @@
                  andFirstButtonText:(NSString *)firstButtonText
                 andSecondButtonText:(NSString *)secondButtonText
                 andFirstButtonBlock:(NSDAlertButtonBlock)firstButtonBlock
-               andSecondButtonBlock:(NSDAlertButtonBlock)secondButtonBlock {
+               andSecondButtonBlock:(NSDAlertButtonBlock)secondButtonBlock
+                     andDismissible:(BOOL)dismissible{
     
     self = [super init];
     
@@ -83,6 +84,7 @@
         self.secondButtonText = secondButtonText;
         self.firstButtonBlock = firstButtonBlock;
         self.secondButtonBlock = secondButtonBlock;
+        self.isDismissible = dismissible;
     }
     
     return self;

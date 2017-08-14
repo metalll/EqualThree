@@ -31,7 +31,8 @@ typedef void(^NSDAlertButtonBlock)(void);
                  andFirstButtonText:(NSString *)firstButtonText
                 andSecondButtonText:(NSString *)secondButtonText
                 andFirstButtonBlock:(NSDAlertButtonBlock)firstButtonBlock
-               andSecondButtonBlock:(NSDAlertButtonBlock)secondButtonBlock;
+               andSecondButtonBlock:(NSDAlertButtonBlock)secondButtonBlock
+                     andDismissible:(BOOL)dismissible;
 
 - (void)showWithParentViewController:(UIViewController *)parentVC;
 
