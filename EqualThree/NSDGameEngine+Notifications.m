@@ -14,7 +14,7 @@
 - (void)notifyAboutItemsMovement:(NSArray *)itemTransitions{
     
     NSNotification *notification = [NSNotification notificationWithName:NSDGameItemsDidMoveNotification
-                                                                 object:nil
+                                                                 object:self
                                                                userInfo:@{kNSDGameItemTransitions : itemTransitions}];
     
     [[NSNotificationCenter defaultCenter] postNotification:notification];
@@ -23,7 +23,7 @@
 - (void)notifyAboutItemsDeletion:(NSArray *)items{
     
     NSNotification *notification = [NSNotification notificationWithName:NSDGameItemsDidDeleteNotification
-                                                                 object:nil
+                                                                 object:self
                                                                userInfo:@{kNSDGameItems : items}];
     
     [[NSNotificationCenter defaultCenter] postNotification:notification];
@@ -33,7 +33,7 @@
 - (void)notifyAboutDidDetectGameOver{
     
     NSNotification *notification = [NSNotification notificationWithName:NSDDidDetectGameOver
-                                                                 object:nil
+                                                                 object:self
                                                                userInfo:@{
                                                                           kNSDUserScore : @(self.userScore),
                                                                           kNSDMovesCount: @(self.movesCount)
@@ -45,7 +45,7 @@
 - (void)notifyAboutDidFindPermissibleStroke:(NSArray *)gameItems{
     
     NSNotification *notification = [NSNotification notificationWithName:NSDDidFindPermissibleStroke
-                                                                 object:nil
+                                                                 object:self
                                                                userInfo:@{kNSDGameItems : gameItems}];
     
     [[NSNotificationCenter defaultCenter] postNotification:notification];
@@ -54,7 +54,7 @@
 - (void)notifyAboutDidUpdateUserScore{
     
     NSNotification *notification = [NSNotification notificationWithName:NSDDidUpdateUserScore
-                                                                 object:nil
+                                                                 object:self
                                                                userInfo:@{
                                                                           kNSDUserScore : @(self.userScore)
                                                                           }];
@@ -65,7 +65,7 @@
 - (void)notifyAboutDidUpdateMoviesCount{
     
     NSNotification *notification = [NSNotification notificationWithName:NSDDidUpdateMovesCount
-                                                                 object:nil
+                                                                 object:self
                                                                userInfo:@{
                                                                           kNSDMovesCount : @(self.movesCount)
                                                                           }];
@@ -76,7 +76,7 @@
 - (void)notifyAboutDidGoToAwaitState{
     
     NSNotification *notification = [NSNotification notificationWithName:NSDDidGoToAwaitState
-                                                                 object:nil
+                                                                 object:self
                                                                userInfo:@{
                                                                           kNSDGameItems : [self.gameField copy],
                                                                           kNSDUserScore : @(self.userScore),
@@ -90,13 +90,12 @@
 - (void)notifyAboutDidUpdateSharedUserScore{
     
     NSNotification *notification = [NSNotification notificationWithName:NSDDidUpdadeSharedUserScore
-                                                                 object:nil
+                                                                 object:self
                                                                userInfo:@{
                                                                           kNSDUserScore : @(self.userScore)
                                                                           }];
     
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
-
 
 @end

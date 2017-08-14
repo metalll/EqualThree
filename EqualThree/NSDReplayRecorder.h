@@ -17,6 +17,7 @@ extern NSUInteger const tempReplayID;
 + (instancetype)sharedInstance;
 
 - (void)configureRecorder;
+
 - (void)restoreRecorder;
 
 - (void)stopRecording;

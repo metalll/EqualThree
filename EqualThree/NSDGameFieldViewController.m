@@ -107,7 +107,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
                 }
             }
             
-        
+            
             
             self.gameField = nil;
             
@@ -143,7 +143,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
     [self unsubscribeFromNotifications];
 }
 
-#pragma mark - Private Methods
+#pragma mark - Configure
 
 - (void)restoreLastSavedGame{
     
@@ -203,26 +203,6 @@ float const NSDDeleteAnimationDuration = 0.16f;
                                                            itemTypesCount:self.itemTypesCount];
 }
 
-- (NSDGameItemView *)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type{
-    NSDGameItemView *itemView = [[NSDGameItemView alloc] initWithFrame:frame];
-    
-    itemView.type = type;
-    
-    itemView.autoresizingMask =
-    UIViewAutoresizingFlexibleLeftMargin |
-    UIViewAutoresizingFlexibleWidth |
-    UIViewAutoresizingFlexibleRightMargin |
-    UIViewAutoresizingFlexibleTopMargin |
-    UIViewAutoresizingFlexibleHeight |
-    UIViewAutoresizingFlexibleBottomMargin;
-    
-    itemView.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    [self.gameItemsView addSubview:itemView];
-    
-    return itemView;
-}
-
 - (void)playReplay{
     
     self.gameEngine = nil;
@@ -251,6 +231,29 @@ float const NSDDeleteAnimationDuration = 0.16f;
     
     
 }
+
+#pragma mark - Private
+
+- (NSDGameItemView *)createGameItemViewWithFrame:(CGRect)frame type:(NSUInteger)type{
+    NSDGameItemView *itemView = [[NSDGameItemView alloc] initWithFrame:frame];
+    
+    itemView.type = type;
+    
+    itemView.autoresizingMask =
+    UIViewAutoresizingFlexibleLeftMargin |
+    UIViewAutoresizingFlexibleWidth |
+    UIViewAutoresizingFlexibleRightMargin |
+    UIViewAutoresizingFlexibleTopMargin |
+    UIViewAutoresizingFlexibleHeight |
+    UIViewAutoresizingFlexibleBottomMargin;
+    
+    itemView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    [self.gameItemsView addSubview:itemView];
+    
+    return itemView;
+}
+
 
 #pragma mark - Coordinate translation
 
@@ -431,7 +434,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hintUser) name:NSDUserDidTapHintButton object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processDidDetectEndPlayingReplay) name:NSDEndPlayReplay object:nil];
-
+    
 }
 
 
@@ -441,7 +444,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
 }
 
 - (void)notifyAboutGameFieldDidEndPlayingReplay{
- 
+    
     NSNotification *notification = [NSNotification notificationWithName:NSDGameFieldEndPlayingReplay
                                                                  object:nil];
     
@@ -476,21 +479,21 @@ float const NSDDeleteAnimationDuration = 0.16f;
             dispatch_group_enter(animationGroup);
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-             if(!self.isReplay&&[notification.object isKindOfClass:[NSDReplayPlayer class]]){
+                if(!self.isReplay&&[notification.object isKindOfClass:[NSDReplayPlayer class]]){
                     dispatch_group_leave(animationGroup);
-             }else{
-                NSDGameItemView *gameItemView = [self gameItemViewAtIJStruct:itemTransition.from type:itemTransition.type];
-                CGRect endFrame = CGRectZero;
-                endFrame.size = gameItemView.frame.size;
-                endFrame.origin = [self xyCoordinatesFromIJStruct:itemTransition.to];
-                
-                [UIView animateWithDuration:itemTransition.animationDuration animations:^{
-                    gameItemView.frame = endFrame;
-                } completion:^(BOOL finished) {
-                    self.gameField[itemTransition.to.i][itemTransition.to.j] = gameItemView;
-                    dispatch_group_leave(animationGroup);
-                }];
-             }
+                }else{
+                    NSDGameItemView *gameItemView = [self gameItemViewAtIJStruct:itemTransition.from type:itemTransition.type];
+                    CGRect endFrame = CGRectZero;
+                    endFrame.size = gameItemView.frame.size;
+                    endFrame.origin = [self xyCoordinatesFromIJStruct:itemTransition.to];
+                    
+                    [UIView animateWithDuration:itemTransition.animationDuration animations:^{
+                        gameItemView.frame = endFrame;
+                    } completion:^(BOOL finished) {
+                        self.gameField[itemTransition.to.i][itemTransition.to.j] = gameItemView;
+                        dispatch_group_leave(animationGroup);
+                    }];
+                }
             });
         }
         
@@ -498,27 +501,6 @@ float const NSDDeleteAnimationDuration = 0.16f;
     });
     
 }
-
-- (void)processDidDetectEndPlayingReplay{
-   
-    if(!_isReplay)return;
-    
-    dispatch_async(self.animationQueue, ^{
-        
-        dispatch_group_t animationGroup = dispatch_group_create();
-        dispatch_group_enter(animationGroup);
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self notifyAboutGameFieldDidEndPlayingReplay];
-            
-            dispatch_group_leave(animationGroup);
-        });
-        
-        dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
-    });
-}
-
 
 - (void)processGotoAwaitStateNotification:(NSNotification *)notification{
     
@@ -528,16 +510,16 @@ float const NSDDeleteAnimationDuration = 0.16f;
         dispatch_group_enter(animationGroup);
         
         dispatch_async(dispatch_get_main_queue(), ^{
-           
+            
             if(!self.isReplay&&[notification.object isKindOfClass:[NSDReplayPlayer class]]){
                 dispatch_group_leave(animationGroup);
                 
                 
             }else{
-
-            self.animated = NO;
-            dispatch_group_leave(animationGroup);
-            
+                
+                self.animated = NO;
+                dispatch_group_leave(animationGroup);
+                
             }
         });
         
@@ -549,11 +531,9 @@ float const NSDDeleteAnimationDuration = 0.16f;
 
 - (void)processDidFindPermissibleStroke:(NSNotification *)notification{
     
-    
     if(!self.isReplay&&[notification.object isKindOfClass:[NSDReplayPlayer class]]){
-       return;
+        return;
     }
-
     
     if(self.isReplay){
         
@@ -562,7 +542,7 @@ float const NSDDeleteAnimationDuration = 0.16f;
             dispatch_group_t animationGroup = dispatch_group_create();
             dispatch_group_enter(animationGroup);
             dispatch_async(dispatch_get_main_queue(), ^{
-               
+                
                 
                 self.hint = notification.userInfo[kNSDGameItems];
                 
@@ -593,8 +573,6 @@ float const NSDDeleteAnimationDuration = 0.16f;
 
 - (void)processItemsDidDeleteNotification:(NSNotification *)notification{
     
-    
-  
     self.hint = nil;
     self.isUserHelpNeeded = NO;
     
@@ -613,33 +591,58 @@ float const NSDDeleteAnimationDuration = 0.16f;
                 dispatch_group_enter(animationGroup);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
-                   if(!self.isReplay&&[notification.object isKindOfClass:[NSDReplayPlayer class]]){
+                    if(!self.isReplay&&[notification.object isKindOfClass:[NSDReplayPlayer class]]){
                         dispatch_group_leave(animationGroup);
-                   }
-                   else{
-                    
-                    NSUInteger i = tempStruct.i;
-                    NSUInteger j = tempStruct.j;
-                    
-                    [((NSDGameItemView *)self.gameField[i][j]) animateDestroyWithDuration:NSDDeleteAnimationDuration completion:^{
+                    }
+                    else{
                         
-                        [self.gameField[i][j] removeFromSuperview];
-                        self.gameField[i][j] = [NSNull null];
+                        NSUInteger i = tempStruct.i;
+                        NSUInteger j = tempStruct.j;
                         
-                        dispatch_group_leave(animationGroup);
-                    }];
-                   }
+                        [((NSDGameItemView *)self.gameField[i][j]) animateDestroyWithDuration:NSDDeleteAnimationDuration completion:^{
+                            
+                            [self.gameField[i][j] removeFromSuperview];
+                            self.gameField[i][j] = [NSNull null];
+                            
+                            dispatch_group_leave(animationGroup);
+                        }];
+                    }
                 });
             }
         }
         
         dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
+        
         if(!self.isReplay){
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self notifyAboutGameFieldDidEndDeletingWithScoreCount:(NSDItemCost * itemsToDelete.count)];
-        });
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self notifyAboutGameFieldDidEndDeletingWithScoreCount:(NSDItemCost * itemsToDelete.count)];
+            });
         }
     });
 }
+
+#pragma mark - Notification + ReplayExtention
+
+- (void)processDidDetectEndPlayingReplay{
+    
+    if(!_isReplay)return;
+    
+    dispatch_async(self.animationQueue, ^{
+        
+        dispatch_group_t animationGroup = dispatch_group_create();
+        dispatch_group_enter(animationGroup);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self notifyAboutGameFieldDidEndPlayingReplay];
+            
+            dispatch_group_leave(animationGroup);
+        });
+        
+        dispatch_group_wait(animationGroup, DISPATCH_TIME_FOREVER);
+    });
+}
+
 
 @end

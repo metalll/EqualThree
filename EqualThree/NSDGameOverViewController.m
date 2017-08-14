@@ -37,7 +37,6 @@ float const heightTranstionToDisplayKeyboard = -134.0f;
         [self.view setBackgroundColor:[UIColor alertBackroundColor]];
         
     }
-    
     return self;
 }
 

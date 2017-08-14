@@ -12,10 +12,12 @@
 #import "NSDAlertView.h"
 
 @interface NSDReplayViewController()
-- (void)didDetectEndPlayingReplay;
 
 @property BOOL isUserAgree;
 
+- (void)subscribeToNotifications;
+- (void)didDetectEndPlayingReplay;
+- (void)unsubscribeFromNotifications;
 
 @end
 
@@ -76,10 +78,11 @@
     return self.isUserAgree;
 }
 
+#pragma mark - Notifications
+
 - (void)subscribeToNotifications{
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDetectEndPlayingReplay) name:NSDGameFieldEndPlayingReplay object:nil];
-    
 }
 
 - (void)unsubscribeFromNotifications{
@@ -95,11 +98,9 @@
                        andFirstButtonBlock:^{
                            
                            [self.navigationController popViewControllerAnimated:YES];
-                           
                        }
                       andSecondButtonBlock:^{
                       } andParentViewController:self];
-    
 }
 
 @end

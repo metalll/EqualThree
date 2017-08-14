@@ -56,14 +56,15 @@ static NSDReplayPlayer * instance;
     return instance;
 }
 
+#pragma mark - Constructor
+
 -(instancetype)init{
     
     self = [super init];
     
     if(self){
-        _underlingQueue  = dispatch_queue_create("dscasds", DISPATCH_QUEUE_SERIAL);
+        _underlingQueue  = dispatch_queue_create("com.nsd.game.replay.player", DISPATCH_QUEUE_SERIAL);
     }
-    
     return self;
 }
 
@@ -177,7 +178,7 @@ static NSDReplayPlayer * instance;
             [self notifyAboutUserDidTapHint:hintItems];
             
             
-        });        
+        });
     }];
     
     [_replayQueue addOperations:@[block] waitUntilFinished:YES];
@@ -201,7 +202,6 @@ static NSDReplayPlayer * instance;
     
     
     NSBlockOperation * block = [NSBlockOperation blockOperationWithBlock: ^{
-        
         
     }];
     

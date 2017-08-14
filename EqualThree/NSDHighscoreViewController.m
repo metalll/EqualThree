@@ -15,6 +15,7 @@
 #import "NSDReplayViewController.h"
 
 @interface NSDHighscoreViewController (){
+    
     NSArray *_highscores;
     NSUInteger _selectedHighscoreReplayID;
     NSString * _selectedUserName;

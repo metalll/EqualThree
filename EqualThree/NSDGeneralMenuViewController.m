@@ -27,6 +27,7 @@ float splashEffectAnimationDuration = 0.6f;
 
 - (void)startNewGame;
 - (void)animateSplashEffect;
+
 @end
 
 
