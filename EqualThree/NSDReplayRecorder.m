@@ -49,17 +49,29 @@ static NSDReplayRecorder *instance;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        
         instance = [NSDReplayRecorder new];
     });
     
     return instance;
 }
 
+- (instancetype)init{
+    
+    self = [super init];
+    
+    if(self){
+        
+        _operationQueue = dispatch_queue_create("com.nsd.game.replay.recorder.operation.queue", DISPATCH_QUEUE_SERIAL);
+    }
+    
+    return self;
+}
+
 #pragma mark - Public
 
 - (void)configureRecorder{
     
-    _operationQueue = dispatch_queue_create("com.nsd.game.replay.recorder.operation.queue", DISPATCH_QUEUE_SERIAL);
     dispatch_group_t operationGroup = dispatch_group_create();
     
     dispatch_async(_operationQueue, ^{
@@ -102,7 +114,6 @@ static NSDReplayRecorder *instance;
         dispatch_async(dispatch_get_main_queue(), ^{
             
             _isRestoredReplay = YES;
-            _operationQueue = dispatch_queue_create("com.nsd.game.replay.recorder.operation.queue", DISPATCH_QUEUE_SERIAL);
             _isFirstRestoreTransition = YES;
             
             _isAddedHint = NO;
@@ -212,21 +223,21 @@ static NSDReplayRecorder *instance;
         
         if(_isFirstRestoreTransition){
             _isFirstRestoreTransition = NO;
-           
+            
         }else{
-        
-        NSArray *itemsTransitions = notification.userInfo[kNSDGameItemTransitions];
-        
-        NSDReplayStep *replayStep = [NSDReplayStep new];
-        
-        replayStep.operationType = Transition;
-        replayStep.operatedItems = itemsTransitions;
-        
-        [_currentReplay.replayOperationsQueue enqueueWithObject:replayStep];
+            
+            NSArray *itemsTransitions = notification.userInfo[kNSDGameItemTransitions];
+            
+            NSDReplayStep *replayStep = [NSDReplayStep new];
+            
+            replayStep.operationType = Transition;
+            replayStep.operatedItems = itemsTransitions;
+            
+            [_currentReplay.replayOperationsQueue enqueueWithObject:replayStep];
         }
         dispatch_group_leave(operationGroup);
         dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
-            
+        
     });
 }
 
@@ -267,6 +278,7 @@ static NSDReplayRecorder *instance;
         [_currentReplay.replayOperationsQueue enqueueWithObject:replayStep];
         
         [self saveChangesWithCompletion:^{
+            
             dispatch_group_leave(operationGroup);
         }];
         

@@ -9,29 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EqualThree/NSDReplayStep.m"
-            timestampString = "524328377.622976"
+            filePath = "EqualThree/NSDGameFieldViewController.m"
+            timestampString = "524402293.616176"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "-copyWithZone:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EqualThree/NSDReplayPlayer.m"
-            timestampString = "524329776.403603"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
-            landmarkName = "-displayTransition:"
+            startingLineNumber = "442"
+            endingLineNumber = "442"
+            landmarkName = "-notifyAboutGameFieldDidEndPlayingReplay"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

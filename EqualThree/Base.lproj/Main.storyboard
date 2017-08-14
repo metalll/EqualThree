@@ -267,6 +267,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="IYL-me-eOc">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QES-Da-F4v">
                                 <rect key="frame" x="0.0" y="105" width="375" height="462"/>
                                 <connections>
@@ -276,7 +279,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="mMi-5N-qWK" firstAttribute="top" secondItem="IYL-me-eOc" secondAttribute="bottom" id="9oB-FW-rna"/>
+                            <constraint firstItem="IYL-me-eOc" firstAttribute="top" secondItem="PXs-7y-2QL" secondAttribute="top" id="EtK-Tf-2Dn"/>
                             <constraint firstAttribute="trailing" secondItem="QES-Da-F4v" secondAttribute="trailing" id="VTV-OQ-gDX"/>
+                            <constraint firstItem="IYL-me-eOc" firstAttribute="leading" secondItem="PXs-7y-2QL" secondAttribute="leading" id="WZO-1B-ayc"/>
+                            <constraint firstAttribute="trailing" secondItem="IYL-me-eOc" secondAttribute="trailing" id="bXg-rC-K0c"/>
                             <constraint firstItem="QES-Da-F4v" firstAttribute="top" secondItem="lfW-Ja-7G9" secondAttribute="bottom" constant="85" id="bcO-1Y-nVQ"/>
                             <constraint firstItem="QES-Da-F4v" firstAttribute="leading" secondItem="PXs-7y-2QL" secondAttribute="leading" id="jwX-2G-lxO"/>
                             <constraint firstItem="mMi-5N-qWK" firstAttribute="top" secondItem="QES-Da-F4v" secondAttribute="bottom" constant="100" id="jzC-xT-iCI"/>
@@ -285,7 +292,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EVV-z4-bK9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1182" y="746"/>
+            <point key="canvasLocation" x="1181.5999999999999" y="745.27736131934034"/>
         </scene>
         <!--Highscore View Controller-->
         <scene sceneID="PLf-Z4-Rbs">

@@ -8,35 +8,49 @@
 
 #import "NSDScoreTableViewCell.h"
 #import "UIColor+NSDColor.h"
+
 @implementation NSDScoreTableViewCell
 
+
+-(void)awakeFromNib{
+
+    [super awakeFromNib];
+    
+    UIImage * image = [UIImage imageNamed:@"Accessory"];
+    
+    UIImageView * imageView = [[UIImageView alloc] initWithImage:image];
+
+    
+    self.accessoryView = imageView;
+    
+}
 
 - (void)setScoreRecordWithScoreRecord:(NSDScoreRecord *)record andNumber:(NSUInteger) number{
     
     switch (number) {
-        
+            
         case 0:
-           
-            [self.contentView setBackgroundColor:[UIColor goldColor]];
+            
+            [self setBackgroundColor:[UIColor goldColor]];
             break;
-        
+            
         case 1:
             
-            [self.contentView setBackgroundColor:[UIColor silverColor]];
+            [self setBackgroundColor:[UIColor silverColor]];
             break;
-      
+            
         case 2:
             
-            [self.contentView setBackgroundColor:[UIColor bronzeColor]];
+            [self setBackgroundColor:[UIColor bronzeColor]];
             break;
-        
+            
         default:
             
-            [self.contentView setBackgroundColor:[UIColor tableViewCellDefaultBackroundColor]];
+            [self setBackgroundColor:[UIColor tableViewCellDefaultBackroundColor]];
             break;
     }
     
-    self.numberLabel.text = [[NSString stringWithFormat:@"%li",(unsigned long)(NSUInteger)(number+1)] stringByAppendingString:@"."];
+    self.numberLabel.text = [[NSString stringWithFormat:@"%li",(unsigned long)(NSUInteger)(number + 1)] stringByAppendingString:@"."];
     self.nameLabel.text = record.userName;
     self.scopeLabel.text = [record.userScore stringValue];
     

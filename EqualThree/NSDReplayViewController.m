@@ -9,15 +9,35 @@
 #import "NSDReplayViewController.h"
 #import "NSDReplayPlayer.h"
 #import "NSDGameFieldViewController.h"
+#import "NSDAlertView.h"
+
+@interface NSDReplayViewController()
+- (void)didDetectEndPlayingReplay;
+@end
 
 @implementation NSDReplayViewController
+
+#pragma mark - Life Cycle
 
 - (void)viewDidLoad{
     
     [super viewDidLoad];
+    [self subscribeToNotifications];
+}
+
+- (void)viewDidDisappear:(BOOL)animated{
+    
+    [super viewDidDisappear:animated];
+    
+    [[NSDReplayPlayer sharedInstance] stopReplay];
     
 }
 
+-(void)dealloc{
+    [self unsubscribeFromNotifications];
+}
+
+#pragma mark - Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
@@ -27,8 +47,33 @@
         
         gameFieldVC.isReplay = YES;
         gameFieldVC.replayID = self.replayID;
-        
     }
+}
+
+- (void)subscribeToNotifications{
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDetectEndPlayingReplay) name:NSDGameFieldEndPlayingReplay object:nil];
+    
+}
+
+- (void)unsubscribeFromNotifications{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)didDetectEndPlayingReplay{
+    
+    [NSDAlertView showAlertWithMessageText:@"Replay playback complete.\nBack to the highscore table?"
+                        andFirstButtonText:@"Yes"
+                       andSecondButtonText:@"No"
+                       andFirstButtonBlock:^{
+                           
+                           [self.navigationController popViewControllerAnimated:YES];
+                           
+                       }
+                      andSecondButtonBlock:^{
+                      } andParentViewController:self];
+
 }
 
 @end

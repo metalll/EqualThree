@@ -12,6 +12,7 @@
 extern NSString * const NSDGameFieldDidEndDeletingNotification;
 extern NSString * const kNSDDeletedItemsCost;
 
+extern NSString * const NSDGameFieldEndPlayingReplay;
 
 extern NSString * const NSDUserHintItems;
 

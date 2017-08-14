@@ -11,45 +11,108 @@
 #import "NSDReplayRecorder.h"
 #import "NSDPlistController.h"
 #import "NSDGameEngine.h"
+#import "NSDGameViewController.h"
 
-@implementation NSDReplayPlayer{
+NSString * const NSDEndPlayReplay = @"NSDEndPlayReplay";
+
+@interface NSDReplayPlayer (){
+    
     NSDReplay *_currentReplay;
-    dispatch_queue_t _replayQueue;
+    NSOperationQueue *_replayQueue;
+    dispatch_queue_t _underlingQueue;
+    BOOL _canceled;
 }
 
+- (void)startReplay;
+
+- (void)displayTransition:(NSArray *)transitionItems;
+- (void)displayHint:(NSArray *)hintItems;
+- (void)displayDelete:(NSArray *)deletedItems;
+- (void)displayPause;
+
+- (void)notifyAboutEndPlayingRecord;
+- (void)notifyAboutUserDidTapHint:(NSArray *)hintItems;
+- (void)notifyAboutItemsMovement:(NSArray *)itemTransitions;
+- (void)notifyAboutItemsDeletion:(NSArray *)items;
+
+@end
+
+@implementation NSDReplayPlayer
+
 static NSDReplayPlayer * instance;
+
+#pragma mark - Singletone
 
 + (instancetype)sharedInstance{
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [NSDReplayPlayer new];
+        
+        
+        
     });
     
     return instance;
 }
 
+-(instancetype)init{
+    
+    self = [super init];
+    
+    if(self){
+        _underlingQueue  = dispatch_queue_create("dscasds", DISPATCH_QUEUE_SERIAL);
+    }
+    
+    return self;
+}
+
+
+#pragma mark - Public
 
 - (void)playReplayWithID:(NSUInteger)ID{
     
     NSString * fileName = [sharedReplayPath stringByAppendingString:[@(ID) stringValue]];
     
     [NSDPlistController loadPlistWithName:fileName andCompletion:^(id replay) {
+        _replayQueue = [[NSOperationQueue alloc] init];
+        [_replayQueue setUnderlyingQueue:_underlingQueue];
+        [_replayQueue setMaxConcurrentOperationCount:1];
         
+        
+        _canceled  = NO;
         _currentReplay = replay;
         
-        _replayQueue = dispatch_queue_create("dcdsddfsdfa", DISPATCH_QUEUE_SERIAL);
-        
         [self startReplay];
-        
     }];
 }
+
+- (void)pauseReplay{
+    
+    [_replayQueue setSuspended:YES];
+}
+
+
+
+- (void)resumeReplay{
+    
+    [_replayQueue setSuspended:NO];
+}
+
+- (void)stopReplay{
+    
+    [_replayQueue cancelAllOperations];
+}
+
+#pragma mark - Private
 
 - (void)startReplay{
     
     while (_currentReplay.replayOperationsQueue.count > 0) {
         
         NSDReplayStep * _currentStep = [_currentReplay.replayOperationsQueue dequeue];
+        
+        
         
         switch (_currentStep.operationType) {
                 
@@ -68,9 +131,13 @@ static NSDReplayPlayer * instance;
                 
             case Hint:
                 
+                [self displayHint:_currentStep.operatedItems];
+                
                 break;
                 
             case Pause:
+                
+                [self displayPause];
                 
                 break;
                 
@@ -78,87 +145,95 @@ static NSDReplayPlayer * instance;
                 break;
         }
     }
+    
+    [self notifyAboutEndPlayingRecord];
+    
 }
 
-- (void)pauseReplay{
-    
-    dispatch_suspend(_replayQueue);
-}
-
-- (void)resumeReplay{
-    
-    dispatch_resume(_replayQueue);
-}
 
 - (void)displayTransition:(NSArray *)transitionItems{
     
-    dispatch_group_t operationGroup = dispatch_group_create();
-    
-    dispatch_async(_replayQueue, ^{
-        dispatch_group_enter(operationGroup);
+    NSBlockOperation * block = [NSBlockOperation blockOperationWithBlock: ^{
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            
             [self notifyAboutItemsMovement:transitionItems];
+            
         });
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            dispatch_group_leave(operationGroup);
-        });
-        
-        dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
-    });
+    }];
+    
+    [_replayQueue addOperations:@[block] waitUntilFinished:YES];
 }
 
 - (void)displayHint:(NSArray *)hintItems{
     
-    dispatch_group_t operationGroup = dispatch_group_create();
     
-    dispatch_async(_replayQueue, ^{
-        dispatch_group_enter(operationGroup);
+    NSBlockOperation * block = [NSBlockOperation blockOperationWithBlock: ^{
         
         
-        
-        dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
-    });
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self notifyAboutUserDidTapHint:hintItems];
+            
+            
+        });        
+    }];
+    
+    [_replayQueue addOperations:@[block] waitUntilFinished:YES];
 }
 
 - (void)displayDelete:(NSArray *)deletedItems{
     
-    dispatch_group_t operationGroup = dispatch_group_create();
-    
-    dispatch_async(_replayQueue, ^{
-        dispatch_group_enter(operationGroup);
+    NSBlockOperation * block = [NSBlockOperation blockOperationWithBlock: ^{
         
         dispatch_async(dispatch_get_main_queue(), ^{
-           
+            
             [self notifyAboutItemsDeletion:deletedItems];
         });
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            dispatch_group_leave(operationGroup);
-        });
-        
-        
-        
-        
-        
-        dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
-    });
+    }];
+    
+    [_replayQueue addOperations:@[block] waitUntilFinished:YES];
 }
 
 - (void)displayPause{
     
-    dispatch_group_t operationGroup = dispatch_group_create();
     
-    dispatch_async(_replayQueue, ^{
+    NSBlockOperation * block = [NSBlockOperation blockOperationWithBlock: ^{
         
-        dispatch_group_enter(operationGroup);
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    }];
+    
+    [_replayQueue addOperations:@[block] waitUntilFinished:YES];
+}
+
+#pragma mark - Notification
+
+- (void)notifyAboutEndPlayingRecord {
+    NSBlockOperation * block = [NSBlockOperation blockOperationWithBlock: ^{
+        
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
             
-            dispatch_group_leave(operationGroup);
+            NSNotification *notification = [NSNotification notificationWithName:NSDEndPlayReplay
+                                                                         object:nil];
+            
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
+            
         });
-        dispatch_group_wait(operationGroup, DISPATCH_TIME_FOREVER);
-    });
+    }];
+    
+    [_replayQueue addOperations:@[block] waitUntilFinished:YES];
+}
+
+- (void)notifyAboutUserDidTapHint:(NSArray *)hintItems{
+    
+    NSNotification *notification = [NSNotification notificationWithName:NSDDidFindPermissibleStroke
+                                                                 object:nil
+                                                               userInfo:@{kNSDGameItems : hintItems}];
+    
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+    
 }
 
 - (void)notifyAboutItemsMovement:(NSArray *)itemTransitions{
@@ -178,6 +253,5 @@ static NSDReplayPlayer * instance;
     
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
-
 
 @end
