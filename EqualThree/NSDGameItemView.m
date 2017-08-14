@@ -48,7 +48,9 @@
                         completion:(void (^)(void))completion{
     
     _emitter.emitterPosition = CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f);
-    _emitter.emitterSize = CGSizeMake(self.frame.size.width,self.frame.size.height);
+    _emitter.emitterSize = CGSizeMake(self.frame.size.width*1.6f,self.frame.size.height*1.6f);
+    
+    
     
     [self startAnimateDestroy];
     
@@ -90,7 +92,7 @@
     particles.contents = (id)[self.image CGImage];
     [particles setName:@"particles"];
     particles.zAcceleration = 20.0f;
-    particles.velocity = 196;
+    particles.velocity = self.frame.size.width * 4;
     
     particles.emissionRange = M_PI;
     
@@ -110,7 +112,8 @@
 
 - (void)setIsEmitting:(BOOL)isEmitting{
     
-    [_emitter setValue:[NSNumber numberWithInt:isEmitting?6000:0] forKeyPath:@"emitterCells.particles.birthRate"];
+    
+    [_emitter setValue:[NSNumber numberWithInt:isEmitting? self.frame.size.width * 142 :0] forKeyPath:@"emitterCells.particles.birthRate"];
 }
 
 

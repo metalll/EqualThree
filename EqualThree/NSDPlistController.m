@@ -20,9 +20,9 @@
         NSString *documentsDirectory = [paths objectAtIndex:0];
         
         NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:[name stringByAppendingString:@".plist"]];
-        if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath])
-        {
-            
+       
+        if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]){
+        
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 if(completion) completion(nil);
@@ -52,6 +52,8 @@
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
         NSString *plistPath = [documentsDirectory stringByAppendingPathComponent:[name stringByAppendingString:@".plist"]];
+        
+        
         
 #ifdef DEBUG
         NSLog(@"stored fileName %@",plistPath);

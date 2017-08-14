@@ -6,7 +6,7 @@
 //  Copyright © 2017 NSD NULL. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+
 #import "NSDScoreRecord.h"
 
 extern NSString * const NSDHighScoreFileName;

@@ -71,6 +71,11 @@ static NSDHighscoresManager *manager;
             _records = [NSMutableArray new];
         }
         
+        if([_records containsObject:record]){
+            
+            [_records removeObject:record];
+        }
+        
         [_records addObject:record];
         [self saveChangesToFile];
         

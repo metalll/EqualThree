@@ -37,6 +37,7 @@ float const NSDRevertAnimationDuration = 0.15f;
 
 - (void)configureGameField;
 - (void)restoreGameField;
+
 - (NSUInteger)generateNewItemType;
 - (void)fillGaps;
 - (void)deleteItems:(NSArray *)matchingSequences;

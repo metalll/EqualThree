@@ -6,11 +6,12 @@
 //  Copyright © 2017 NSD NULL. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "NSDIJStruct.h"
 
+extern NSString * const kNSDFrom;
+extern NSString * const kNSDTo;
 
-@interface NSDSwap : NSObject
+@interface NSDSwap : NSObject<NSCoding>
 
 @property NSDIJStruct *from;
 @property NSDIJStruct *to;

@@ -16,6 +16,7 @@
 #import "NSDGameOverViewController.h"
 #import "NSDHighscoresManager.h"
 #import "NSDGameSharedManager.h"
+#import "NSDReplayRecorder.h"
 
 NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 
@@ -81,6 +82,7 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
 }
 
 - (IBAction)didTapHintButton:(id)sender {
+    
     [self notifyAboutUserDidTapHintButton];
 }
 
@@ -148,6 +150,11 @@ NSString * const NSDUserDidTapHintButton = @"NSDUserDidTapHintButton";
         
         [[NSDGameSharedManager sharedInstance] deleteGame];
         [[NSDHighscoresManager sharedManager] addRecordWithRecord:record];
+        
+        record.replayID = [record hash];
+        [[NSDReplayRecorder sharedInstance] stopRecording];
+        [[NSDReplayRecorder sharedInstance] saveReplayWithID:record.replayID];
+        
         
         [self dismissViewControllerAnimated:YES completion:^{
             [self.navigationController popToRootViewControllerAnimated:YES];

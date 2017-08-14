@@ -6,13 +6,16 @@
 //  Copyright © 2017 NSD NULL. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 
-@interface NSDIJStruct : NSObject
+
+extern NSString * const kNSDI;
+extern NSString * const kNSDJ;
+
+@interface NSDIJStruct : NSObject<NSCoding>
 
 @property NSInteger i;
 @property NSInteger j;
 
-- (instancetype)initWithI:(NSUInteger)i andJ:(NSUInteger)j;
+- (instancetype)initWithI:(NSInteger)i andJ:(NSInteger)j;
 
 @end

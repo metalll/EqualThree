@@ -8,12 +8,15 @@
 
 #import "NSDIJStruct.h"
 
+NSString * const kNSDI = @"kNSDI";
+NSString * const kNSDJ = @"kNSDJ";
+
 @implementation NSDIJStruct
 
 #pragma mark - Init
 
-- (instancetype)initWithI:(NSUInteger)i
-                     andJ:(NSUInteger)j{
+- (instancetype)initWithI:(NSInteger)i
+                     andJ:(NSInteger)j{
     
     self = [super init];
     
@@ -45,6 +48,26 @@
 - (NSString *)description{
     
     return [NSString stringWithFormat:@"-| item at i: %ld j: %ld |- ", (long)self.i, (long)self.j];
+}
+
+#pragma mark - Coding
+
+- (void)encodeWithCoder:(NSCoder *)coder{
+    
+    [coder encodeObject:@(self.i) forKey:kNSDI];
+    [coder encodeObject:@(self.j) forKey:kNSDJ];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder{
+    
+    self = [super init];
+    
+    if(self){
+        
+        self.i = [[aDecoder decodeObjectForKey:kNSDI] integerValue];
+        self.j = [[aDecoder decodeObjectForKey:kNSDJ] integerValue];
+    }
+    return self;
 }
 
 @end
